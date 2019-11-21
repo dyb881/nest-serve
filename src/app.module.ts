@@ -11,7 +11,7 @@ import { AdminModule } from './admin/admin.module';
       username: 'root',
       password: 'root',
       database: 'nest_db',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/**/entity{.ts,.js}'],
       synchronize: true,
     }),
     AdminModule,

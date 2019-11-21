@@ -1,5 +1,6 @@
 import {
   Controller,
+  Req,
   Query,
   Param,
   Body,
@@ -7,39 +8,51 @@ import {
   Post,
   Put,
   Delete,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
+import { ApiUseTags, ApiOperation } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
-import { CreateDto, UpdateDto, QueryDto } from './dto';
+import { CreateAdminDto, UpdateAdminDto, QueryAdminDto } from './common';
+import requestIp from 'request-ip';
 
 @Controller('admin')
+@ApiUseTags('管理员账号')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Get()
-  findAll(@Query() query: QueryDto) {
-    console.log(query);
-    return this.adminService.findAll();
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOperation({ title: '查询列表' })
+  findAll(@Query() queryData: QueryAdminDto) {
+    return this.adminService.findAll(queryData);
   }
 
   @Get(':id')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOperation({ title: '查询详情' })
   findOne(@Param('id') id: string) {
-    console.log(id);
-    return `This action returns a #${id} cat`;
+    return this.adminService.findOne(id);
   }
 
   @Post()
-  create(@Body() create: CreateDto) {
-    return this.adminService.create(create);
+  @ApiOperation({ title: '添加' })
+  async create(@Req() req, @Body() createData: CreateAdminDto) {
+    await this.adminService.create({
+      ...createData,
+      reg_ip: requestIp.getClientIp(req),
+    });
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() update: UpdateDto) {
-    console.log(id, update);
-    return `This action updates a #${id} cat`;
+  @ApiOperation({ title: '编辑' })
+  async update(@Param('id') id: string, @Body() updateData: UpdateAdminDto) {
+    await this.adminService.update(id, updateData);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return `This action removes a #${id} cat`;
+  @ApiOperation({ title: '删除' })
+  async remove(@Param('id') id: string) {
+    await this.adminService.remove(id);
   }
 }

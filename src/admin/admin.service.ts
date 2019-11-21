@@ -1,21 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Admin } from './admin.entity';
-import { IAdmin } from './interfaces';
+import {
+  AdminEntity,
+  QueryAdminData,
+  CreateAdminData,
+  UpdateAdminData,
+} from './common';
 
 @Injectable()
 export class AdminService {
   constructor(
-    @InjectRepository(Admin)
-    private readonly adminRepository: Repository<Admin>,
+    @InjectRepository(AdminEntity)
+    private readonly repository: Repository<AdminEntity>,
   ) {}
 
-  async create(admin: IAdmin) {
-    console.log(admin);
+  async findAll(queryData: QueryAdminData) {
+    const [list, count] = await this.repository.findAndCount(queryData);
+    return { list, count };
   }
 
-  findAll() {
-    return this.adminRepository.find();
+  async findOne(id: string) {
+    const one = await this.repository.findOne(id);
+    if (!one) throw new UnprocessableEntityException('该数据不存在');
+    return one;
+  }
+
+  async create(createData: CreateAdminData) {
+    const data = new AdminEntity();
+    Object.assign(data, createData);
+    await this.repository.save(data);
+  }
+
+  async update(id: string, updateData: UpdateAdminData) {
+    const one = await this.findOne(id);
+    Object.assign(one, updateData);
+    await this.repository.save(one);
+  }
+
+  async remove(id: string) {
+    const one = await this.findOne(id);
+    await this.repository.remove(one);
   }
 }
