@@ -1,35 +1,48 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe, BadRequestException } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { TransformInterceptor, HttpExceptionFilter } from './common';
+import { TransformInterceptor, HttpExceptionFilter, log } from './common';
 import { AppModule } from './app.module';
-import helmet from 'helmet';
+import { address } from 'ip';
+
+const ip = address();
+const port = 80;
+const prefix = 'api';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // 接口请求前缀
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix(prefix);
+
+  // 全局使用验证管道，并统一报错处理
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory: ([error]) => {
+        throw new BadRequestException(Object.values(error.constraints)[0]);
+      },
+    })
+  );
+
+  // 响应参数统一格式
+  app.useGlobalInterceptors(new TransformInterceptor());
 
   // 报错过滤器
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // 注册拦截器
-  app.useGlobalInterceptors(new TransformInterceptor());
-
-  // 安全防御中间件
-  app.use(helmet());
-
   // swagger 接口文档
   const options = new DocumentBuilder()
-    .setTitle('管理后台接口文档')
+    .setTitle('接口文档')
     .setDescription('code:状态码，message:提示信息，data:返回值')
-    .setBasePath('api')
-    .setVersion('1.0')
+    .setBasePath(prefix)
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger', app, document);
 
   // 启动服务
-  await app.listen(80);
+  await app.listen(port);
+
+  log('log')('启动服务', `http://${ip}`, `http://${ip}/${prefix}`, `http://${ip}/swagger`);
 }
+
 bootstrap();

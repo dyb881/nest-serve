@@ -1,9 +1,17 @@
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AdminModule } from './admin/admin.module';
+import { join } from 'path';
+import { BasedModule } from './based/based.module';
 
 @Module({
   imports: [
+    // 静态资源
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../public'),
+      exclude: ['/api/:path*'],
+    }),
+    // 数据库
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -11,10 +19,10 @@ import { AdminModule } from './admin/admin.module';
       username: 'root',
       password: 'root',
       database: 'nest_db',
-      entities: [__dirname + '/**/entity{.ts,.js}'],
+      entities: [__dirname + '/**/*.entity.{ts,js}'],
       synchronize: true,
     }),
-    AdminModule,
+    BasedModule,
   ],
 })
 export class AppModule {}
