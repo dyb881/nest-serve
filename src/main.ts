@@ -24,11 +24,11 @@ async function bootstrap() {
     })
   );
 
-  // 响应参数统一格式
-  app.useGlobalInterceptors(new TransformInterceptor());
-
   // 报错过滤器
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  // 响应参数统一格式
+  app.useGlobalInterceptors(new TransformInterceptor());
 
   // swagger 接口文档
   const options = new DocumentBuilder()

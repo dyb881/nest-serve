@@ -5,7 +5,6 @@ import { log } from '../tool';
 export class HttpExceptionFilter<T> implements ExceptionFilter {
   catch(exception: T, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const req = ctx.getRequest<Request>();
     const res = ctx.getResponse();
 
     let errorLog = exception;
@@ -23,7 +22,7 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
     }
 
     // 错误日志
-    log('error', req)(errorLog);
+    log('error')(errorLog);
 
     const message = (chinese.test(msg) && msg) || HttpStatusText[error] || error;
     res.status(code).json({ code, error, message });

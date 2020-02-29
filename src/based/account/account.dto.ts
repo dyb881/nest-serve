@@ -20,7 +20,7 @@ export const Validator = createValidator({
     message: '请输入正确的昵称，2-32位、中文、字母、数字，下划线、减号',
   },
   status: {
-    isIn: statusEnum.map(i => '' + i),
+    isIn: statusEnum,
     message: `请选择正确的${statusComment}`,
   },
 });

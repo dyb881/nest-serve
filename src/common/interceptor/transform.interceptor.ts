@@ -13,12 +13,9 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
     const ctx = context.switchToHttp();
     const req = ctx.getRequest();
     const end = log('log', req);
-    const now = Date.now();
     return next.handle().pipe(
       map(data => ({ code: 0, data })),
-      tap(() => {
-        end(`耗时 ${Date.now() - now}`);
-      })
+      tap(() => end())
     );
   }
 }

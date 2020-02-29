@@ -33,6 +33,7 @@ export const log = (type: keyof Logger, req?: Request) => {
   if (req) {
     Logger[type](`请求路径 ${req.url}`);
     Logger[type](`请求IP ${getIp(req)}`);
+    Object.keys(req.body).length && Logger[type](req.body);
   }
   return (...msgs: any[]) => {
     msgs.forEach(i => Logger[type](i));
@@ -66,8 +67,7 @@ export const columnOptions = {
    * 创建枚举配置
    */
   createEnum: (comment: string, enumObject: object, defaults?: number | string) => {
-    const isArray = Array.isArray(enumObject);
-    const keys = Object.keys(enumObject).map(i => +i);
+    const keys = Object.keys(enumObject);
     return {
       enum: keys,
       comment: `${comment}，${keys.map(i => `${i}:${enumObject[i]}`).join('、')}`,
