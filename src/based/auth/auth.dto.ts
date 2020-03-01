@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Validator } from '../account/account.dto';
+import { Validator, AccountDto } from '../account/account.dto';
 
 export class authDto {
   @Validator('username')
@@ -11,7 +11,7 @@ export class authDto {
   readonly password: string;
 }
 
-export class tokenDto {
+export class tokenDto extends AccountDto {
   @ApiProperty({ description: 'token，放到请求头用于鉴权' })
   readonly access_token: string;
 }
