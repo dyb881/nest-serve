@@ -1,8 +1,26 @@
 import { Logger } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { QueryPaginationDto } from '../dto/common.dto';
 import { IsIn, Matches, ValidationOptions } from 'class-validator';
 import { getClientIp } from 'request-ip';
 import { sha512 } from 'js-sha512';
+import { mapValues } from 'lodash';
 import dayjs from 'dayjs';
+
+/**
+ * 分页
+ */
+export const pagination = <T extends any, P extends object = {}>(
+  repository: Repository<T>,
+  { current, pageSize, ...data }: P & QueryPaginationDto
+) => {
+  return repository.findAndCount({
+    where: mapValues(data, i => (isNaN(i) ? i : '' + i)),
+    order: { create_date: 'DESC' },
+    skip: (current - 1) * pageSize,
+    take: pageSize,
+  });
+};
 
 type TValidator = { isIn?: any[]; matches?: RegExp; message: string };
 export type TValidatorConfig = { [key: string]: TValidator };
@@ -31,9 +49,10 @@ export const getIp = (req: Request) => getClientIp(req as any).replace('::ffff:'
 export const log = (type: keyof Logger, req?: Request) => {
   Logger[type]('----------- start -----------');
   if (req) {
-    Logger[type](`请求路径 ${req.url}`);
-    Logger[type](`请求IP ${getIp(req)}`);
-    Object.keys(req.body).length && Logger[type](req.body);
+    const { method, url, body } = req;
+    Logger[type](`${method} ${url}`);
+    Logger[type](`IP ${getIp(req)}`);
+    Object.keys(body).length && Logger[type](body);
   }
   return (...msgs: any[]) => {
     msgs.forEach(i => Logger[type](i));
@@ -67,7 +86,8 @@ export const columnOptions = {
    * 创建枚举配置
    */
   createEnum: (comment: string, enumObject: object, defaults?: number | string) => {
-    const keys = Object.keys(enumObject);
+    let keys: (string | number)[] = Object.keys(enumObject);
+    if (Array.isArray(enumObject)) keys = keys.map(i => +i);
     return {
       enum: keys,
       comment: `${comment}，${keys.map(i => `${i}:${enumObject[i]}`).join('、')}`,

@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { createValidator } from '../../common';
-import { IsOptional } from 'class-validator';
+import { IsInt, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 import { statusEnum, statusComment } from './account.entity';
+import { QueryPaginationDto, CommonDto, createValidator } from '../../common';
 
 /**
  * 自定义验证器
@@ -25,7 +26,35 @@ export const Validator = createValidator({
   },
 });
 
-export class QueryAccountDto {
+export class AccountDto extends CommonDto {
+  @ApiProperty({ description: '用户名' })
+  username: string;
+
+  @ApiProperty({ description: '昵称' })
+  nickname: string;
+
+  @ApiProperty({ description: '注册IP' })
+  reg_ip: string;
+
+  @ApiProperty({ description: '登录IP' })
+  login_ip: string;
+
+  @ApiProperty({ description: '登录时间' })
+  login_date: Date;
+
+  @ApiProperty({ description: statusComment, enum: statusEnum })
+  status: number;
+}
+
+export class AccountPaginationDto {
+  @ApiProperty({ description: '列表', type: [AccountDto] })
+  list: AccountDto[];
+
+  @ApiProperty({ description: '总数' })
+  total: number;
+}
+
+export class QueryAccountDto extends QueryPaginationDto {
   @IsOptional()
   @Validator('username')
   @ApiProperty({ description: '用户名', required: false })
@@ -37,6 +66,7 @@ export class QueryAccountDto {
   readonly nickname?: string;
 
   @IsOptional()
+  @Type(() => Number)
   @Validator('status')
   @ApiProperty({ description: statusComment, enum: statusEnum, required: false })
   readonly status?: number;
@@ -60,4 +90,17 @@ export class CreateAccountDto {
   readonly status: string;
 }
 
-export class UpdateAccountDto extends CreateAccountDto {}
+export class UpdateAccountDto {
+  @IsOptional()
+  @Validator('password')
+  @ApiProperty({ description: '密码', required: false })
+  readonly password?: string;
+
+  @Validator('nickname')
+  @ApiProperty({ description: '昵称' })
+  readonly nickname: string;
+
+  @Validator('status')
+  @ApiProperty({ description: statusComment, enum: statusEnum })
+  readonly status: string;
+}

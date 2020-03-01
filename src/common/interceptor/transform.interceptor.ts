@@ -12,9 +12,10 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
   intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
     const ctx = context.switchToHttp();
     const req = ctx.getRequest();
+    const res = ctx.getResponse();
     const end = log('log', req);
     return next.handle().pipe(
-      map(data => ({ code: 0, data })),
+      map(data => ({ code: res.statusCode, data })),
       tap(() => end())
     );
   }

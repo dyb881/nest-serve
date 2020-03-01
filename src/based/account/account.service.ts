@@ -4,18 +4,17 @@ import { Repository } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
 import { Account } from './account.entity';
 import { QueryAccountDto, CreateAccountDto, UpdateAccountDto } from './account.dto';
+import { pagination } from '../../common';
+import { pick } from 'lodash';
 
 @Injectable()
 export class AccountService {
-  constructor(
-    @InjectRepository(Account)
-    private readonly repository: Repository<Account>
-  ) {}
+  constructor(@InjectRepository(Account) private readonly repository: Repository<Account>) {}
 
   @TransformClassToPlain()
-  async findAll(queryData: QueryAccountDto) {
-    const [list, count] = await this.repository.findAndCount(queryData);
-    return { list, count };
+  async findAndCount(data: QueryAccountDto) {
+    const [list, total] = await pagination(this.repository, data);
+    return { list, total };
   }
 
   @TransformClassToPlain()
@@ -26,12 +25,9 @@ export class AccountService {
   }
 
   async create(data: CreateAccountDto & { readonly reg_ip: string }) {
-    const { password, username } = data;
-    const one = await this.repository.findOne({ username });
+    const one = await this.repository.findOne(pick(data, ['username']));
     if (one) throw new BadRequestException('用户名已存在');
-    const account = new Account();
-    Object.assign(account, data);
-    await this.repository.save(account);
+    await this.repository.save(data);
   }
 
   async update(id: string, data: UpdateAccountDto) {

@@ -4,13 +4,17 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { TransformInterceptor, HttpExceptionFilter, log } from './common';
 import { AppModule } from './app.module';
 import { address } from 'ip';
+import helmet from 'helmet';
 
 const ip = address();
 const port = 80;
 const prefix = 'api';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
+
+  // 设置与安全相关的 HTTP 头
+  app.use(helmet());
 
   // 接口请求前缀
   app.setGlobalPrefix(prefix);
@@ -34,7 +38,6 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('接口文档')
     .setDescription('code:状态码，message:提示信息，data:返回值')
-    .setBasePath(prefix)
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger', app, document);
@@ -42,7 +45,9 @@ async function bootstrap() {
   // 启动服务
   await app.listen(port);
 
-  log('log')('启动服务', `http://${ip}`, `http://${ip}/${prefix}`, `http://${ip}/swagger`);
+  let host = `http://${ip}`;
+  if (port !== 80) host += `${host}:${port}`;
+  log('log')('启动服务', host, `${host}/${prefix}`, `${host}/swagger`);
 }
 
 bootstrap();

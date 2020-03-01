@@ -21,8 +21,10 @@ import { BasedModule } from './based/based.module';
       database: 'nest_db',
       entities: [__dirname + '/**/*.entity.{ts,js}'],
       synchronize: true,
+      // logging: true,
     }),
     BasedModule,
   ],
 })
 export class AppModule {}
+

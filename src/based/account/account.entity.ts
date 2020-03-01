@@ -1,6 +1,8 @@
 import { Entity, Column } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { CommonEntity, columnOptions } from '../../common';
+import { ApiProperty } from '@nestjs/swagger';
+
 const { date, password, createEnum } = columnOptions;
 
 const statusOptions = createEnum('状态', ['未审核', '已审核', '冻结']);
@@ -14,8 +16,8 @@ export class Account extends CommonEntity {
   @Column({ comment: '用户名', length: 32, unique: true })
   username: string;
 
-  @Column({ comment: '密码', ...password })
   @Exclude()
+  @Column({ comment: '密码', ...password })
   password: string;
 
   @Column({ comment: '昵称', length: 32 })
