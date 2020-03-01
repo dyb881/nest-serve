@@ -35,6 +35,7 @@ const chinese = /.*[\u4e00-\u9fa5]+.*/;
 // 错误状态码中文
 const HttpStatusText = {
   'Bad Request': '请求参数错误',
+  Unauthorized: '未经授权',
   'Not Found': '未找到地址',
   'Internal Server Error': '服务器错误',
 };

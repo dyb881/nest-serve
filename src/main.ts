@@ -38,6 +38,7 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('接口文档')
     .setDescription('code:状态码，message:提示信息，data:返回值')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger', app, document);

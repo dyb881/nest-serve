@@ -3,7 +3,6 @@ import { Repository } from 'typeorm';
 import { QueryPaginationDto } from '../dto/common.dto';
 import { IsIn, Matches, ValidationOptions } from 'class-validator';
 import { getClientIp } from 'request-ip';
-import { sha512 } from 'js-sha512';
 import { mapValues } from 'lodash';
 import dayjs from 'dayjs';
 
@@ -72,14 +71,6 @@ export const columnOptions = {
       to: value => value,
       from: value => value && dayjs(value).format('YYYY-MM-DD HH:mm:ss'),
     },
-  },
-
-  /**
-   * 密码
-   */
-  password: {
-    length: 128,
-    transformer: { to: sha512, from: value => value },
   },
 
   /**

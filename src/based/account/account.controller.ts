@@ -1,9 +1,12 @@
-import { HttpCode, Controller, Post, Get, Put, Delete, Query, Param, Body, Req } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Controller, UseGuards, Post, Get, Put, Delete, Query, Param, Body, Req } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { AccountService } from './account.service';
 import { QueryAccountDto, CreateAccountDto, UpdateAccountDto, AccountDto, AccountPaginationDto } from './account.dto';
 import { getIp } from '../../common';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('账号')
 @Controller('account')
 export class AccountController {
@@ -20,7 +23,7 @@ export class AccountController {
   @ApiOperation({ summary: '查询详情' })
   @ApiResponse({ status: 200, type: AccountDto })
   findOne(@Param('id') id: string) {
-    return this.service.findOne(id);
+    return this.service.findOne({ id });
   }
 
   @Post()

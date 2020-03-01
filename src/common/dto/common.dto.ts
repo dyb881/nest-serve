@@ -21,12 +21,12 @@ export class CommonDto {
  */
 export class QueryPaginationDto {
   @Type(() => Number)
-  @IsInt()
+  @IsInt({ message: 'current 只能为数字' })
   @ApiProperty({ description: '当前页码', default: 1 })
   readonly current: number;
 
   @Type(() => Number)
-  @IsInt()
+  @IsInt({ message: 'pageSize 只能为数字' })
   @ApiProperty({ description: '每页数量', default: 10 })
   readonly pageSize: number;
 }
