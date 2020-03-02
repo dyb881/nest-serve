@@ -1,7 +1,6 @@
 import { Entity, Column } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { CommonEntity, columnOptions } from '../../common';
-import { ApiProperty } from '@nestjs/swagger';
 import { sha512 } from 'js-sha512';
 
 const { date, createEnum } = columnOptions;

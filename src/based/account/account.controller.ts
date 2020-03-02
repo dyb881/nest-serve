@@ -4,7 +4,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { AccountService } from './account.service';
 import { QueryAccountDto, CreateAccountDto, UpdateAccountDto, AccountDto, AccountPaginationDto } from './account.dto';
 import { getIp } from '../../common';
+import { AdminGuard } from '../auth/guard/permissions.guard';
 
+@UseGuards(AdminGuard)
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('账号')

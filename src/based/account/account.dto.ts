@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsOptional } from 'class-validator';
+import { IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { statusEnum, statusComment, typeEnum, typeComment } from './account.entity';
 import { QueryPaginationDto, CommonDto, createValidator } from '../../common';

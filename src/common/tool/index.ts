@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, SetMetadata } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { QueryPaginationDto } from '../dto/common.dto';
 import { IsIn, Matches, ValidationOptions } from 'class-validator';
@@ -85,4 +85,11 @@ export const columnOptions = {
       default: defaults ?? keys[0],
     };
   },
+};
+
+/**
+ * 权限管理
+ */
+export const Permissions = (accountType: string, ...roles: string[]) => {
+  return SetMetadata('permissions', [accountType, ...roles]);
 };
