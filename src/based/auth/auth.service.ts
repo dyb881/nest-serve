@@ -7,7 +7,7 @@ export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
   getToken(account: AccountDto) {
-    const { id, username } = account;
-    return { access_token: this.jwtService.sign({ sub: id, username }), ...account };
+    const { id, username, type } = account;
+    return { access_token: this.jwtService.sign({ sub: id, username, type }), ...account };
   }
 }

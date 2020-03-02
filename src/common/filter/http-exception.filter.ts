@@ -38,6 +38,7 @@ const HttpStatusText = {
   Unauthorized: '未经授权',
   'Not Found': '未找到地址',
   'Internal Server Error': '服务器错误',
+  Forbidden: '权限不足',
 };
 
 /*

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
-import { statusEnum, statusComment } from './account.entity';
+import { statusEnum, statusComment, typeEnum, typeComment } from './account.entity';
 import { QueryPaginationDto, CommonDto, createValidator } from '../../common';
 
 /**
@@ -20,6 +20,10 @@ export const Validator = createValidator({
     matches: /^[\d\w\u4e00-\u9fa5-_]{2,15}$/,
     message: '请输入正确的昵称，2-32位、中文、字母、数字，下划线、减号',
   },
+  type: {
+    isIn: typeEnum,
+    message: `请选择正确的${typeComment}`,
+  },
   status: {
     isIn: statusEnum,
     message: `请选择正确的${statusComment}`,
@@ -33,6 +37,9 @@ export class AccountDto extends CommonDto {
   @ApiProperty({ description: '昵称' })
   nickname: string;
 
+  @ApiProperty({ enum: typeEnum, description: typeComment })
+  type: string;
+
   @ApiProperty({ description: '注册IP' })
   reg_ip: string;
 
@@ -42,7 +49,7 @@ export class AccountDto extends CommonDto {
   @ApiProperty({ description: '登录时间' })
   login_date: Date;
 
-  @ApiProperty({ description: statusComment, enum: statusEnum })
+  @ApiProperty({ enum: statusEnum, description: statusComment })
   status: number;
 }
 
@@ -66,6 +73,11 @@ export class QueryAccountDto extends QueryPaginationDto {
   readonly nickname?: string;
 
   @IsOptional()
+  @Validator('type')
+  @ApiProperty({ enum: typeEnum, description: typeComment, required: false })
+  type: string;
+
+  @IsOptional()
   @Type(() => Number)
   @Validator('status')
   @ApiProperty({ description: statusComment, enum: statusEnum, required: false })
@@ -84,6 +96,10 @@ export class CreateAccountDto {
   @Validator('nickname')
   @ApiProperty({ description: '昵称' })
   readonly nickname: string;
+
+  @Validator('type')
+  @ApiProperty({ enum: typeEnum, description: typeComment })
+  type: string;
 
   @Validator('status')
   @ApiProperty({ description: statusComment, enum: statusEnum })

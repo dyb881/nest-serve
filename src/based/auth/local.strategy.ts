@@ -10,12 +10,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(username: string, password: string) {
-    const account = await this.accountService.validate(username, password);
+    const account = await this.accountService.validate({ username, password });
     if (!account) throw new UnauthorizedException('登录失败');
     return account;
   }
 }
-
-
-
-

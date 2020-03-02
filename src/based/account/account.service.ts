@@ -43,8 +43,8 @@ export class AccountService {
   }
 
   @TransformClassToPlain()
-  async validate(username: string, password: string) {
-    const one = await this.accountRepository.findOne({ username });
+  async validate({ password, ...data }: Pick<Account, 'username' | 'password'>) {
+    const one = await this.accountRepository.findOne(data);
     if (one?.password === sha512(password)) return one;
   }
 }

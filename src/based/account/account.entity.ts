@@ -9,6 +9,9 @@ const { date, createEnum } = columnOptions;
 const statusOptions = createEnum('状态', ['未审核', '已审核', '冻结']);
 export const { enum: statusEnum, comment: statusComment } = statusOptions;
 
+const typeOptions = createEnum('帐号类型', { admin: '管理员', user: '用户' });
+export const { enum: typeEnum, comment: typeComment } = typeOptions;
+
 /**
  * 帐号
  */
@@ -23,6 +26,9 @@ export class Account extends CommonEntity {
 
   @Column({ comment: '昵称', length: 32 })
   nickname: string;
+
+  @Column('enum', typeOptions)
+  type: string;
 
   @Column({ comment: '注册IP', length: 15 })
   reg_ip: string;

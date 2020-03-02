@@ -27,4 +27,3 @@ import { BasedModule } from './based/based.module';
   ],
 })
 export class AppModule {}
-
