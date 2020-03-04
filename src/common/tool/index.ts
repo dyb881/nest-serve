@@ -51,6 +51,8 @@ export const log = (type: keyof Logger, req?: Request) => {
     const { method, url, body } = req;
     Logger[type](`${method} ${url}`);
     Logger[type](`IP ${getIp(req)}`);
+    Logger[type]((req as any).user.username);
+
     Object.keys(body).length && Logger[type](body);
   }
   return (...msgs: any[]) => {

@@ -19,8 +19,8 @@ export class AccountService {
   }
 
   @TransformClassToPlain()
-  async findOne(id: Partial<Account>) {
-    const one = await this.accountRepository.findOne(id);
+  async findOne(data: Partial<Account>) {
+    const one = await this.accountRepository.findOne(data);
     if (!one) throw new BadRequestException('该数据不存在');
     return one;
   }
@@ -38,8 +38,7 @@ export class AccountService {
   }
 
   async remove(id: string) {
-    const one = await this.findOne({ id });
-    await this.accountRepository.remove(one);
+    await this.accountRepository.delete(id);
   }
 
   @TransformClassToPlain()
