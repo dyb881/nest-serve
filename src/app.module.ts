@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BasedModule } from './based/based.module';
+import { BasicModule } from './basic/basic.module';
 import { join } from 'path';
 
 @Module({
@@ -9,7 +9,7 @@ import { join } from 'path';
     // 静态资源
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../public'),
-      exclude: ['/api/:path*'],
+      exclude: ['/api/:path*'], // 排除 api 开头的地址，无对应静态文件的地址指向 index.html
     }),
     // 数据库
     TypeOrmModule.forRoot({
@@ -23,7 +23,7 @@ import { join } from 'path';
       synchronize: true,
       // logging: true,
     }),
-    BasedModule,
+    BasicModule,
   ],
 })
 export class AppModule {}
