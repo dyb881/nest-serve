@@ -34,7 +34,7 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   @ApiResponse({ status: 200, type: Account })
   @ApiOperation('获取帐号信息')
-  async getInfo(@Req() req) {
+  getInfo(@Req() req) {
     const { id } = req.user;
     return this.accountService.findOne(id);
   }

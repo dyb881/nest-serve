@@ -46,3 +46,7 @@ export const accountTypeList = Object.keys(accountType);
  */
 export const accountStatus = ['未审核', '已审核', '冻结'];
 
+/**
+ * 栏目分类状态
+ */
+export const menuStatus = ['隐藏', '显示', '置顶'];

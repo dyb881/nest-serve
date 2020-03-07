@@ -24,7 +24,7 @@ export class UploadFileController {
   @Permissions('admin')
   @Delete()
   @ApiOperation('删除')
-  async deletes(@Body() { ids }: DeleteDto) {
+  async delete(@Body() { ids }: DeleteDto) {
     await this.uploadFileService.delete(ids);
   }
 

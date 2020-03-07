@@ -14,7 +14,7 @@ export class AccountService extends CommonService<Account, any, any, AccountUpda
     super(accountRepository);
   }
 
-  async pagination(data: AccountQueryDto) {
+  pagination(data: AccountQueryDto) {
     insLike(data, ['username', 'nickname']);
     return super.pagination(data);
   }

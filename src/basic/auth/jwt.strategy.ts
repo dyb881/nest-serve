@@ -13,7 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ username, type, ...token }: any) {
+  validate({ username, type, ...token }: any) {
     return { id: token[`key-${jwtConstants.secret}`], username, type };
   }
 }

@@ -14,7 +14,7 @@ export class UploadFileService extends CommonService<UploadFile> {
     super(uploadFileRepository);
   }
 
-  async pagination(data: UploadQueryDto) {
+  pagination(data: UploadQueryDto) {
     insLike(data, ['name', 'username']);
     return super.pagination(data);
   }

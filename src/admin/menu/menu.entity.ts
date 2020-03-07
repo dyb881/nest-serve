@@ -1,5 +1,5 @@
 import { Entity } from 'typeorm';
-import { CommonEntity, Column, ApiProperty } from '../../common';
+import { CommonEntity, Column, ApiProperty, ApiPropertyEnum, ColumnEnum, menuStatus } from '../../common';
 
 /**
  * 帐号
@@ -26,9 +26,9 @@ export class Menu extends CommonEntity {
   @Column('排序号')
   sort: number;
 
-  @ApiProperty('是否显示')
-  @Column('是否显示')
-  show: boolean;
+  @ApiPropertyEnum('状态', menuStatus)
+  @ColumnEnum('状态', menuStatus)
+  status: number;
 
   @ApiProperty('创建帐号')
   @Column('创建帐号', 32)

@@ -1,4 +1,4 @@
-import { ApiProperty, PaginationQueryDto, IsInt } from '../../common';
+import { ApiProperty, PaginationQueryDto, IsInt, ApiPropertyEnum, menuStatus, IsIn } from '../../common';
 
 export class MenuQueryDto extends PaginationQueryDto {
   @ApiProperty('标题', { required: false })
@@ -7,8 +7,9 @@ export class MenuQueryDto extends PaginationQueryDto {
   @ApiProperty('内容', { required: false })
   content?: string;
 
-  @ApiProperty('是否显示', { required: false })
-  show?: boolean;
+  @IsIn(menuStatus, '请选择正确的状态')
+  @ApiPropertyEnum('状态', menuStatus)
+  status?: boolean;
 }
 
 export class MenuCreateDto {
@@ -28,8 +29,8 @@ export class MenuCreateDto {
   @ApiProperty('排序号')
   sort: number;
 
-  @ApiProperty('是否显示')
-  show: boolean;
+  @ApiProperty('状态')
+  status: boolean;
 }
 
 export class MenuUpdateDto extends MenuCreateDto {}

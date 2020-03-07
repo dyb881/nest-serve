@@ -1,19 +1,24 @@
 import { BadRequestException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, FindManyOptions } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
 import { PaginationQueryDto } from './common.dto';
-import { pagination } from '../tool';
 
 /**
  * 公用服务<数据实体，查询，创建，更新>
  * 数据实体必填，其他默认 any
  */
-export class CommonService<T, Q extends PaginationQueryDto = any, C = any, U = any> {
+export class CommonService<T extends any, Q extends PaginationQueryDto = any, C = any, U = any> {
   constructor(readonly repository: Repository<T>) {}
 
   @TransformClassToPlain()
-  async pagination({ current, pageSize, ...data }: Q) {
-    const [list, total] = await pagination(this.repository, { current, pageSize }, data);
+  async pagination({ current, pageSize, ...where }: Q, options?: FindManyOptions<T>) {
+    const [list, total] = await this.repository.findAndCount({
+      where,
+      order: { create_date: 'DESC' },
+      skip: (current - 1) * pageSize,
+      take: pageSize,
+      ...options,
+    });
     return { list, total };
   }
 
