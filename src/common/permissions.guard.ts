@@ -1,5 +1,24 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { UseGuards, Injectable, CanActivate, ExecutionContext, SetMetadata } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
+
+/**
+ * 权限管理
+ * accountType 帐号类型
+ * roles       角色
+ */
+export const Permissions = (accountType: string, ...roles: string[]) => {
+  return SetMetadata('permissions', [accountType, ...roles]);
+};
+
+/**
+ * 登录权限校验
+ */
+export const Jwt = (...guards: (Function | CanActivate)[]) => (...arg: any[]) => {
+  const res: any = UseGuards(AuthGuard('jwt'), ...guards);
+  return ApiBearerAuth()(res(...arg));
+};
 
 /**
  * 权限守卫
@@ -30,6 +49,11 @@ export class PermissionsGuard implements CanActivate {
 }
 
 /**
+ * 权限校验
+ */
+export const JwtPermissions = () => Jwt(PermissionsGuard);
+
+/**
  * 管理员守卫
  * 只有管理员才能访问该控制器
  */
@@ -40,3 +64,8 @@ export class AdminGuard implements CanActivate {
     return request.user.type === 'admin';
   }
 }
+
+/**
+ * 管理员权限校验
+ */
+export const JwtAdmin = () => Jwt(AdminGuard);

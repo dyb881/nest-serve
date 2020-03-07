@@ -1,28 +1,13 @@
-import {
-  Controller,
-  UseGuards,
-  Get,
-  Delete,
-  Post,
-  Query,
-  Body,
-  Param,
-  UseInterceptors,
-  UploadedFile,
-  Req,
-  BadRequestException,
-} from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiConsumes, ApiBody, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import { Controller, Get, Delete, Post, Query, Body, Param, UseInterceptors, UploadedFile, Req, BadRequestException } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiConsumes, ApiBody, ApiParam } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { AuthGuard } from '@nestjs/passport';
 import { UploadFileService } from './upload-file.service';
-import { UploadPaginationDto, UploadQueryDto, UploadDto, UploadResDto } from './upload-file.dto';
-import { DeleteDto, ApiOperation, fileTypeList, getFileType, fileType, fileTypeSize, PermissionsGuard, Permissions } from '../../common';
+import { UploadQueryDto, UploadDto, UploadResDto } from './upload-file.dto';
+import { UploadFile } from './upload-file.entity';
+import { DeleteDto, ApiOperation, fileTypeList, getFileType, fileType, fileTypeSize, PaginationDto, JwtPermissions, Permissions } from '../../common';
 import filesize from 'filesize';
 
-@UseGuards(PermissionsGuard)
-@ApiBearerAuth()
-@UseGuards(AuthGuard('jwt'))
+@JwtPermissions()
 @ApiTags('文件')
 @Controller('upload')
 export class UploadFileController {
@@ -31,7 +16,7 @@ export class UploadFileController {
   @Permissions('admin')
   @Get()
   @ApiOperation('查询列表')
-  @ApiResponse({ status: 200, type: UploadPaginationDto })
+  @ApiResponse({ status: 200, type: PaginationDto(UploadFile) })
   findAll(@Query() data: UploadQueryDto) {
     return this.uploadFileService.pagination(data);
   }
@@ -72,7 +57,6 @@ export class UploadFileController {
       throw new BadRequestException(`${fileType[type]}文件大小不能大于 ${filesize(maxSize)}`);
     }
 
-    const { username } = req.user || { username: 'test' };
-    return this.uploadFileService.create({ name, url, type, size, username });
+    return this.uploadFileService.create({ name, url, type, size, username: req.user.username });
   }
 }

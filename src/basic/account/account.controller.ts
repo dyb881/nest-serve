@@ -1,13 +1,11 @@
-import { Controller, UseGuards, Get, Post, Put, Delete, Query, Param, Body, Req } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
-import { AccountDto, AccountPaginationDto, AccountQueryDto, AccountCreateDto, AccountUpdateDto } from './account.dto';
+import { Controller, Get, Post, Put, Delete, Query, Param, Body, Req } from '@nestjs/common';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { AccountQueryDto, AccountCreateDto, AccountUpdateDto } from './account.dto';
+import { Account } from './account.entity';
 import { AccountService } from './account.service';
-import { DeleteDto, getIp, ApiOperation, AdminGuard } from '../../common';
+import { DeleteDto, getIp, ApiOperation, PaginationDto, JwtAdmin } from '../../common';
 
-@UseGuards(AdminGuard)
-@ApiBearerAuth()
-@UseGuards(AuthGuard('jwt'))
+@JwtAdmin()
 @ApiTags('账号')
 @Controller('account')
 export class AccountController {
@@ -15,14 +13,14 @@ export class AccountController {
 
   @Get()
   @ApiOperation('查询列表')
-  @ApiResponse({ status: 200, type: AccountPaginationDto })
+  @ApiResponse({ status: 200, type: PaginationDto(Account) })
   findAll(@Query() data: AccountQueryDto) {
     return this.accountService.pagination(data);
   }
 
   @Get(':id')
   @ApiOperation('查询详情')
-  @ApiResponse({ status: 200, type: AccountDto })
+  @ApiResponse({ status: 200, type: Account })
   findOne(@Param('id') id: string) {
     return this.accountService.findOne(id);
   }

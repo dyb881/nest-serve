@@ -3,8 +3,8 @@ import { ApiTags, ApiParam, ApiBody, ApiResponse, ApiBearerAuth } from '@nestjs/
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AccountService } from '../account/account.service';
-import { authDto, LoginInfoDto } from './auth.dto';
-import { AccountDto } from '../account/account.dto';
+import { AuthDto, LoginInfoDto } from './auth.dto';
+import { Account } from '../account/account.entity';
 import { ApiOperation, accountTypeList, getIp, format } from '../../common';
 
 @ApiTags('鉴权')
@@ -14,8 +14,8 @@ export class AuthController {
 
   @Post(':accountType')
   @UseGuards(AuthGuard('local'))
-  @ApiParam({ name: 'accountType', enum: accountTypeList, description: '登录帐号类型' })
-  @ApiBody({ type: authDto })
+  @ApiParam({ name: 'accountType', enum: accountTypeList, description: '登录帐号类型，admin:管理员、user:用户' })
+  @ApiBody({ type: AuthDto })
   @ApiResponse({ status: 200, type: LoginInfoDto })
   @ApiOperation('登录')
   async login(@Param('accountType') accountType, @Req() req) {
@@ -32,7 +32,7 @@ export class AuthController {
   @Get()
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
-  @ApiResponse({ status: 200, type: AccountDto })
+  @ApiResponse({ status: 200, type: Account })
   @ApiOperation('获取帐号信息')
   async getInfo(@Req() req) {
     const { id } = req.user;

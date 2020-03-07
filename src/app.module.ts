@@ -3,6 +3,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BasicModule } from './basic/basic.module';
 import { join } from 'path';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { join } from 'path';
       // logging: true,
     }),
     BasicModule,
+    AdminModule,
   ],
 })
 export class AppModule {}

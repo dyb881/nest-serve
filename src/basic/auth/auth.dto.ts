@@ -1,7 +1,8 @@
-import { username, password, AccountDto } from '../account/account.dto';
+import { username, password } from '../account/account.dto';
+import { Account } from '../account/account.entity';
 import { ApiProperty } from '../../common';
 
-export class authDto {
+export class AuthDto {
   @username
   @ApiProperty('用户名')
   username: string;
@@ -14,7 +15,7 @@ export class authDto {
 /**
  * 登录信息
  */
-export class LoginInfoDto extends AccountDto {
+export class LoginInfoDto extends Account {
   @ApiProperty('token，放到请求头用于鉴权')
   access_token: string;
 }

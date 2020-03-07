@@ -9,6 +9,8 @@ import {
   dateTransformer,
   accountType,
   accountStatus,
+  ApiProperty,
+  ApiPropertyEnum,
 } from '../../common';
 
 /**
@@ -16,6 +18,7 @@ import {
  */
 @Entity()
 export class Account extends CommonEntity {
+  @ApiProperty('用户名')
   @Column('用户名', 32, { unique: true })
   username: string;
 
@@ -23,21 +26,27 @@ export class Account extends CommonEntity {
   @Column('密码', 128, { transformer: createTransformer({ to: sha512 }) })
   password: string;
 
+  @ApiProperty('昵称')
   @Column('昵称', 32)
   nickname: string;
 
+  @ApiProperty('注册IP')
   @Column('注册IP', 15)
   reg_ip: string;
 
+  @ApiProperty('登录IP')
   @Column('登录IP', 15, { nullable: true })
   login_ip: string;
 
+  @ApiProperty('登录时间')
   @Column('登录时间', { transformer: dateTransformer, nullable: true })
   login_date: Date;
 
+  @ApiPropertyEnum('帐号类型', accountType)
   @ColumnEnum('帐号类型', accountType)
   type: string;
 
+  @ApiPropertyEnum('状态', accountStatus)
   @ColumnEnum('状态', accountStatus)
   status: number;
 }

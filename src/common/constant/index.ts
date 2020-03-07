@@ -45,3 +45,4 @@ export const accountTypeList = Object.keys(accountType);
  * 帐号状态
  */
 export const accountStatus = ['未审核', '已审核', '冻结'];
+

@@ -3,21 +3,23 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { UploadFile } from './upload-file.entity';
 import { UploadQueryDto, CreateFileCreateDto } from './upload-file.dto';
-import { pagination } from '../../common';
+import { CommonService, insLike } from '../../common';
 import { removeSync } from 'fs-extra';
 import { join } from 'path';
 import { pick } from 'lodash';
 
 @Injectable()
-export class UploadFileService {
-  constructor(@InjectRepository(UploadFile) private readonly uploadFileRepository: Repository<UploadFile>) {}
-
-  async pagination({ current, pageSize, ...data }: UploadQueryDto) {
-    const [list, total] = await pagination(this.uploadFileRepository, { current, pageSize }, data);
-    return { list, total };
+export class UploadFileService extends CommonService<UploadFile> {
+  constructor(@InjectRepository(UploadFile) readonly uploadFileRepository: Repository<UploadFile>) {
+    super(uploadFileRepository);
   }
 
-  async create(data: CreateFileCreateDto & { readonly username: string }) {
+  async pagination(data: UploadQueryDto) {
+    insLike(data, ['name', 'username']);
+    return super.pagination(data);
+  }
+
+  async create(data: CreateFileCreateDto & { username: string }) {
     await this.uploadFileRepository.save(data);
     return pick(data, ['url']);
   }
@@ -25,7 +27,7 @@ export class UploadFileService {
   async delete(ids: string[]) {
     const list = await this.uploadFileRepository.find({ where: In(ids) });
     list.forEach(({ url }) => this.deleteFile(url));
-    await this.uploadFileRepository.delete(ids);
+    await super.delete(ids);
   }
 
   /**

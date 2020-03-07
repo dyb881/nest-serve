@@ -1,19 +1,9 @@
-import { SetMetadata } from '@nestjs/common';
 import { Column as ColumnSource, ColumnOptions } from 'typeorm';
 import { ColumnCommonOptions } from 'typeorm/browser/decorator/options/ColumnCommonOptions';
 import { ColumnEnumOptions } from 'typeorm/browser/decorator/options/ColumnEnumOptions';
 import { IsIn as IsInSource, Matches as MatchesSource, IsInt as IsIntSource, ValidationOptions } from 'class-validator';
 import { ApiProperty as ApiPropertySource, ApiOperation as ApiOperationSource, ApiPropertyOptions, ApiOperationOptions } from '@nestjs/swagger';
 import { getKeys, getEnumRemark } from './fun.tool';
-
-/**
- * 权限管理
- * accountType 帐号类型
- * roles       角色
- */
-export const Permissions = (accountType: string, ...roles: string[]) => {
-  return SetMetadata('permissions', [accountType, ...roles]);
-};
 
 /**
  * 列装饰器
@@ -48,7 +38,7 @@ export const Matches = (pattern: RegExp, message: string, options?: ValidationOp
  * 验证是否数字
  */
 export const IsInt = (message: string, options?: ValidationOptions) => {
-  return IsIntSource({ message, ...options });
+  return IsIntSource({ message: `${message}只能为数字`, ...options });
 };
 
 /**
