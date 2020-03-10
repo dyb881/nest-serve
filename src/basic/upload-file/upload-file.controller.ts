@@ -2,7 +2,7 @@ import { Controller, Get, Delete, Post, Query, Body, Param, UseInterceptors, Upl
 import { ApiTags, ApiResponse, ApiConsumes, ApiBody, ApiParam } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadFileService } from './upload-file.service';
-import { UploadQueryDto, UploadDto, UploadResDto } from './upload-file.dto';
+import { UploadQueryDto, CreateFileCreateDto, UploadDto, UploadResDto } from './upload-file.dto';
 import { UploadFile } from './upload-file.entity';
 import { DeleteDto, ApiOperation, fileTypeList, getFileType, fileType, fileTypeSize, PaginationDto, JwtPermissions, Permissions } from '../../common';
 import filesize from 'filesize';
@@ -19,6 +19,17 @@ export class UploadFileController {
   @ApiResponse({ status: 200, type: PaginationDto(UploadFile) })
   findAll(@Query() data: UploadQueryDto) {
     return this.uploadFileService.pagination(data);
+  }
+
+  @Permissions('admin')
+  @Post('install')
+  @ApiOperation('添加文件')
+  async create(@Body() { name, ...data }: CreateFileCreateDto, @Req() req) {
+    const type = getFileType(name);
+
+    if (!type) throw new BadRequestException('禁止上传该类型文件');
+
+    return this.uploadFileService.create({ ...data, name, type, username: req.user.username });
   }
 
   @Permissions('admin')
@@ -39,7 +50,6 @@ export class UploadFileController {
     if (!file) throw new BadRequestException('请上传文件');
     const { originalname: name, path, size } = file;
 
-    // 上传的文件类型
     const type = getFileType(name);
 
     if (!type) throw new BadRequestException('禁止上传该类型文件');

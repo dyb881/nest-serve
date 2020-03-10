@@ -3,9 +3,9 @@ import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { AccountQueryDto, AccountCreateDto, AccountUpdateDto } from './account.dto';
 import { Account } from './account.entity';
 import { AccountService } from './account.service';
-import { DeleteDto, toIp, ApiOperation, PaginationDto } from '../../common';
+import { DeleteDto, toIp, ApiOperation, PaginationDto, JwtAdmin } from '../../common';
 
-// @JwtAdmin()
+@JwtAdmin()
 @ApiTags('账号')
 @Controller('account')
 export class AccountController {

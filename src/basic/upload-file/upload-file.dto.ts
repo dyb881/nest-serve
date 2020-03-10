@@ -23,10 +23,6 @@ export class CreateFileCreateDto {
   @ApiProperty('文件地址')
   url: string;
 
-  @type
-  @ApiPropertyEnum('文件类型', fileType)
-  type: string;
-
   @ApiProperty('文件大小')
   size: number;
 }

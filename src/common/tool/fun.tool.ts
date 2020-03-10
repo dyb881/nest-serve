@@ -1,5 +1,5 @@
 import { fileTypeList, fileTypeSuffix, serveConfig } from '../constant';
-import { extname } from 'path';
+import { extname, join } from 'path';
 import dayjs from 'dayjs';
 
 /**
@@ -39,7 +39,7 @@ const http = /^http/;
  */
 export const fileTransformer = createTransformer({
   from: url => {
-    if (!http.test(url)) url = serveConfig.host + url;
+    if (!http.test(url)) url = join(serveConfig.host, url);
     return url;
   },
 });

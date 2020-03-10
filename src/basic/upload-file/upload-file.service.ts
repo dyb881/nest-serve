@@ -19,7 +19,7 @@ export class UploadFileService extends CommonService<UploadFile> {
     return super.pagination(data);
   }
 
-  async create(data: CreateFileCreateDto & { username: string }) {
+  async create(data: CreateFileCreateDto & { type: string; username: string }) {
     await this.uploadFileRepository.save(data);
     return pick(data, ['url']);
   }

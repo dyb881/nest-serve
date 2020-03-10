@@ -14,7 +14,7 @@ export class UploadFile extends CommonEntity {
 
   @ApiPropertyEnum('文件类型', fileType)
   @ColumnEnum('文件类型', fileType)
-  type: number;
+  type: string;
 
   @ApiProperty('文件大小')
   @Column('文件大小', { transformer: createTransformer({ to: filesize }) })
