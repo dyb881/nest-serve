@@ -1,12 +1,11 @@
-import { getClientIp } from 'request-ip';
-import { fileTypeList, fileTypeSuffix } from '../constant';
+import { fileTypeList, fileTypeSuffix, serveConfig } from '../constant';
 import { extname } from 'path';
 import dayjs from 'dayjs';
 
 /**
- * 获取客户端 ip
+ * 客户端 ip 字符串 转化纯 ip
  */
-export const getIp = (req: Request) => getClientIp(req as any).replace('::ffff:', '');
+export const toIp = (ip: string) => ip.replace('::ffff:', '');
 
 /**
  * 生成时间格式化工具
@@ -32,6 +31,18 @@ export const createTransformer = ({ to = toOrFrom, from = toOrFrom }: TTransform
  * 时间转化
  */
 export const dateTransformer = createTransformer({ from: format });
+
+const http = /^http/;
+
+/**
+ * 文件路径转化
+ */
+export const fileTransformer = createTransformer({
+  from: url => {
+    if (!http.test(url)) url = serveConfig.host + url;
+    return url;
+  },
+});
 
 /**
  * 获取对象真实 key 数组

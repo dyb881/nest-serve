@@ -1,6 +1,6 @@
 import { Logger as LoggerSource } from '@nestjs/common';
 import log4js from 'log4js';
-import { getIp } from '../tool';
+import { toIp } from '../tool';
 import { join } from 'path';
 
 class Logger extends LoggerSource {
@@ -68,8 +68,8 @@ class Logger extends LoggerSource {
    * 打印请求
    */
   request(req: any) {
-    const { method, url, user, body } = req;
-    this.log(url, `${getIp(req)} ${method}`);
+    const { method, url, user, body, ip } = req;
+    this.log(url, `${toIp(ip)} ${method}`);
     user?.username && this.log(user?.username, '用户名');
     Object.keys(body).length && this.log(body, '请求参数');
   }

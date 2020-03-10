@@ -1,3 +1,17 @@
+import { address } from 'ip';
+
+const ip = address();
+
+/**
+ * 服务配置
+ */
+export const serveConfig = {
+  ip,
+  port: 80,
+  prefix: '/api',
+  host: `http://${ip}`,
+};
+
 /**
  * 密钥
  */
@@ -47,6 +61,11 @@ export const accountTypeList = Object.keys(accountType);
 export const accountStatus = ['未审核', '已审核', '冻结'];
 
 /**
- * 栏目分类状态
+ * 菜单分类状态
  */
-export const menuStatus = ['隐藏', '显示', '置顶'];
+export const menuStatus = ['隐藏', '显示'];
+
+/**
+ * 信息状态
+ */
+export const infoStatus = ['隐藏', '显示'];

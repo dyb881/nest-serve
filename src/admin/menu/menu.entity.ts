@@ -1,9 +1,6 @@
 import { Entity } from 'typeorm';
 import { CommonEntity, Column, ApiProperty, ApiPropertyEnum, ColumnEnum, menuStatus } from '../../common';
 
-/**
- * 帐号
- */
 @Entity()
 export class Menu extends CommonEntity {
   @ApiProperty('上级 ID')

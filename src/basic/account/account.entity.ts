@@ -13,9 +13,6 @@ import {
   ApiPropertyEnum,
 } from '../../common';
 
-/**
- * 帐号
- */
 @Entity()
 export class Account extends CommonEntity {
   @ApiProperty('用户名')

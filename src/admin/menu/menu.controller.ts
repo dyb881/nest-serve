@@ -6,7 +6,7 @@ import { Menu } from './menu.entity';
 import { DeleteDto, ApiOperation, PaginationDto, JwtAdmin } from '../../common';
 
 @JwtAdmin()
-@ApiTags('栏目分类')
+@ApiTags('菜单分类')
 @Controller('menu')
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}

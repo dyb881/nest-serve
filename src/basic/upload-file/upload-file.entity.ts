@@ -1,10 +1,7 @@
 import { Entity } from 'typeorm';
-import { CommonEntity, Column, ColumnEnum, fileType, createTransformer, ApiProperty, ApiPropertyEnum } from '../../common';
+import { CommonEntity, Column, ColumnEnum, fileType, fileTransformer, createTransformer, ApiProperty, ApiPropertyEnum } from '../../common';
 import filesize from 'filesize';
 
-/**
- * 文件
- */
 @Entity()
 export class UploadFile extends CommonEntity {
   @ApiProperty('文件名')
@@ -12,7 +9,7 @@ export class UploadFile extends CommonEntity {
   name: string;
 
   @ApiProperty('文件地址')
-  @Column('文件地址')
+  @Column('文件地址', { transformer: fileTransformer })
   url: string;
 
   @ApiPropertyEnum('文件类型', fileType)

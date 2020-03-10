@@ -21,6 +21,13 @@ export const ColumnEnum = (comment: string, object: object, options?: ColumnComm
 };
 
 /**
+ * 数组列装饰器
+ */
+export const ColumnArray = (comment: string, options?: ColumnCommonOptions) => {
+  return ColumnSource('simple-array', { comment, ...options });
+};
+
+/**
  * 验证在数值范围内
  */
 export const IsIn = (object: object, message = '请选择正确的', options?: ValidationOptions) => {

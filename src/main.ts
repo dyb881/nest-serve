@@ -1,16 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, BadRequestException } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { TransformInterceptor, HttpExceptionFilter, logger } from './common/global';
+import { TransformInterceptor, HttpExceptionFilter, logger, serveConfig } from './common';
 import { AppModule } from './app.module';
-import { address } from 'ip';
 import helmet from 'helmet';
 
-const ip = address();
-const port = 80;
-const prefix = '/api';
-let host = `http://${ip}`;
-if (port !== 80) host += `${host}:${port}`;
+const { port, prefix, host } = serveConfig;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger, cors: true });

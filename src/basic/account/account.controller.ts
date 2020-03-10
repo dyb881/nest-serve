@@ -1,11 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Query, Param, Body, Req } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Query, Param, Body, Ip } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { AccountQueryDto, AccountCreateDto, AccountUpdateDto } from './account.dto';
 import { Account } from './account.entity';
 import { AccountService } from './account.service';
-import { DeleteDto, getIp, ApiOperation, PaginationDto, JwtAdmin } from '../../common';
+import { DeleteDto, toIp, ApiOperation, PaginationDto } from '../../common';
 
-@JwtAdmin()
+// @JwtAdmin()
 @ApiTags('账号')
 @Controller('account')
 export class AccountController {
@@ -27,8 +27,8 @@ export class AccountController {
 
   @Post()
   @ApiOperation('添加')
-  async create(@Body() data: AccountCreateDto, @Req() req) {
-    await this.accountService.create({ ...data, reg_ip: getIp(req) });
+  async create(@Body() data: AccountCreateDto, @Ip() ip) {
+    await this.accountService.create({ ...data, reg_ip: toIp(ip) });
   }
 
   @Put(':id')
