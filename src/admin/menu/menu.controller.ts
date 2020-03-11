@@ -13,7 +13,7 @@ export class MenuController {
 
   @Get()
   @ApiOperation('查询列表')
-  @ApiResponse({ status: 200, type: PaginationDto(Menu) })
+  @ApiResponse({ status: 200, type: class MenuPaginationDto extends PaginationDto(Menu) {} })
   findAll(@Query() data: MenuQueryDto) {
     return this.menuService.pagination(data);
   }

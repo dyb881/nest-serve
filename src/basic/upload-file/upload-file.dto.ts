@@ -39,6 +39,9 @@ export class UploadDto {
  * 上传后返回文件地址
  */
 export class UploadResDto {
+  @ApiProperty('ID')
+  id: string;
+
   @ApiProperty('文件地址')
   url: string;
 }

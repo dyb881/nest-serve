@@ -13,7 +13,7 @@ export class AccountController {
 
   @Get()
   @ApiOperation('查询列表')
-  @ApiResponse({ status: 200, type: PaginationDto(Account) })
+  @ApiResponse({ status: 200, type: class AccountPaginationDto extends PaginationDto(Account) {} })
   findAll(@Query() data: AccountQueryDto) {
     return this.accountService.pagination(data);
   }

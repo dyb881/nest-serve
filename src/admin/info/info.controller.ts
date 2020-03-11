@@ -13,7 +13,7 @@ export class InfoController {
 
   @Get()
   @ApiOperation('查询列表')
-  @ApiResponse({ status: 200, type: PaginationDto(Info) })
+  @ApiResponse({ status: 200, type: class InfoPaginationDto extends PaginationDto(Info) {} })
   findAll(@Query() data: InfoQueryDto) {
     return this.infoService.pagination(data);
   }

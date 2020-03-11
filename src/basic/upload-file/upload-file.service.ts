@@ -21,7 +21,7 @@ export class UploadFileService extends CommonService<UploadFile> {
 
   async create(data: CreateFileCreateDto & { type: string; username: string }) {
     await this.uploadFileRepository.save(data);
-    return pick(data, ['url']);
+    return pick(data, ['id', 'url']);
   }
 
   async delete(ids: string[]) {

@@ -16,7 +16,7 @@ export class UploadFileController {
   @Permissions('admin')
   @Get()
   @ApiOperation('查询列表')
-  @ApiResponse({ status: 200, type: PaginationDto(UploadFile) })
+  @ApiResponse({ status: 200, type: class UploadFilePaginationDto extends PaginationDto(UploadFile) {} })
   findAll(@Query() data: UploadQueryDto) {
     return this.uploadFileService.pagination(data);
   }
@@ -24,6 +24,7 @@ export class UploadFileController {
   @Permissions('admin')
   @Post('install')
   @ApiOperation('添加文件')
+  @ApiResponse({ status: 200, type: UploadResDto })
   async create(@Body() { name, ...data }: CreateFileCreateDto, @Req() req) {
     const type = getFileType(name);
 

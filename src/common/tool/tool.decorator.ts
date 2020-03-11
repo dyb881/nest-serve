@@ -67,6 +67,17 @@ export const ApiPropertyEnum = (description: string, object: object, options?: A
 };
 
 /**
+ * swagger 数组标注
+ */
+export const ApiPropertyArray = (description: string, object: object, options?: ApiPropertyOptions) => {
+  return ApiPropertySource({
+    description: `${description}，${getEnumRemark(object)}`,
+    type: [String],
+    ...options,
+  });
+};
+
+/**
  * swagger 路由标注
  */
 export const ApiOperation = (summary: string, options?: ApiOperationOptions) => {

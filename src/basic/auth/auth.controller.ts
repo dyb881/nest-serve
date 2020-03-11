@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Get, Param, Req, UnauthorizedException, Ip } from '@nestjs/common';
+import { Controller, UseGuards, Post, Get, Param, Req, UnauthorizedException } from '@nestjs/common';
 import { ApiTags, ApiParam, ApiBody, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
@@ -18,11 +18,11 @@ export class AuthController {
   @ApiBody({ type: AuthDto })
   @ApiResponse({ status: 200, type: LoginInfoDto })
   @ApiOperation('登录')
-  async login(@Param('accountType') accountType, @Req() req, @Ip() ip) {
+  async login(@Param('accountType') accountType, @Req() req) {
     const { type, status } = req.user;
     if (accountType !== type) throw new UnauthorizedException('登录失败');
     if (status !== 1) throw new UnauthorizedException({ 0: '该账号未审核', 2: '该账号已冻结' }[status]);
-    const account = { ...req.user, login_ip: toIp(ip), login_date: format(new Date()) };
+    const account = { ...req.user, login_ip: toIp(req.ip), login_date: format(new Date()) };
     const access_token = this.authService.getToken(req.user);
     await this.accountService.login(account);
     Object.assign(account, { access_token });
