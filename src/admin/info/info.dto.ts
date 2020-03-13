@@ -1,4 +1,5 @@
 import { IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 import { ApiProperty, PaginationQueryDto, IsInt, ApiPropertyEnum, infoStatus, IsIn } from '../../common';
 
 export class InfoQueryDto extends PaginationQueryDto {
@@ -11,6 +12,7 @@ export class InfoQueryDto extends PaginationQueryDto {
   @ApiProperty('内容', { required: false })
   content?: string;
 
+  @Type(() => Number)
   @IsOptional()
   @IsIn(infoStatus, '请选择正确的状态')
   @ApiPropertyEnum('状态', infoStatus, { required: false })
@@ -36,9 +38,9 @@ export class InfoCreateDto {
   @ApiProperty('内容', { required: false })
   content: string;
 
-  @IsInt('排序号')
-  @ApiProperty('排序号')
-  sort: number;
+  @IsInt('优先级')
+  @ApiProperty('优先级')
+  priority: number;
 
   @IsInt('热度')
   @ApiProperty('热度', { default: 0 })

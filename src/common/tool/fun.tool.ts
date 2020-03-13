@@ -35,14 +35,19 @@ export const dateTransformer = createTransformer({ from: format });
 const http = /^http/;
 
 /**
+ * 转化为可访问地址
+ */
+const toUrl = (url: string) => (url && !http.test(url) ? serveConfig.host + url : url);
+
+/**
  * 文件路径转化
  */
-export const fileTransformer = createTransformer({
-  from: url => {
-    if (!http.test(url)) url = serveConfig.host + url;
-    return url;
-  },
-});
+export const fileTransformer = createTransformer({ from: toUrl });
+
+/**
+ * 文件路径数组转化
+ */
+export const filesTransformer = createTransformer({ from: urls => urls && urls.map(toUrl) });
 
 /**
  * 获取对象真实 key 数组

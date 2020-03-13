@@ -1,13 +1,15 @@
 import { IsOptional } from 'class-validator';
-import { ApiProperty, PaginationQueryDto, IsInt, ApiPropertyEnum, menuStatus, IsIn } from '../../common';
+import { Type } from 'class-transformer';
+import { ApiProperty, IsInt, ApiPropertyEnum, menuStatus, IsIn } from '../../common';
 
-export class MenuQueryDto extends PaginationQueryDto {
+export class MenuQueryDto {
   @ApiProperty('标题', { required: false })
   title?: string;
 
   @ApiProperty('内容', { required: false })
   content?: string;
 
+  @Type(() => Number)
   @IsOptional()
   @IsIn(menuStatus, '请选择正确的状态')
   @ApiPropertyEnum('状态', menuStatus, { required: false })
@@ -27,9 +29,9 @@ export class MenuCreateDto {
   @ApiProperty('内容', { required: false })
   content?: string;
 
-  @IsInt('排序号')
-  @ApiProperty('排序号')
-  sort: number;
+  @IsInt('优先级')
+  @ApiProperty('优先级')
+  priority: number;
 
   @IsIn(menuStatus, '请选择正确的状态')
   @ApiPropertyEnum('状态', menuStatus)

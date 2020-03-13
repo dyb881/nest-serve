@@ -1,5 +1,5 @@
 import { Entity } from 'typeorm';
-import { CommonEntity, Column, ApiProperty, ApiPropertyEnum, ColumnEnum, menuStatus } from '../../common';
+import { CommonEntity, Column, ApiProperty, ApiPropertyEnum, ColumnEnum, menuStatus, fileTransformer } from '../../common';
 
 @Entity()
 export class Menu extends CommonEntity {
@@ -12,16 +12,16 @@ export class Menu extends CommonEntity {
   title: string;
 
   @ApiProperty('图标')
-  @Column('图标', { nullable: true })
+  @Column('图标', { nullable: true, transformer: fileTransformer })
   icon: string;
 
   @ApiProperty('内容')
   @Column('内容', { type: 'text', nullable: true })
   content: string;
 
-  @ApiProperty('排序号')
-  @Column('排序号')
-  sort: number;
+  @ApiProperty('优先级')
+  @Column('优先级')
+  priority: number;
 
   @ApiPropertyEnum('状态', menuStatus)
   @ColumnEnum('状态', menuStatus)

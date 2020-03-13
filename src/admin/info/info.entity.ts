@@ -1,5 +1,15 @@
 import { Entity } from 'typeorm';
-import { CommonEntity, Column, ColumnEnum, ColumnArray, ApiProperty, ApiPropertyEnum, infoStatus } from '../../common';
+import {
+  CommonEntity,
+  Column,
+  ColumnEnum,
+  ColumnArray,
+  ApiProperty,
+  ApiPropertyEnum,
+  infoStatus,
+  fileTransformer,
+  filesTransformer,
+} from '../../common';
 
 @Entity()
 export class Info extends CommonEntity {
@@ -12,11 +22,11 @@ export class Info extends CommonEntity {
   title: string;
 
   @ApiProperty('图标')
-  @Column('图标', { nullable: true })
+  @Column('图标', { nullable: true, transformer: fileTransformer })
   icon: string;
 
   @ApiProperty('图组')
-  @ColumnArray('图组', { nullable: true })
+  @ColumnArray('图组', { nullable: true, transformer: filesTransformer })
   picture_group: string[];
 
   @ApiProperty('简介')
@@ -27,9 +37,9 @@ export class Info extends CommonEntity {
   @Column('内容', { type: 'text', nullable: true })
   content: string;
 
-  @ApiProperty('排序号')
-  @Column('排序号', { default: 0 })
-  sort: number;
+  @ApiProperty('优先级')
+  @Column('优先级', { default: 0 })
+  priority: number;
 
   @ApiProperty('热度')
   @Column('热度', { default: 0 })

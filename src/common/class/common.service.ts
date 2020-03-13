@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
-import { Repository, FindManyOptions, In } from 'typeorm';
+import { Repository, FindManyOptions } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
 import { PaginationQueryDto } from './common.dto';
-import { pickBy, mapValues } from 'lodash';
+import { getWhere } from '../tool';
 
 /**
  * 公用服务<数据实体，查询，创建，更新>
@@ -12,22 +12,20 @@ export class CommonService<T extends any, Q extends PaginationQueryDto = any, C 
   constructor(readonly repository: Repository<T>) {}
 
   @TransformClassToPlain()
+  async findAll({ where, order, ...options }: FindManyOptions<T>) {
+    return this.repository.find({
+      where: getWhere(where),
+      order: { ...order, create_date: 'DESC' },
+      ...options,
+    });
+  }
+
+  @TransformClassToPlain()
   async pagination({ current, pageSize, ...data }: Q, options?: FindManyOptions<T>) {
     const { order, ...option } = options || {};
-
-    // 过滤
-    data = pickBy(data, v => ![undefined, null, ''].includes(v));
-
-    // 转化
-    data = mapValues(data, v => {
-      if (!isNaN(Number(v))) v += '';
-      else if (Array.isArray(v)) v = v.length ? In(v) : undefined;
-      return v;
-    });
-
     const [list, total] = await this.repository.findAndCount({
-      where: data,
-      order: { create_date: 'DESC', ...order },
+      where: getWhere(data),
+      order: { ...order, create_date: 'DESC' },
       skip: (current - 1) * pageSize,
       take: pageSize,
       ...option,

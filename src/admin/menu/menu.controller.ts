@@ -3,7 +3,7 @@ import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { MenuService } from './menu.service';
 import { MenuQueryDto, MenuCreateDto, MenuUpdateDto } from './menu.dto';
 import { Menu } from './menu.entity';
-import { DeleteDto, ApiOperation, PaginationDto, JwtAdmin } from '../../common';
+import { DeleteDto, ApiOperation, JwtAdmin } from '../../common';
 
 @JwtAdmin()
 @ApiTags('菜单分类')
@@ -12,10 +12,10 @@ export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
   @Get()
-  @ApiOperation('查询列表')
-  @ApiResponse({ status: 200, type: class MenuPaginationDto extends PaginationDto(Menu) {} })
+  @ApiOperation('查询所有')
+  @ApiResponse({ status: 200, type: [Menu] })
   findAll(@Query() data: MenuQueryDto) {
-    return this.menuService.pagination(data);
+    return this.menuService.findAllMenu(data);
   }
 
   @Get(':id')
