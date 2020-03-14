@@ -37,7 +37,7 @@ const http = /^http/;
 /**
  * 转化为可访问地址
  */
-const toUrl = (url: string) => (url && !http.test(url) ? serveConfig.host + url : url);
+export const toUrl = (url: string) => (url && !http.test(url) ? serveConfig.host + url : url);
 
 /**
  * 文件路径转化

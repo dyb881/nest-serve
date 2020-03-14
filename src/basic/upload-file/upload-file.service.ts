@@ -3,10 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { UploadFile } from './upload-file.entity';
 import { UploadQueryDto, CreateFileCreateDto } from './upload-file.dto';
-import { CommonService, insLike } from '../../common';
+import { CommonService, insLike, toUrl } from '../../common';
 import { removeSync } from 'fs-extra';
 import { join } from 'path';
-import { pick } from 'lodash';
 
 @Injectable()
 export class UploadFileService extends CommonService<UploadFile> {
@@ -20,8 +19,9 @@ export class UploadFileService extends CommonService<UploadFile> {
   }
 
   async create(data: CreateFileCreateDto & { type: string; username: string }) {
-    await this.uploadFileRepository.save(data);
-    return pick(data, ['id', 'url']);
+    const uploadFile = await this.uploadFileRepository.save(data);
+    const { id, url } = uploadFile;
+    return { id, url: toUrl(url) };
   }
 
   async delete(ids: string[]) {

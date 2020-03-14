@@ -40,7 +40,7 @@ export class CommonService<T extends any, Q extends PaginationQueryDto = any, C 
     return one;
   }
 
-  async create(data: C) {
+  async create(data: C): Promise<any> {
     await this.repository.save(data);
   }
 

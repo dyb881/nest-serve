@@ -13,6 +13,6 @@ export class InfoService extends CommonService<Info, any, InfoCreateDto & { crea
 
   pagination(data: InfoQueryDto) {
     insLike(data, ['title', 'summary', 'content']);
-    return super.pagination(data);
+    return super.pagination(data, { order: { priority: 'DESC' } });
   }
 }
