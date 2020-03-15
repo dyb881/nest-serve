@@ -27,6 +27,10 @@ export class Account extends CommonEntity {
   @Column('昵称', 32)
   nickname: string;
 
+  @ApiProperty('头像')
+  @Column('头像', { nullable: true })
+  avatar: string;
+
   @ApiProperty('注册IP')
   @Column('注册IP', 15)
   reg_ip: string;

@@ -1,15 +1,5 @@
 import { Entity } from 'typeorm';
-import {
-  CommonEntity,
-  Column,
-  ColumnEnum,
-  ColumnArray,
-  ApiProperty,
-  ApiPropertyEnum,
-  infoStatus,
-  fileTransformer,
-  filesTransformer,
-} from '../../common';
+import { CommonEntity, Column, ColumnEnum, ColumnArray, ApiProperty, ApiPropertyEnum, infoStatus } from '../../common';
 
 @Entity()
 export class Info extends CommonEntity {
@@ -22,11 +12,11 @@ export class Info extends CommonEntity {
   title: string;
 
   @ApiProperty('图标')
-  @Column('图标', { nullable: true, transformer: fileTransformer })
+  @Column('图标', { nullable: true })
   icon: string;
 
   @ApiProperty('图组')
-  @ColumnArray('图组', { nullable: true, transformer: filesTransformer })
+  @ColumnArray('图组', { nullable: true })
   picture_group: string[];
 
   @ApiProperty('简介')

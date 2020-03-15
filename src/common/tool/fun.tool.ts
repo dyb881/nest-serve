@@ -45,11 +45,6 @@ export const toUrl = (url: string) => (url && !http.test(url) ? serveConfig.host
 export const fileTransformer = createTransformer({ from: toUrl });
 
 /**
- * 文件路径数组转化
- */
-export const filesTransformer = createTransformer({ from: urls => urls && urls.map(toUrl) });
-
-/**
  * 获取对象真实 key 数组
  */
 export const getKeys = (object: object) => {

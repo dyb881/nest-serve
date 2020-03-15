@@ -4,12 +4,12 @@ import { Repository } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
 import { AccountQueryDto, AccountCreateDto, AccountUpdateDto } from './account.dto';
 import { Account } from './account.entity';
-import { CommonService, insLike } from '../../common';
+import { CommonService, insLike, insNull } from '../../common';
 import { sha512 } from 'js-sha512';
 import { pick } from 'lodash';
 
 @Injectable()
-export class AccountService extends CommonService<Account, any, any, AccountUpdateDto> {
+export class AccountService extends CommonService<Account> {
   constructor(@InjectRepository(Account) readonly accountRepository: Repository<Account>) {
     super(accountRepository);
   }
@@ -22,7 +22,13 @@ export class AccountService extends CommonService<Account, any, any, AccountUpda
   async create(data: AccountCreateDto & { reg_ip: string }) {
     const one = await this.accountRepository.findOne(pick(data, ['username']));
     if (one) throw new BadRequestException('用户名已存在');
+    insNull(data, ['avatar']);
     await super.create(data);
+  }
+
+  async update(id: string, data: AccountUpdateDto) {
+    insNull(data, ['avatar']);
+    await super.update(id, data);
   }
 
   @TransformClassToPlain()

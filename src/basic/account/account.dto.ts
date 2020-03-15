@@ -40,6 +40,9 @@ export class AccountCreateDto {
   @ApiProperty('昵称')
   nickname: string;
 
+  @ApiProperty('头像', { required: true })
+  avatar: string;
+
   @type
   @ApiPropertyEnum('帐号类型', accountType)
   type: string;
@@ -58,6 +61,9 @@ export class AccountUpdateDto {
   @nickname
   @ApiProperty('昵称')
   nickname: string;
+
+  @ApiProperty('头像', { required: true })
+  avatar: string;
 
   @IsIn(accountStatus)
   @ApiPropertyEnum('状态', accountStatus)

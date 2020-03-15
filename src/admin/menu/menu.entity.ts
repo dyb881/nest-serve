@@ -1,5 +1,5 @@
 import { Entity } from 'typeorm';
-import { CommonEntity, Column, ApiProperty, ApiPropertyEnum, ColumnEnum, menuStatus, fileTransformer } from '../../common';
+import { CommonEntity, Column, ApiProperty, ApiPropertyEnum, ColumnEnum, menuStatus } from '../../common';
 
 @Entity()
 export class Menu extends CommonEntity {
@@ -12,7 +12,7 @@ export class Menu extends CommonEntity {
   title: string;
 
   @ApiProperty('图标')
-  @Column('图标', { nullable: true, transformer: fileTransformer })
+  @Column('图标', { nullable: true })
   icon: string;
 
   @ApiProperty('内容')
