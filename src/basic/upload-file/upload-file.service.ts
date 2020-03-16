@@ -25,7 +25,7 @@ export class UploadFileService extends CommonService<UploadFile> {
   }
 
   async delete(ids: string[]) {
-    const list = await this.uploadFileRepository.find({ where: In(ids) });
+    const list = await this.uploadFileRepository.find({ where: { id: In(ids) } });
     list.forEach(({ url }) => this.deleteFile(url));
     await super.delete(ids);
   }
