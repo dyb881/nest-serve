@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { Repository, FindManyOptions } from 'typeorm';
+import { Repository, FindManyOptions, FindOneOptions, FindConditions } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
 import { PaginationQueryDto } from './common.dto';
 import { getWhere } from '../tool';
@@ -8,7 +8,7 @@ import { getWhere } from '../tool';
  * 公用服务<数据实体，查询，创建，更新>
  * 数据实体必填，其他默认 any
  */
-export class CommonService<T extends any, Q extends PaginationQueryDto = any, C = any, U = any> {
+export class CommonService<T extends object, Q extends PaginationQueryDto = any, C = any, U = any> {
   constructor(readonly repository: Repository<T>) {}
 
   @TransformClassToPlain()
@@ -34,8 +34,8 @@ export class CommonService<T extends any, Q extends PaginationQueryDto = any, C 
   }
 
   @TransformClassToPlain()
-  async findOne(id: string) {
-    const one = await this.repository.findOne(id);
+  async findOne(id: string, options?: FindOneOptions<T>) {
+    const one = await this.repository.findOne(id, options);
     if (!one) throw new BadRequestException('该数据不存在');
     return one;
   }
@@ -44,14 +44,14 @@ export class CommonService<T extends any, Q extends PaginationQueryDto = any, C 
     await this.repository.save(data);
   }
 
-  async update(id: string, data: U) {
-    const one = await this.findOne(id);
+  async update(id: string, data: U, options?: FindOneOptions<T>) {
+    const one = await this.findOne(id, options);
     Object.assign(one, data);
     await this.repository.save(one);
   }
 
-  async delete(ids: string[]) {
-    if (!ids?.length) throw new BadRequestException('ids 不可为空');
+  async delete(ids: string[] | FindConditions<T>) {
+    if (Array.isArray(ids) && !ids.length) throw new BadRequestException('ids 不可为空');
     await this.repository.delete(ids);
   }
 }

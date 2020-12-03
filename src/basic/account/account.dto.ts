@@ -1,12 +1,15 @@
 import { IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiProperty, ApiPropertyEnum, accountType, accountStatus, PaginationQueryDto, Matches, IsIn } from '../../common';
+import { ApiProperty, ApiPropertyEnum, PaginationQueryDto, Matches, IsIn, accountType, dataStatus } from '../../common';
 
 export const username = Matches(/^[\d\w-_]{4,32}$/, '请输入正确的用户名，4-32位、字母、数字、下划线、减号');
 export const password = Matches(/^[\d\w-_]{4,32}$/, '请输入正确的密码，4-32位、字母、数字、下划线、减号');
-export const nickname = Matches(/^[\d\w\u4e00-\u9fa5-_]{2,15}$/, '请输入正确的昵称，2-32位、中文、字母、数字，下划线、减号');
+export const nickname = Matches(
+  /^[\d\w\u4e00-\u9fa5-_]{2,15}$/,
+  '请输入正确的昵称，2-32位、中文、字母、数字，下划线、减号'
+);
 export const type = IsIn(accountType, '请选择正确的帐号类型');
-export const status = IsIn(accountStatus, '请选择正确的状态');
+export const status = IsIn(dataStatus.account, '请选择正确的状态');
 
 export class AccountQueryDto extends PaginationQueryDto {
   @ApiProperty('用户名', { required: false })
@@ -23,7 +26,7 @@ export class AccountQueryDto extends PaginationQueryDto {
   @Type(() => Number)
   @IsOptional()
   @status
-  @ApiPropertyEnum('状态', accountStatus, { required: false })
+  @ApiPropertyEnum('状态', dataStatus.account, { required: false })
   status?: number;
 }
 
@@ -48,7 +51,7 @@ export class AccountCreateDto {
   type: string;
 
   @status
-  @ApiPropertyEnum('状态', accountStatus)
+  @ApiPropertyEnum('状态', dataStatus.account)
   status: string;
 }
 
@@ -65,7 +68,7 @@ export class AccountUpdateDto {
   @ApiProperty('头像', { required: true })
   avatar: string;
 
-  @IsIn(accountStatus)
-  @ApiPropertyEnum('状态', accountStatus)
+  @IsIn(dataStatus.account)
+  @ApiPropertyEnum('状态', dataStatus.account)
   status: string;
 }

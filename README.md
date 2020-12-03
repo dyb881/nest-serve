@@ -1,7 +1,5 @@
 # 使用 Nestjs 搭建的基础服务
 
-## [配套前端](https://github.com/dyb881/create-react-app)。pc-admin 模版
-
 # src 目录结构
 
 - based - 基础服务

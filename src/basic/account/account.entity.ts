@@ -7,10 +7,10 @@ import {
   ColumnEnum,
   createTransformer,
   dateTransformer,
-  accountType,
-  accountStatus,
   ApiProperty,
   ApiPropertyEnum,
+  accountType,
+  dataStatus,
 } from '../../common';
 
 @Entity()
@@ -47,7 +47,7 @@ export class Account extends CommonEntity {
   @ColumnEnum('帐号类型', accountType)
   type: string;
 
-  @ApiPropertyEnum('状态', accountStatus)
-  @ColumnEnum('状态', accountStatus)
+  @ApiPropertyEnum('状态', dataStatus.account)
+  @ColumnEnum('状态', dataStatus.account)
   status: number;
 }

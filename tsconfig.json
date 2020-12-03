@@ -5,6 +5,7 @@
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
@@ -14,5 +15,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["old"]
 }

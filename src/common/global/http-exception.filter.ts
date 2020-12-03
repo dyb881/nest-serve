@@ -1,4 +1,5 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+import { Response } from 'express';
 import { logger } from './logger';
 
 /**
@@ -8,7 +9,7 @@ import { logger } from './logger';
 export class HttpExceptionFilter<T> implements ExceptionFilter {
   catch(exception: T, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const res = ctx.getResponse();
+    const response = ctx.getResponse<Response>();
 
     let errorLog = exception;
     let code = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -17,22 +18,26 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
 
     // 请求错误
     if (exception instanceof HttpException) {
-      const { statusCode, error: err, message } = exception.message;
-      errorLog = exception.message;
-      code = statusCode;
-      error = err;
-      msg = message;
+      const res = exception.getResponse();
+      if (typeof res !== 'string') {
+        const { statusCode, message, error: err = message } = res as any;
+        code = statusCode;
+        error = err;
+        msg = message;
+      }
     } else {
-      logger.error(errorLog, '服务出错');
+      logger.error(errorLog, '服务运行错误');
     }
 
+    // 尽可能转为中文
     const message = (chinese.test(msg) && msg) || HttpStatusText[error] || error;
+
     const resJson = { code, error, message };
 
     // 错误日志
     logger.error(resJson, '响应错误');
 
-    res.status(code).json(resJson);
+    response.status(code).json(resJson);
   }
 }
 

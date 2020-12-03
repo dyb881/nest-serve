@@ -1,5 +1,5 @@
 import { Entity } from 'typeorm';
-import { CommonEntity, Column, ApiProperty, ApiPropertyEnum, ColumnEnum, menuStatus } from '../../common';
+import { CommonEntity, Column, ApiProperty, ApiPropertyEnum, ColumnEnum, dataStatus } from '../../common';
 
 @Entity()
 export class Menu extends CommonEntity {
@@ -23,8 +23,8 @@ export class Menu extends CommonEntity {
   @Column('优先级')
   priority: number;
 
-  @ApiPropertyEnum('状态', menuStatus)
-  @ColumnEnum('状态', menuStatus)
+  @ApiPropertyEnum('状态', dataStatus.menu)
+  @ColumnEnum('状态', dataStatus.menu)
   status: number;
 
   @ApiProperty('创建帐号')

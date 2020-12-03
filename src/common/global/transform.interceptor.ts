@@ -4,6 +4,7 @@ import { map, tap } from 'rxjs/operators';
 import { logger } from './logger';
 
 export interface Response<T> {
+  code: number;
   data: T;
 }
 
@@ -21,8 +22,9 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
     logger.log(line, '请求接收');
     logger.request(req);
     return next.handle().pipe(
-      map(data => ({ code: res.statusCode, data })),
-      tap(() => {
+      map((data) => ({ code: res.statusCode, data })),
+      tap((res) => {
+        logger.log(res, '响应结果');
         logger.log(line, '请求成功');
       })
     );

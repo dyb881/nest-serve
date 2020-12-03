@@ -59,9 +59,19 @@ export const JwtPermissions = () => Jwt(PermissionsGuard);
  */
 @Injectable()
 export class AdminGuard implements CanActivate {
+  constructor(private readonly reflector: Reflector) {}
   canActivate(context: ExecutionContext) {
+    const permissions = this.reflector.get<string[]>('permissions', context.getHandler());
+    const types = ['admin'];
+
+    // 追加帐号类型判断
+    if (permissions) {
+      const [accountType] = permissions;
+      types.push(accountType);
+    }
+
     const request = context.switchToHttp().getRequest();
-    return request.user.type === 'admin';
+    return types.includes(request.user.type);
   }
 }
 

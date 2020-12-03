@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MulterModule } from '@nestjs/platform-express';
 import { UploadFile } from './upload-file.entity';
 import { UploadFileController } from './upload-file.controller';
 import { UploadFileService } from './upload-file.service';
-import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { join, extname } from 'path';
 import dayjs from 'dayjs';

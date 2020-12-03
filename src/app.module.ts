@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BasicModule } from './basic/basic.module';
 import { join } from 'path';
+import { serveConfig } from './common/global';
+
+// 模块
+import { BasicModule } from './basic/basic.module';
 import { AdminModule } from './admin/admin.module';
 
 @Module({
@@ -15,14 +18,9 @@ import { AdminModule } from './admin/admin.module';
     // 数据库
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'nest_db',
-      entities: [__dirname + '/**/*.entity.{ts,js}'],
+      ...serveConfig.sql,
       synchronize: true,
-      // logging: true,
+      entities: [__dirname + '/**/*.entity.{ts,js}'],
     }),
     BasicModule,
     AdminModule,

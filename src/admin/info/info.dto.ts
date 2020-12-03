@@ -1,6 +1,6 @@
 import { IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiProperty, PaginationQueryDto, IsInt, ApiPropertyEnum, infoStatus, IsIn } from '../../common';
+import { ApiProperty, PaginationQueryDto, IsInt, ApiPropertyEnum, dataStatus, IsIn } from '../../common';
 
 export class InfoQueryDto extends PaginationQueryDto {
   @ApiProperty('标题', { required: false })
@@ -14,8 +14,8 @@ export class InfoQueryDto extends PaginationQueryDto {
 
   @Type(() => Number)
   @IsOptional()
-  @IsIn(infoStatus, '请选择正确的状态')
-  @ApiPropertyEnum('状态', infoStatus, { required: false })
+  @IsIn(dataStatus.info, '请选择正确的状态')
+  @ApiPropertyEnum('状态', dataStatus.info, { required: false })
   status?: boolean;
 }
 
@@ -46,8 +46,8 @@ export class InfoCreateDto {
   @ApiProperty('热度', { default: 0 })
   hot: number;
 
-  @IsIn(infoStatus, '请选择正确的状态')
-  @ApiPropertyEnum('状态', infoStatus)
+  @IsIn(dataStatus.info, '请选择正确的状态')
+  @ApiPropertyEnum('状态', dataStatus.info)
   status: number;
 }
 

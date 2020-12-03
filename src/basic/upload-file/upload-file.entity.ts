@@ -1,5 +1,14 @@
 import { Entity } from 'typeorm';
-import { CommonEntity, Column, ColumnEnum, fileType, fileTransformer, createTransformer, ApiProperty, ApiPropertyEnum } from '../../common';
+import {
+  CommonEntity,
+  Column,
+  ColumnEnum,
+  fileType,
+  fileTransformer,
+  createTransformer,
+  ApiProperty,
+  ApiPropertyEnum,
+} from '../../common';
 import filesize from 'filesize';
 
 @Entity()
@@ -18,7 +27,7 @@ export class UploadFile extends CommonEntity {
 
   @ApiProperty('文件大小')
   @Column('文件大小', { transformer: createTransformer({ to: filesize }) })
-  size: string;
+  size: number;
 
   @ApiProperty('上传帐号')
   @Column('上传帐号', 32)

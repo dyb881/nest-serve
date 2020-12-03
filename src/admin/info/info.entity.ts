@@ -1,5 +1,5 @@
 import { Entity } from 'typeorm';
-import { CommonEntity, Column, ColumnEnum, ColumnArray, ApiProperty, ApiPropertyEnum, infoStatus } from '../../common';
+import { CommonEntity, Column, ColumnEnum, ColumnArray, ApiProperty, ApiPropertyEnum, dataStatus } from '../../common';
 
 @Entity()
 export class Info extends CommonEntity {
@@ -35,8 +35,8 @@ export class Info extends CommonEntity {
   @Column('热度', { default: 0 })
   hot: number;
 
-  @ApiPropertyEnum('状态', infoStatus)
-  @ColumnEnum('状态', infoStatus)
+  @ApiPropertyEnum('状态', dataStatus.info)
+  @ColumnEnum('状态', dataStatus.info)
   status: number;
 
   @ApiProperty('创建帐号')

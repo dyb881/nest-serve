@@ -1,10 +1,32 @@
-import { Controller, Get, Delete, Post, Query, Body, Param, UseInterceptors, UploadedFile, Req, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Delete,
+  Post,
+  Query,
+  Body,
+  Param,
+  UseInterceptors,
+  UploadedFile,
+  Req,
+  BadRequestException,
+} from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiConsumes, ApiBody, ApiParam } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadFileService } from './upload-file.service';
 import { UploadQueryDto, CreateFileCreateDto, UploadDto, UploadResDto } from './upload-file.dto';
 import { UploadFile } from './upload-file.entity';
-import { DeleteDto, ApiOperation, fileTypeList, getFileType, fileType, fileTypeSize, PaginationDto, JwtPermissions, Permissions } from '../../common';
+import {
+  DeleteDto,
+  ApiOperation,
+  fileTypes,
+  getFileType,
+  fileType,
+  serveConfig,
+  PaginationDto,
+  JwtPermissions,
+  Permissions,
+} from '../../common';
 import filesize from 'filesize';
 
 @JwtPermissions()
@@ -43,7 +65,12 @@ export class UploadFileController {
   @Post(':uploadType?')
   @ApiOperation('上传文件')
   @ApiConsumes('multipart/form-data')
-  @ApiParam({ name: 'uploadType', enum: fileTypeList, required: false, description: '上传文件类型，不选则上传任意类型文件' })
+  @ApiParam({
+    name: 'uploadType',
+    enum: fileTypes,
+    required: false,
+    description: '上传文件类型，不选则上传任意类型文件',
+  })
   @ApiBody({ type: UploadDto })
   @ApiResponse({ status: 200, type: UploadResDto })
   @UseInterceptors(FileInterceptor('file'))
@@ -59,10 +86,12 @@ export class UploadFileController {
 
     if (uploadType && uploadType !== type) {
       this.uploadFileService.deleteFile(url);
-      throw new BadRequestException(fileType[uploadType] ? `请上传${fileType[uploadType]}类型文件` : '请输入正确的上传文件类型');
+      throw new BadRequestException(
+        fileType[uploadType] ? `请上传${fileType[uploadType]}类型文件` : '请输入正确的上传文件类型'
+      );
     }
 
-    const maxSize = fileTypeSize[type];
+    const maxSize = serveConfig.file.find((i) => i.key === type).size;
     if (size > maxSize) {
       this.uploadFileService.deleteFile(url);
       throw new BadRequestException(`${fileType[type]}文件大小不能大于 ${filesize(maxSize)}`);

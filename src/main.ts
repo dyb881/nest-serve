@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, BadRequestException } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { TransformInterceptor, HttpExceptionFilter, logger, serveConfig } from './common';
-import { AppModule } from './app.module';
+import { serveConfig, logger, TransformInterceptor, HttpExceptionFilter } from './common/global';
 import helmet from 'helmet';
+import { AppModule } from './app.module';
 
-const { port, prefix, host } = serveConfig;
+const { port, prefix, url, apiUrl, swaggerPath, swaggerUrl } = serveConfig;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger, cors: true });
@@ -17,13 +17,7 @@ async function bootstrap() {
   app.setGlobalPrefix(prefix);
 
   // 全局使用验证管道，并统一报错处理
-  app.useGlobalPipes(
-    new ValidationPipe({
-      exceptionFactory: ([error]) => {
-        throw new BadRequestException(Object.values(error.constraints)[0]);
-      },
-    })
-  );
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   // 响应参数统一格式
   app.useGlobalInterceptors(new TransformInterceptor());
@@ -39,12 +33,13 @@ async function bootstrap() {
     .addServer(prefix)
     .build();
   const document = SwaggerModule.createDocument(app, options, { ignoreGlobalPrefix: true });
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup(swaggerPath, app, document);
 
   await app.listen(port);
 
-  logger.log(host, '服务地址');
-  logger.log(`${host}/swagger`, '接口文档');
+  logger.log(url, '服务地址');
+  logger.log(apiUrl, 'API地址');
+  logger.log(swaggerUrl, '接口文档');
 }
 
 bootstrap();

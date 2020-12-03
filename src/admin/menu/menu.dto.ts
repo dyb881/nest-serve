@@ -1,6 +1,6 @@
 import { IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiProperty, IsInt, ApiPropertyEnum, menuStatus, IsIn } from '../../common';
+import { ApiProperty, IsInt, ApiPropertyEnum, dataStatus, IsIn } from '../../common';
 
 export class MenuQueryDto {
   @ApiProperty('标题', { required: false })
@@ -11,8 +11,8 @@ export class MenuQueryDto {
 
   @Type(() => Number)
   @IsOptional()
-  @IsIn(menuStatus, '请选择正确的状态')
-  @ApiPropertyEnum('状态', menuStatus, { required: false })
+  @IsIn(dataStatus.menu, '请选择正确的状态')
+  @ApiPropertyEnum('状态', dataStatus.menu, { required: false })
   status?: boolean;
 }
 
@@ -33,8 +33,8 @@ export class MenuCreateDto {
   @ApiProperty('优先级')
   priority: number;
 
-  @IsIn(menuStatus, '请选择正确的状态')
-  @ApiPropertyEnum('状态', menuStatus)
+  @IsIn(dataStatus.menu, '请选择正确的状态')
+  @ApiPropertyEnum('状态', dataStatus.menu)
   status: boolean;
 }
 
