@@ -5,11 +5,9 @@ import {
   ColumnEnum,
   fileType,
   fileTransformer,
-  createTransformer,
   ApiProperty,
   ApiPropertyEnum,
 } from '../../common';
-import filesize from 'filesize';
 
 @Entity()
 export class UploadFile extends CommonEntity {
@@ -26,8 +24,8 @@ export class UploadFile extends CommonEntity {
   type: string;
 
   @ApiProperty('文件大小')
-  @Column('文件大小', { transformer: createTransformer({ to: filesize }) })
-  size: number;
+  @Column('文件大小')
+  size: string;
 
   @ApiProperty('上传帐号')
   @Column('上传帐号', 32)

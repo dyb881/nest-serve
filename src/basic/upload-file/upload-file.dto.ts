@@ -24,7 +24,7 @@ export class CreateFileCreateDto {
   url: string;
 
   @ApiProperty('文件大小')
-  size: number;
+  size: string;
 }
 
 /**

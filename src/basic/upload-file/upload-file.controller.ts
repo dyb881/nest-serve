@@ -97,6 +97,6 @@ export class UploadFileController {
       throw new BadRequestException(`${fileType[type]}文件大小不能大于 ${filesize(maxSize)}`);
     }
 
-    return this.uploadFileService.create({ name, url, type, size, username: req.user.username });
+    return this.uploadFileService.create({ name, url, type, size: filesize(size), username: req.user.username });
   }
 }
