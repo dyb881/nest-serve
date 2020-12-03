@@ -6,7 +6,6 @@ import { UploadFileController } from './upload-file.controller';
 import { UploadFileService } from './upload-file.service';
 import { diskStorage } from 'multer';
 import { join, extname } from 'path';
-import dayjs from 'dayjs';
 import nuid from 'nuid';
 
 @Module({
@@ -16,7 +15,7 @@ import nuid from 'nuid';
       // 文件储存
       storage: diskStorage({
         // 配置文件上传后的文件夹路径
-        destination: join(__dirname, '../../../public/uploads', dayjs().format('YYYY-MM')),
+        destination: join(__dirname, '../../../public/uploads'),
         // 在此处自定义保存后的文件名称
         filename: (_req, { originalname }, cb) => {
           const filename = nuid.next() + extname(originalname);
