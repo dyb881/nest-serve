@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { UploadFileModule } from '../upload-file/upload-file.module';
 import { AccountModule } from '../account/account.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -13,7 +12,6 @@ import { serveConfig } from '../../common';
   imports: [
     PassportModule,
     JwtModule.register({ secret: serveConfig.jwt.secret, signOptions: { expiresIn: '36000s' } }),
-    UploadFileModule,
     AccountModule,
   ],
   controllers: [AuthController],
