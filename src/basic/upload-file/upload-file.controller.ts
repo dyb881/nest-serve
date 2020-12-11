@@ -84,7 +84,7 @@ export class UploadFileController {
 
     const url = path.split('/public')[1];
 
-    if (uploadType && uploadType !== type) {
+    if (!type || (uploadType && uploadType !== type)) {
       this.uploadFileService.deleteFile(url);
       throw new BadRequestException(
         fileType[uploadType] ? `请上传${fileType[uploadType]}类型文件` : '请输入正确的上传文件类型'

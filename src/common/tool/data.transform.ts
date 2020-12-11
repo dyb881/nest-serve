@@ -60,7 +60,7 @@ export const getEnumRemark = (object: object) => {
 export const getFileType = (filename: string) => {
   const suffix = extname(filename).slice(1);
   const file = serveConfig.file.find((i) => i.suffix.includes(suffix));
-  return file.key;
+  return file?.key;
 };
 
 // ---------------------- 内容数据转化 ---------------------- //

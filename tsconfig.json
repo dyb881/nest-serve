@@ -15,5 +15,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "exclude": ["old"]
+  "exclude": ["./public/uploads"]
 }
