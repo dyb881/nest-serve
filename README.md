@@ -1,5 +1,7 @@
 # 使用 Nestjs 搭建的基础服务
 
+[管理后台模版 DEMO](http://nest.bittyshow.top)，对应前端代码[cra-template-seasoning](https://github.com/dyb881/cra-template-seasoning)pc-admin 模版
+
 ## 基础功能
 
 - 日志文件生成
