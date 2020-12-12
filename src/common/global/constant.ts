@@ -5,15 +5,12 @@ const { file } = serveConfig;
 /**
  * 文件类型
  */
-export const fileType = file.reduce((o, i) => {
-  o[i.key] = i.label;
-  return o;
-}, {});
+export const fileType = file.reduce((o, i) => ((o[i.key] = i.label), o), {});
 
 /**
- * 文件类型数组
+ * 文件储存类型
  */
-export const fileTypes = Object.keys(fileType);
+export const fileStore = { local: '本地储存', oss: 'OSS' };
 
 /**
  * 帐号类型
@@ -21,10 +18,8 @@ export const fileTypes = Object.keys(fileType);
 export const accountType = { admin: '管理员', user: '用户' };
 
 /**
- * 帐号类型数组
+ * 通用显示隐藏状态
  */
-export const accountTypes = Object.keys(accountType);
-
 const hideShow = ['隐藏', '显示'];
 
 /**

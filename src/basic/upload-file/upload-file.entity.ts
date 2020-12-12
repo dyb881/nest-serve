@@ -4,6 +4,7 @@ import {
   Column,
   ColumnEnum,
   fileType,
+  fileStore,
   fileTransformer,
   ApiProperty,
   ApiPropertyEnum,
@@ -22,6 +23,10 @@ export class UploadFile extends CommonEntity {
   @ApiPropertyEnum('文件类型', fileType)
   @ColumnEnum('文件类型', fileType)
   type: string;
+
+  @ApiPropertyEnum('储存方式', fileStore)
+  @ColumnEnum('储存方式', fileStore)
+  store: string;
 
   @ApiProperty('文件大小')
   @Column('文件大小')

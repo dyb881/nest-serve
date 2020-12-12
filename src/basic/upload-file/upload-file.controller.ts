@@ -19,8 +19,8 @@ import { UploadFile } from './upload-file.entity';
 import {
   DeleteDto,
   ApiOperation,
-  fileTypes,
   getFileType,
+  getKeys,
   fileType,
   serveConfig,
   PaginationDto,
@@ -67,7 +67,7 @@ export class UploadFileController {
   @ApiConsumes('multipart/form-data')
   @ApiParam({
     name: 'uploadType',
-    enum: fileTypes,
+    enum: getKeys(fileType),
     required: false,
     description: '上传文件类型，不选则上传任意类型文件',
   })
@@ -97,6 +97,13 @@ export class UploadFileController {
       throw new BadRequestException(`${fileType[type]}文件大小不能大于 ${filesize(maxSize)}`);
     }
 
-    return this.uploadFileService.create({ name, url, type, size: filesize(size), username: req.user.username });
+    return this.uploadFileService.create({
+      name,
+      url,
+      type,
+      store: 'local',
+      size: filesize(size),
+      username: req.user.username,
+    });
   }
 }

@@ -2,14 +2,14 @@ import { TServeConfig } from './config.types';
 
 export const serveConfig: TServeConfig = {
   sql: {
-    host: '101.200.80.178',
+    host: 'localhost',
     port: 3306,
     username: 'root',
-    password: 'Deng3364',
+    password: 'root',
     database: 'nest_serve_db',
   },
   protocol: 'http',
-  hostname: '101.200.80.178',
+  hostname: 'localhost',
   port: 8080,
   prefix: '/api',
   get url() {

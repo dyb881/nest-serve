@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { AccountService } from '../account/account.service';
 import { AuthDto, LoginInfoDto } from './auth.dto';
 import { Account } from '../account/account.entity';
-import { ApiOperation, accountType, accountTypes, toIp, format, getEnumRemark } from '../../common';
+import { ApiOperation, accountType, toIp, format, getKeys, getEnumRemark } from '../../common';
 
 @ApiTags('鉴权')
 @Controller('auth')
@@ -14,7 +14,11 @@ export class AuthController {
 
   @Post(':accountType')
   @UseGuards(AuthGuard('local'))
-  @ApiParam({ name: 'accountType', enum: accountTypes, description: `登录帐号类型，${getEnumRemark(accountType)}` })
+  @ApiParam({
+    name: 'accountType',
+    enum: getKeys(accountType),
+    description: `登录帐号类型，${getEnumRemark(accountType)}`,
+  })
   @ApiBody({ type: AuthDto })
   @ApiResponse({ status: 200, type: LoginInfoDto })
   @ApiOperation('登录')

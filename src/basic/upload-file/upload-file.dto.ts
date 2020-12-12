@@ -1,7 +1,8 @@
 import { IsOptional } from 'class-validator';
-import { ApiProperty, ApiPropertyEnum, fileType, PaginationQueryDto, IsIn } from '../../common';
+import { ApiProperty, ApiPropertyEnum, fileType, fileStore, PaginationQueryDto, IsIn } from '../../common';
 
 export const type = IsIn(fileType, '请选择正确的文件类型');
+export const store = IsIn(fileStore, '请选择正确的储存方式');
 
 export class UploadQueryDto extends PaginationQueryDto {
   @ApiProperty('上传帐号', { required: false })
@@ -14,6 +15,11 @@ export class UploadQueryDto extends PaginationQueryDto {
   @type
   @ApiPropertyEnum('文件类型', fileType, { required: false })
   type?: string;
+
+  @IsOptional()
+  @store
+  @ApiPropertyEnum('储存方式', fileStore, { required: true })
+  store?: string;
 }
 
 export class CreateFileCreateDto {
@@ -22,6 +28,11 @@ export class CreateFileCreateDto {
 
   @ApiProperty('文件地址')
   url: string;
+
+  @IsOptional()
+  @store
+  @ApiPropertyEnum('储存方式', fileStore, { required: true })
+  store: string;
 
   @ApiProperty('文件大小')
   size: string;
