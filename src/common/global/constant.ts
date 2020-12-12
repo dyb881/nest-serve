@@ -8,7 +8,7 @@ const { file } = serveConfig;
 export const fileType = file.reduce((o, i) => ((o[i.key] = i.label), o), {});
 
 /**
- * 文件储存类型
+ * 文件储存方式
  */
 export const fileStore = { local: '本地储存', oss: 'OSS' };
 
