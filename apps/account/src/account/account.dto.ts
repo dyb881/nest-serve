@@ -1,7 +1,13 @@
 import { PaginationDto } from '@app/dto-tool';
-import { ApiPropertyEnum, IsOptional, IsIn } from '@app/decorator';
+import { ApiProperty, ApiPropertyEnum, IsOptional, IsIn } from '@app/decorator';
 import { Account, accountType } from './account.entity';
-import { AccountBaseQueryDto, AccountBaseCreateDto, AccountBaseUpdateDto } from './account.base.dto';
+import {
+  AccountBaseQueryDto,
+  AccountBaseCreateDto,
+  AccountBaseUpdateDto,
+  username,
+  password,
+} from './account.base.dto';
 
 export const type = IsIn(accountType, '帐号类型');
 
@@ -21,3 +27,23 @@ export class AccountCreateDto extends AccountBaseCreateDto {
 }
 
 export class AccountUpdateDto extends AccountBaseUpdateDto {}
+
+export class LoginDto {
+  @username
+  @ApiProperty('用户名')
+  username: string;
+
+  @password
+  @ApiProperty('密码')
+  password: string;
+}
+
+export class AuthDto extends LoginDto {}
+
+export function LoginInfoDto<T>(_Dto: T) {
+  class LoginInfoDto {
+    @ApiProperty('token，放到请求头用于鉴权')
+    access_token: string;
+  }
+  return class extends LoginInfoDto {};
+}

@@ -10,11 +10,18 @@ import {
 } from './account-user.dto';
 import { AccountUser } from './account-user.entity';
 import { AccountUserService } from './account-user.service';
+import { LoginDto } from '../account/account.dto';
 
 @ApiTags('用户账号')
 @Controller('user')
 export class AccountUserController {
   constructor(private readonly accountUserService: AccountUserService) {}
+
+  @Post('login')
+  @ApiOperation('登录')
+  login(@Body() data: LoginDto) {
+    return this.accountUserService.login(data);
+  }
 
   @Get()
   @ApiOperation('查询列表')

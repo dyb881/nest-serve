@@ -22,6 +22,9 @@ export class InformationQueryDto extends PaginationQueryDto {
   @status
   @ApiPropertyEnum('状态', infoStatus, { required: false })
   status?: boolean;
+
+  @ApiProperty('分类ID', { required: false })
+  categoryId: string;
 }
 
 export class InformationCreateDto extends InfosBaseCreateDto {

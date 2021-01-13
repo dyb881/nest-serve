@@ -5,6 +5,7 @@ import { CommonService, insNull, toLike, insWhereLike } from '@app/service-tool'
 import { AccountUserQueryDto, AccountUserCreateDto, AccountUserUpdateDto } from './account-user.dto';
 import { AccountUser } from './account-user.entity';
 import { AccountService } from '../account/account.service';
+import { LoginDto } from '../account/account.dto';
 
 @Injectable()
 export class AccountUserService extends CommonService<AccountUser> {
@@ -38,5 +39,9 @@ export class AccountUserService extends CommonService<AccountUser> {
     const all = await this.findAll({ where: { id: ids } });
     await super.delete(ids);
     await this.accountService.delete(all.map((i) => i.account.id));
+  }
+
+  login(data: LoginDto) {
+    return this.accountService.login(this.repository, data);
   }
 }

@@ -4,7 +4,7 @@ import { CommonEntity } from '@app/entity-tool';
 import fs from 'fs';
 
 /**
- * 实时读取配置文件
+ * 读取配置文件（重启后生效）
  */
 const data = fs.readFileSync('config/files.config.json');
 export const filesConfig = JSON.parse(data.toString()).map((i) => {

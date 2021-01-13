@@ -1,10 +1,12 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TransformClassToPlain } from 'class-transformer';
 import { Repository } from 'typeorm';
 import { CommonService, insLike, insNull } from '@app/service-tool';
-import { AccountQueryDto, AccountCreateDto, AccountUpdateDto } from './account.dto';
-import { Account } from './account.entity';
+import { AccountQueryDto, AccountCreateDto, AccountUpdateDto, LoginDto } from './account.dto';
+import { Account, accountStatus } from './account.entity';
 import { pick, omit } from 'lodash';
+import { sha512 } from 'js-sha512';
 
 @Injectable()
 export class AccountService extends CommonService<Account, any, any, AccountUpdateDto> {
@@ -54,5 +56,20 @@ export class AccountService extends CommonService<Account, any, any, AccountUpda
     const other = omit(data, this.fields);
     Object.assign(other, { account });
     return other;
+  }
+
+  @TransformClassToPlain()
+  async login<T extends Repository<any>>(repository: T, { username, password }: LoginDto) {
+    const one = await repository
+      .createQueryBuilder('alias')
+      .innerJoinAndSelect('alias.account', 'account')
+      .where('account.username = :username', { username })
+      .andWhere('account.password = :password', { password: sha512(password) })
+      .getOne();
+
+    if (!one) throw new UnauthorizedException('登录失败');
+    if (one.account.status !== 1) throw new UnauthorizedException(`该账号${accountStatus[one.account.status]}`);
+
+    return one;
   }
 }

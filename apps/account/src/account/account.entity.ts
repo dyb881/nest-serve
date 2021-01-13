@@ -13,7 +13,7 @@ export const accountType = { admin: '管理员', user: '用户' };
 /**
  * 账号状态
  */
-export const accountStatus = ['未审核', '已审核', '冻结'];
+export const accountStatus = ['未审核', '已审核', '已冻结'];
 
 @Entity()
 export class Account extends CommonEntity {

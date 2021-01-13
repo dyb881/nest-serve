@@ -5,6 +5,7 @@ import { CommonService, insNull, toLike, insWhereLike } from '@app/service-tool'
 import { AccountAdminQueryDto, AccountAdminCreateDto, AccountAdminUpdateDto } from './account-admin.dto';
 import { AccountAdmin } from './account-admin.entity';
 import { AccountService } from '../account/account.service';
+import { LoginDto } from '../account/account.dto';
 
 @Injectable()
 export class AccountAdminService extends CommonService<AccountAdmin> {
@@ -20,7 +21,7 @@ export class AccountAdminService extends CommonService<AccountAdmin> {
   pagination(data: AccountAdminQueryDto) {
     toLike(data, ['username', 'phone', 'nickname']);
     return super.paginationQueryBuilder(data, 'admin', (query, where) =>
-      insWhereLike(query, where, [...this.accountService.fields.map((i) => `account.${i}`), 'admin.roles'])
+      insWhereLike(query, where, [...this.accountService.fields.map((i) => `account.${i}`), 'admin.rolesId'])
     );
   }
 
@@ -38,5 +39,9 @@ export class AccountAdminService extends CommonService<AccountAdmin> {
     const all = await this.findAll({ where: { id: ids } });
     await super.delete(ids);
     await this.accountService.delete(all.map((i) => i.account.id));
+  }
+
+  login(data: LoginDto) {
+    return this.accountService.login(this.repository, data);
   }
 }

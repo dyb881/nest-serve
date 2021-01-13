@@ -1,4 +1,6 @@
-# 使用 Nestjs 搭建的微服务
+# Nest Serve
+
+在 Nestjs 基于 monorepo 模式，以微服务形式开发应用
 
 ## 使用方法
 

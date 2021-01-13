@@ -10,11 +10,18 @@ import {
 } from './account-admin.dto';
 import { AccountAdmin } from './account-admin.entity';
 import { AccountAdminService } from './account-admin.service';
+import { LoginDto } from '../account/account.dto';
 
 @ApiTags('管理员账号')
 @Controller('admin')
 export class AccountAdminController {
   constructor(private readonly accountAdminService: AccountAdminService) {}
+
+  @Post('login')
+  @ApiOperation('登录')
+  login(@Body() data: LoginDto) {
+    return this.accountAdminService.login(data);
+  }
 
   @Get()
   @ApiOperation('查询列表')
