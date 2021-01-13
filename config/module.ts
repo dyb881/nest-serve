@@ -24,7 +24,7 @@ const isHome = /^192.168.31./.test(ip.address());
  */
 export const configModule = (path: string, options?: ConfigModuleOptions) =>
   ConfigModule.forRoot({
-    envFilePath: [isHome ? null : 'config/.dev.env', `config/${path}.env`, 'config/.env'],
+    envFilePath: [isHome ? null : 'config/.dev.env', `config/apps/${path}.env`, 'config/.env'],
     ...options,
   });
 
