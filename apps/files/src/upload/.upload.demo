@@ -1,0 +1,39 @@
+import { Request } from 'seasoning';
+import OSS from 'ali-oss';
+
+const { get, post } = new Request({
+  host: 'http://127.0.0.1:3002',
+  apiPath: '/api',
+});
+
+const files = {
+  oss: {
+    stsTime: 0,
+    sts: () => get('/oss/sts', {}, '获取临时授权'),
+    path: (data: any) => get('/oss/path', data, '获取上传路径'),
+  },
+};
+
+let oss: any;
+let stsTime: number;
+export const upload = async (file: File, type = 'image') => {
+  // 14 分钟内刷新一次授权
+  if (!oss || +new Date() - stsTime > 1000 * 60 * 14) {
+    const res = await files.oss.sts();
+    if (!res.ok) return;
+    oss = new OSS(res.data);
+    stsTime = +new Date();
+  }
+  const { name, size } = file;
+
+  // 获取上传路径
+  const pathRes = await files.oss.path({ name, size, type });
+  if (!pathRes.ok) return;
+  const { path, url } = pathRes.data;
+
+  // 执行上传
+  const ossRes = await oss.put(path, file);
+  if (ossRes.res.status !== 200) return;
+
+  return url as string;
+};

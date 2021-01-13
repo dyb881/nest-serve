@@ -1,0 +1,32 @@
+[
+  {
+    "type": "image",
+    "name": "图片",
+    "suffixs": ["jpg", "png", "jpeg", "gif", "ico"],
+    "maxSizeMB": 5
+  },
+  {
+    "type": "video",
+    "name": "视频",
+    "suffixs": ["mp4", "webm"],
+    "maxSizeMB": 100
+  },
+  {
+    "type": "audio",
+    "name": "音频",
+    "suffixs": ["mp3"],
+    "maxSizeMB": 100
+  },
+  {
+    "type": "document",
+    "name": "文档",
+    "suffixs": ["doc", "docx", "ppt", "pptx", "xls", "xlsx", "pdf", "md", "txt"],
+    "maxSizeMB": 10
+  },
+  {
+    "type": "other",
+    "name": "其他",
+    "suffixs": [],
+    "maxSizeMB": 10
+  }
+]

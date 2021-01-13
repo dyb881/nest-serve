@@ -13,6 +13,65 @@
     "incremental": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@app/data-tool": [
+        "libs/data-tool/src"
+      ],
+      "@app/data-tool/*": [
+        "libs/data-tool/src/*"
+      ],
+      "@app/service-tool": [
+        "libs/service-tool/src"
+      ],
+      "@app/service-tool/*": [
+        "libs/service-tool/src/*"
+      ],
+      "@app/decorator": [
+        "libs/decorator/src"
+      ],
+      "@app/decorator/*": [
+        "libs/decorator/src/*"
+      ],
+      "@app/dto-tool": [
+        "libs/dto-tool/src"
+      ],
+      "@app/dto-tool/*": [
+        "libs/dto-tool/src/*"
+      ],
+      "@app/entity-tool": [
+        "libs/entity-tool/src"
+      ],
+      "@app/entity-tool/*": [
+        "libs/entity-tool/src/*"
+      ],
+      "@app/logger": [
+        "libs/logger/src"
+      ],
+      "@app/logger/*": [
+        "libs/logger/src/*"
+      ],
+      "@app/middleware": [
+        "libs/middleware/src"
+      ],
+      "@app/middleware/*": [
+        "libs/middleware/src/*"
+      ],
+      "@app/bootstrap": [
+        "libs/bootstrap/src",
+        "libs/bootstrap/src"
+      ],
+      "@app/bootstrap/*": [
+        "libs/bootstrap/src/*",
+        "libs/bootstrap/src/*"
+      ],
+      "@app/http": [
+        "libs/http/src"
+      ],
+      "@app/http/*": [
+        "libs/http/src/*"
+      ]
+    }
   }
 }

@@ -1,7 +1,6 @@
 # compiled output
 /dist
 /node_modules
-/public/uploads
 
 # Logs
 logs
@@ -33,4 +32,9 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
 sftp-config.json
+uploads
+
+.dev.env
+.env
