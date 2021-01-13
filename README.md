@@ -38,9 +38,10 @@ yarn start admin // 运行管理后台网关服务
 ## 网关服务
 
 - admin 管理后台服务
-  - 账号管理
-  - 文件管理
-  - 信息管理
+  - account 账号管理
+  - files 文件管理
+  - infos 信息管理
+  - auth 鉴权登录
   - 角色权限管理（未开发）
 - webapp 网络应用服务（未开发）
 

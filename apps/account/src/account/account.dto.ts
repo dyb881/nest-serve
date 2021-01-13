@@ -40,9 +40,9 @@ export class LoginDto {
 
 export class AuthDto extends LoginDto {}
 
-export function LoginInfoDto<T>(_Dto: T) {
-  class LoginInfoDto {
-    @ApiProperty('token，放到请求头用于鉴权')
+export function LoginInfoDto(Dto: any) {
+  class LoginInfoDto extends Dto {
+    @ApiProperty('headers.Authorization="Bearer ${access_token}" 用于鉴权')
     access_token: string;
   }
   return class extends LoginInfoDto {};
