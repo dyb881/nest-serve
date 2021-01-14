@@ -1,0 +1,61 @@
+import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation } from '@app/decorator';
+import { HttpService } from '@app/http';
+import { IdsDto } from '@app/dto-tool';
+import { RoleAdminCreateDto, RoleAdminUpdateDto } from 'apps/account/src/role-admin/role-admin.dto';
+import { RoleAdmin } from 'apps/account/src/role-admin/role-admin.entity';
+import { JwtPermissions, Permissions } from '../jwt.guard';
+
+@JwtPermissions()
+@ApiTags('管理员角色')
+@Controller('role-admin')
+export class RoleAdminController {
+  api = '/role-admin';
+
+  constructor(private readonly httpService: HttpService) {}
+
+  @Permissions('infos.roleAdmin.query')
+  @Get()
+  @ApiOperation('查询列表')
+  @ApiResponse({ status: 200, type: [RoleAdmin] })
+  findAll() {
+    return this.httpService.get(this.api);
+  }
+
+  @Permissions('infos.roleAdmin.query')
+  @Get(':id')
+  @ApiOperation('查询详情')
+  @ApiResponse({ status: 200, type: RoleAdmin })
+  findOne(@Param('id') id: string) {
+    return this.httpService.get(`${this.api}/${id}`);
+  }
+
+  @Permissions('infos.roleAdmin.create')
+  @Post()
+  @ApiOperation('添加')
+  async create(@Body() data: RoleAdminCreateDto) {
+    await this.httpService.post(this.api, data);
+  }
+
+  @Permissions('infos.roleAdmin.update')
+  @Put(':id')
+  @ApiOperation('编辑')
+  async update(@Param('id') id: string, @Body() data: RoleAdminUpdateDto) {
+    await this.httpService.put(`${this.api}/${id}`, data);
+  }
+
+  @Permissions('infos.roleAdmin.delete')
+  @Delete()
+  @ApiOperation('删除')
+  async deletes(@Body() data: IdsDto) {
+    await this.httpService.del(this.api, data);
+  }
+
+  // @Permissions('infos.roleAdmin.delete')
+  @Get('test')
+  @ApiOperation('删除')
+  async test() {
+    return this.httpService.del('https://baidiu.com');
+  }
+}
