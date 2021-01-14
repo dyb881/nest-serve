@@ -6,6 +6,7 @@ import { IdsDto } from '@app/dto-tool';
 import { RoleAdminCreateDto, RoleAdminUpdateDto } from 'apps/account/src/role-admin/role-admin.dto';
 import { RoleAdmin } from 'apps/account/src/role-admin/role-admin.entity';
 import { JwtPermissions, Permissions } from '../jwt.guard';
+import fs from 'fs';
 
 @JwtPermissions()
 @ApiTags('管理员角色')
@@ -14,6 +15,14 @@ export class RoleAdminController {
   api = '/role-admin';
 
   constructor(private readonly httpService: HttpService) {}
+
+  @Permissions('infos.roleAdmin.update')
+  @Get('default-config')
+  @ApiOperation('获取默认权限配置')
+  getDefaultConfig() {
+    const data = fs.readFileSync('config/jwt.config.json');
+    return JSON.parse(data.toString());
+  }
 
   @Permissions('infos.roleAdmin.query')
   @Get()
@@ -50,12 +59,5 @@ export class RoleAdminController {
   @ApiOperation('删除')
   async deletes(@Body() data: IdsDto) {
     await this.httpService.del(this.api, data);
-  }
-
-  // @Permissions('infos.roleAdmin.delete')
-  @Get('test')
-  @ApiOperation('删除')
-  async test() {
-    return this.httpService.del('https://baidiu.com');
   }
 }

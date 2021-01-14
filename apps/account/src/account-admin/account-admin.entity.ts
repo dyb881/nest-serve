@@ -6,5 +6,5 @@ import { AccountBase } from '../account/account.entity';
 export class AccountAdmin extends AccountBase {
   @ApiProperty('角色')
   @Column('角色', 36)
-  rolesId: string;
+  roleId: string;
 }

@@ -21,7 +21,7 @@ export class AccountAdminService extends CommonService<AccountAdmin> {
   pagination(data: AccountAdminQueryDto) {
     toLike(data, ['username', 'phone', 'nickname']);
     return super.paginationQueryBuilder(data, 'admin', (query, where) =>
-      insWhereLike(query, where, [...this.accountService.fields.map((i) => `account.${i}`), 'admin.rolesId'])
+      insWhereLike(query, where, [...this.accountService.fields.map((i) => `account.${i}`), 'admin.roleId'])
     );
   }
 

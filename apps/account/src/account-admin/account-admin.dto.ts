@@ -7,17 +7,17 @@ export class AccountAdminPaginationDto extends PaginationDto(AccountAdmin) {}
 
 export class AccountAdminQueryDto extends AccountBaseQueryDto {
   @ApiProperty('角色', { required: false })
-  rolesId: string;
+  roleId: string;
 }
 
 export class AccountAdminCreateDto extends AccountBaseCreateDto {
   @IsNotEmpty('角色')
   @ApiProperty('角色')
-  rolesId: string;
+  roleId: string;
 }
 
 export class AccountAdminUpdateDto extends AccountBaseUpdateDto {
   @IsNotEmpty('角色')
   @ApiProperty('角色')
-  rolesId: string;
+  roleId: string;
 }
