@@ -64,10 +64,9 @@ export class AccountService extends CommonService<Account, any, any, AccountUpda
       .createQueryBuilder('alias')
       .innerJoinAndSelect('alias.account', 'account')
       .where('account.username = :username', { username })
-      .andWhere('account.password = :password', { password: sha512(password) })
       .getOne();
 
-    if (!one) throw new UnauthorizedException('登录失败');
+    if (!one || one.account.password !== sha512(password)) throw new UnauthorizedException('登录失败');
     if (one.account.status !== 1) throw new UnauthorizedException(`该账号${accountStatus[one.account.status]}`);
 
     return one;

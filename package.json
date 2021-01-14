@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/nest-serve/test/jest-e2e.json",
     "build:all": "nest build account && nest build files && nest build infos",
-    "pm2:all": "pm2 start dist/apps/account/main.js && pm2 start dist/apps/files/main.js && pm2 start dist/apps/infos/main.js"
+    "pm2:all": "pm2 start dist/apps/account/main.js && pm2 start dist/apps/files/main.js && pm2 start dist/apps/infos/main.js && pm2 monit"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.5",
@@ -31,8 +31,6 @@
     "@nestjs/platform-express": "^7.6.5",
     "@nestjs/swagger": "^4.7.10",
     "@nestjs/typeorm": "^7.1.5",
-    "@types/ip": "^1.1.0",
-    "@types/node-fetch": "^2.5.7",
     "ali-oss": "^6.13.1",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.13.0",
@@ -53,7 +51,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
-    "swagger-ui-express": "^4.1.6",
+    "swagger-ui-express": "4.1.6",
     "typeorm": "^0.2.30"
   },
   "devDependencies": {
@@ -61,9 +59,11 @@
     "@nestjs/schematics": "^7.2.6",
     "@nestjs/testing": "^7.6.5",
     "@types/express": "^4.17.11",
+    "@types/ip": "^1.1.0",
     "@types/jest": "^26.0.20",
     "@types/lodash": "^4.14.167",
     "@types/node": "^14.14.20",
+    "@types/node-fetch": "^2.5.7",
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",

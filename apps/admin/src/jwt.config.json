@@ -1,0 +1,15 @@
+{
+  "account": {
+    "account": { "query": true, "create": true, "update": true, "delete": true },
+    "admin": { "query": true, "create": true, "update": true, "delete": true },
+    "user": { "query": true, "create": true, "update": true, "delete": true }
+  },
+  "files": {
+    "files": { "query": true, "create": true, "update": true, "delete": true },
+    "config": { "query": true, "update": true }
+  },
+  "infos": {
+    "category": { "query": true, "create": true, "update": true, "delete": true },
+    "information": { "query": true, "create": true, "update": true, "delete": true }
+  }
+}

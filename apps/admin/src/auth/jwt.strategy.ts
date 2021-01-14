@@ -12,7 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate({ accountId, username, ...token }: any) {
-    return { id: token[`key-${process.env.JWT_SECRET}`], accountId, username };
+  validate({ rolesId, accountId, username, ...token }: any) {
+    return { id: token[`key-${process.env.JWT_SECRET}`], rolesId, accountId, username };
   }
 }

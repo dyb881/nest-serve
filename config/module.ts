@@ -1,4 +1,4 @@
-import { HttpException, RequestTimeoutException } from '@nestjs/common';
+import { HttpException, RequestTimeoutException, ServiceUnavailableException } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigModuleOptions } from '@nestjs/config/dist/interfaces';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -92,8 +92,10 @@ export const httpModule = (config?: TRequestConfig) =>
       // 请求超时
       if (res.errorCode === 'request timeout') throw new RequestTimeoutException();
 
+      if (!res.error) throw new ServiceUnavailableException('服务请求出现异常');
+
       // 抛出异常
-      throw new HttpException({ statusCode: res.code, error: res.error, message: res.message }, res.error);
+      throw new HttpException({ error: res.error, message: res.message }, res.code || 500);
     },
     ...config,
   });

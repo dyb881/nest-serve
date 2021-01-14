@@ -27,7 +27,7 @@ yarn start admin // 运行管理后台网关服务
 - files 文件管理模块
   - files 文件列表
   - config 文件配置
-  - upload 文件上传，需要上传功能的应用直接 在 app.module imports 对应模块即可
+  - upload 文件上传，需要上传功能的应用直接 在 app.module imports 对应模块才可使用，默认带鉴权装饰器，单独使用会报错
     - server 上传到服务器
     - oss 上传到 OSS
     - oss sts 临时授权上传

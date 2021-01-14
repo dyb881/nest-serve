@@ -9,11 +9,12 @@ export class AuthService {
   constructor(private readonly jwtService: JwtService, private readonly httpService: HttpService) {}
 
   async installToken(accountAdmin: AccountAdmin, ip: string) {
-    const { id, account } = accountAdmin;
+    const { id, rolesId, account } = accountAdmin;
 
     // 生成加密串
     const access_token = await this.jwtService.sign({
       [`key-${process.env.JWT_SECRET}`]: id,
+      rolesId,
       accountId: account.id,
       username: account.username,
     });

@@ -1,5 +1,6 @@
-import { Controller, Post, Get, Body, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiConsumes, ApiBody } from '@nestjs/swagger';
+import { Controller, Post, Get, Body, Query, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiConsumes, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation } from '@app/decorator';
 import { HttpService } from '@app/http';
@@ -7,6 +8,8 @@ import { UploadDto, UploadResDto } from '../files/files.dto';
 import { UploadService } from './upload.service';
 import { FIleValidateDto } from '../files-config/files-config.dto';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('上传文件')
 @Controller('upload')
 export class UploadController {
