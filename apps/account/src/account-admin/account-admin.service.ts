@@ -35,12 +35,6 @@ export class AccountAdminService extends CommonService<AccountAdmin> {
     return super.update(id, this.accountService.toSubAccountData(data));
   }
 
-  async delete(ids: string[]) {
-    const all = await this.findAll({ where: { id: ids } });
-    await super.delete(ids);
-    await this.accountService.delete(all.map((i) => i.account.id));
-  }
-
   login(data: LoginDto) {
     return this.accountService.login(this.repository, data);
   }
