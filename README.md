@@ -11,7 +11,6 @@
 ```sh
 yarn build:all // 打包所有基础服务
 yarn pm2:all // 使用pm2运行所有服务（请自行 npm i -g pm2）
-yarn start admin // 运行管理后台网关服务
 ```
 
 ## 默认数据库
@@ -62,7 +61,9 @@ yarn start admin // 运行管理后台网关服务
 
 ## 附加功能
 
+- 日志文件生成
 - redis 缓存
+- oss 文件中转上传和 sts 授权上传
 
 ## 如果觉得项目还不错，请打赏一波，您的支持是我最大的动力。
 
