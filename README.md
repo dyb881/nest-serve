@@ -64,6 +64,6 @@ yarn start admin // 运行管理后台网关服务
 
 - redis 缓存
 
-## 如果觉得项目还不错，请打赞一波，您的支持是我最大的动力。
+## 如果觉得项目还不错，请打赏一波，您的支持是我最大的动力。
 
 ![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/pay.png)
