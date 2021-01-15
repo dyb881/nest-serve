@@ -48,13 +48,22 @@ yarn start admin // 运行管理后台网关服务
   - jwt.guard 角色权限守卫
 - webapp 网络应用服务（未开发）
 
+## 自定义库
+
+- bootstrap 公用引导启动程序（接入默认库）
+- data-tool 数据处理工具
+- decoraror 装饰器二次封装
+- dto-tool Dto（公用类和常用工具）
+- entity-tool Entity（公用类和常用工具）
+- http 自定义请求器模块
+- logger 日志二次封装（日志文件生成）
+- middleware 默认中间件（数据响应转化和错误响应过滤）
+- service-tool 服务常用工具（公用类和常用工具）
+
 ## 附加功能
 
-- 日志文件生成
-- 设置与安全相关的 HTTP 头
-- swagger 接口文档
 - redis 缓存
 
-## 如果你觉得这个项目帮助到了你，你可以帮作者买一杯咖啡表示鼓励
+## 如果觉得项目还不错，请打赞一波，您的支持是我最大的动力。
 
 ![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/pay.png)

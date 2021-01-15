@@ -10,6 +10,8 @@ import { Logger } from '@app/logger';
 const bootstrap = async (module: any, options?: NestApplicationOptions, use?: (app: INestApplication) => void) => {
   const app = await NestFactory.create(module, options);
 
+  use?.(app);
+
   // 日志
   const logger = new Logger(process.env.LOG_PATH);
   app.useLogger(logger);
@@ -25,8 +27,6 @@ const bootstrap = async (module: any, options?: NestApplicationOptions, use?: (a
 
   // 报错过滤器
   app.useGlobalFilters(new HttpExceptionFilter(logger));
-
-  use?.(app);
 
   // swagger 接口文档
   const documentBuilder = new DocumentBuilder()
