@@ -57,4 +57,4 @@ yarn start admin // 运行管理后台网关服务
 
 ## 如果你觉得这个项目帮助到了你，你可以帮作者买表示鼓励
 
-[image](https://github.com/dyb881/nest-serve/blob/master/qrcode.jpg)
+![image](https://files.bittyshow.top/qrcode.png)
