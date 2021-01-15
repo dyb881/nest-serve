@@ -24,6 +24,7 @@ yarn start admin // 运行管理后台网关服务
   - account 所有账号
   - admin 管理员账号
   - user 用户账号
+  - role-admin 管理员角色
 - files 文件管理模块
   - files 文件列表
   - config 文件配置
@@ -42,7 +43,7 @@ yarn start admin // 运行管理后台网关服务
   - files 文件管理
   - infos 信息管理
   - auth 鉴权登录
-  - 角色权限管理（未开发）
+  - jwt.guard 角色权限守卫
 - webapp 网络应用服务（未开发）
 
 ## 附加功能
@@ -50,3 +51,4 @@ yarn start admin // 运行管理后台网关服务
 - 日志文件生成
 - 设置与安全相关的 HTTP 头
 - swagger 接口文档
+- redis 缓存
