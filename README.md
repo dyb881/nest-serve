@@ -55,6 +55,6 @@ yarn start admin // 运行管理后台网关服务
 - swagger 接口文档
 - redis 缓存
 
-## 如果你觉得这个项目帮助到了你，你可以帮作者买表示鼓励
+## 如果你觉得这个项目帮助到了你，你可以帮作者买一杯咖啡表示鼓励
 
 ![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/pay.png)
