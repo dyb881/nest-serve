@@ -1,7 +1,16 @@
-import { UseGuards, Injectable, CanActivate, ExecutionContext, SetMetadata } from '@nestjs/common';
+import {
+  UseGuards,
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  SetMetadata,
+  Inject,
+  CACHE_MANAGER,
+} from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
+import { get } from 'lodash';
 
 /**
  * 权限守卫
@@ -9,14 +18,20 @@ import { Reflector } from '@nestjs/core';
  */
 @Injectable()
 export class PermissionsGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(private readonly reflector: Reflector, @Inject(CACHE_MANAGER) private readonly cacheManager) {}
 
-  canActivate(context: ExecutionContext) {
+  async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
     const permissions = this.reflector.get<string[]>('permissions', context.getHandler());
 
-    console.log(permissions, request.user);
-    if (!permissions) return true;
+    // 无权限标识的接口，直接通过
+    if (permissions) {
+      const [role] = permissions;
+
+      // 获取角色权限配置
+      const roles = await this.cacheManager.get(`${request.user.id}-${request.user.accountId}`);
+      if (!get(roles, role)) return false;
+    }
 
     return true;
   }

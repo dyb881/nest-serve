@@ -16,7 +16,7 @@ export class RoleAdminController {
 
   constructor(private readonly httpService: HttpService) {}
 
-  @Permissions('infos.roleAdmin.update')
+  @Permissions('account.roleAdmin.update')
   @Get('default-config')
   @ApiOperation('获取默认权限配置')
   getDefaultConfig() {
@@ -24,7 +24,7 @@ export class RoleAdminController {
     return JSON.parse(data.toString());
   }
 
-  @Permissions('infos.roleAdmin.query')
+  @Permissions('account.roleAdmin.query')
   @Get()
   @ApiOperation('查询列表')
   @ApiResponse({ status: 200, type: [RoleAdmin] })
@@ -32,7 +32,7 @@ export class RoleAdminController {
     return this.httpService.get(this.api);
   }
 
-  @Permissions('infos.roleAdmin.query')
+  @Permissions('account.roleAdmin.query')
   @Get(':id')
   @ApiOperation('查询详情')
   @ApiResponse({ status: 200, type: RoleAdmin })
@@ -40,21 +40,21 @@ export class RoleAdminController {
     return this.httpService.get(`${this.api}/${id}`);
   }
 
-  @Permissions('infos.roleAdmin.create')
+  @Permissions('account.roleAdmin.create')
   @Post()
   @ApiOperation('添加')
   async create(@Body() data: RoleAdminCreateDto) {
     await this.httpService.post(this.api, data);
   }
 
-  @Permissions('infos.roleAdmin.update')
+  @Permissions('account.roleAdmin.update')
   @Put(':id')
   @ApiOperation('编辑')
   async update(@Param('id') id: string, @Body() data: RoleAdminUpdateDto) {
     await this.httpService.put(`${this.api}/${id}`, data);
   }
 
-  @Permissions('infos.roleAdmin.delete')
+  @Permissions('account.roleAdmin.delete')
   @Delete()
   @ApiOperation('删除')
   async deletes(@Body() data: IdsDto) {

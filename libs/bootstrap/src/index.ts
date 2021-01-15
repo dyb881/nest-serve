@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, NestApplicationOptions } from '@nestjs/common';
+import { ValidationPipe, NestApplicationOptions, INestApplication } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { TransformInterceptor, HttpExceptionFilter } from '@app/middleware';
 import { Logger } from '@app/logger';
@@ -7,7 +7,7 @@ import { Logger } from '@app/logger';
 /**
  * 公用服务引导启动
  */
-const bootstrap = async (module: any, options?: NestApplicationOptions) => {
+const bootstrap = async (module: any, options?: NestApplicationOptions, use?: (app: INestApplication) => void) => {
   const app = await NestFactory.create(module, options);
 
   // 日志
@@ -25,6 +25,8 @@ const bootstrap = async (module: any, options?: NestApplicationOptions) => {
 
   // 报错过滤器
   app.useGlobalFilters(new HttpExceptionFilter(logger));
+
+  use?.(app);
 
   // swagger 接口文档
   const documentBuilder = new DocumentBuilder()

@@ -1,8 +1,10 @@
-import { HttpException, RequestTimeoutException, ServiceUnavailableException } from '@nestjs/common';
+import { CacheModule, HttpException, RequestTimeoutException, ServiceUnavailableException } from '@nestjs/common';
+import redisStore from 'cache-manager-redis-store';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigModuleOptions } from '@nestjs/config/dist/interfaces';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MulterModule } from '@nestjs/platform-express';
+import { JwtModule } from '@nestjs/jwt';
 import { HttpModule } from '@app/http';
 import { TRequestConfig } from '@app/http/request/types';
 import { existsSync, mkdirSync } from 'fs';
@@ -70,6 +72,26 @@ export const multerModule = () =>
           return cb(null, `${day}/${filename}`);
         },
       }),
+    }),
+  });
+
+/**
+ * jwt鉴权模块
+ */
+export const jwtModule = () =>
+  JwtModule.registerAsync({
+    useFactory: () => ({ secret: process.env.JWT_SECRET, signOptions: { expiresIn: `${process.env.JWT_EXPIRES}s` } }),
+  });
+
+/**
+ * redis模块初始化
+ */
+export const cacheModule = () =>
+  CacheModule.registerAsync({
+    useFactory: () => ({
+      store: redisStore,
+      host: process.env.REDIS_HOST,
+      port: +process.env.REDIS_PORT,
     }),
   });
 

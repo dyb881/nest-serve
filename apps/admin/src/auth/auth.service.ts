@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { HttpService } from '@app/http';
 import { toIp, format } from '@app/data-tool';
@@ -7,7 +7,11 @@ import { Account } from 'apps/account/src/account/account.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService, private readonly httpService: HttpService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly httpService: HttpService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager
+  ) {}
 
   /**
    * 生成加密串
@@ -43,7 +47,11 @@ export class AuthService {
   /**
    * 获取角色信息
    */
-  getRole(id: string) {
-    return this.httpService.get(`/role-admin/${id}`);
+  async getRole(req: any) {
+    const role = await this.httpService.get(`/role-admin/${req.user.roleId}`);
+    await this.cacheManager.set(`${req.user.id}-${req.user.account?.id || req.user.accountId}`, role.permissions, {
+      ttl: process.env.JWT_EXPIRES,
+    });
+    return role;
   }
 }

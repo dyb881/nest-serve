@@ -19,7 +19,7 @@ export class AuthController {
   async login(@Req() req) {
     const access_token = await this.authService.getToken(req.user);
     this.authService.saveLogin(req.user.account, req.ip);
-    const role = await this.authService.getRole(req.user.roleId);
+    const role = await this.authService.getRole(req);
     return { ...req.user, access_token, role };
   }
 
@@ -30,7 +30,7 @@ export class AuthController {
   @ApiOperation('获取帐号信息')
   async getInfo(@Req() req) {
     const admin = await this.authService.getAdmin(req.user.id);
-    const role = await this.authService.getRole(req.user.roleId);
+    const role = await this.authService.getRole(req);
     return { ...admin, role };
   }
 }
