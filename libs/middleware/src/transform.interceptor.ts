@@ -2,6 +2,7 @@ import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nes
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Logger } from '@app/logger';
+import { toIp } from '@app/data-tool';
 
 export interface Response<T> {
   code: number;
@@ -26,7 +27,13 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
     const res = ctx.getResponse();
     logger.log(interval, `第 ${++num} 次请求`);
     logger.log(line, '请求接收');
-    logger.request(req);
+
+    // 答应请求内容
+    const { url, ip, method, user, body } = req;
+    logger.log(url, `${toIp(ip)} ${method}`);
+    user?.username && logger.log(user.username, '用户名');
+    Object.keys(body).length && logger.log(body, '请求参数');
+
     return next.handle().pipe(
       map((data) => ({ code: res.statusCode, data })),
       tap((res) => {

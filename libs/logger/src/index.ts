@@ -1,5 +1,4 @@
 import { Logger as LoggerSource } from '@nestjs/common';
-import { toIp } from '@app/data-tool';
 import log4js from 'log4js';
 
 export class Logger extends LoggerSource {
@@ -54,15 +53,5 @@ export class Logger extends LoggerSource {
   verbose(message: any, trace: string) {
     super.verbose(message, trace);
     this.log4js.info(trace, message);
-  }
-
-  /**
-   * 打印请求
-   */
-  request(req: any) {
-    const { method, url, user, body, ip } = req;
-    this.log(url, `${toIp(ip)} ${method}`);
-    user?.username && this.log(user?.username, '用户名');
-    Object.keys(body).length && this.log(body, '请求参数');
   }
 }
