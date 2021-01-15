@@ -38,3 +38,5 @@ uploads
 
 .dev.env
 .env
+
+dump.rdb

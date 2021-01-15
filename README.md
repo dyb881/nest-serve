@@ -1,6 +1,8 @@
 # Nest Serve
 
-在 Nestjs 基于 monorepo 模式，以微服务形式开发应用
+## [旧版本](https://github.com/dyb881/nest-serve/tree/multirepo)使用 multirepo 模式开发
+
+在 Nestjs 基于 monorepo 模式，以微服务形式开发的一个带权限控制的后台服务
 
 ## 使用方法
 
@@ -52,3 +54,7 @@ yarn start admin // 运行管理后台网关服务
 - 设置与安全相关的 HTTP 头
 - swagger 接口文档
 - redis 缓存
+
+## 如果你觉得这个项目帮助到了你，你可以帮作者买表示鼓励
+
+[image](https://github.com/dyb881/nest-serve/blob/master/qrcode.jpg)
