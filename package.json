@@ -20,7 +20,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/nest-serve/test/jest-e2e.json",
     "build:all": "nest build account && nest build files && nest build infos && nest build admin",
-    "pm2:all": "pm2 start dist/apps/account/main.js && pm2 start dist/apps/files/main.js && pm2 start dist/apps/infos/main.js && pm2 start dist/apps/admin/main.js && pm2 monit"
+    "pm2:account": "pm2 start dist/apps/account/main.js --name account",
+    "pm2:files": "pm2 start dist/apps/files/main.js --name files",
+    "pm2:infos": "pm2 start dist/apps/infos/main.js --name infos",
+    "pm2:admin": "pm2 start dist/apps/admin/main.js --name admin",
+    "pm2:all": "yarn pm2:account && yarn pm2:files && yarn pm2:infos && yarn pm2:admin && pm2 monit"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.5",
