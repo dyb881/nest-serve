@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Put, Delete, Query, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Query, Param, Body, Ip } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ApiOperation } from '@app/decorator';
 import { HttpService } from '@app/http';
 import { IdsDto } from '@app/dto-tool';
+import { toIp } from '@app/data-tool';
 import {
   AccountAdminPaginationDto,
   AccountAdminQueryDto,
@@ -39,8 +40,8 @@ export class AccountAdminController {
   @Permissions('account.admin.create')
   @Post()
   @ApiOperation('添加')
-  async create(@Body() data: AccountAdminCreateDto) {
-    await this.httpService.post(this.api, data);
+  async create(@Body() data: AccountAdminCreateDto, @Ip() ip) {
+    await this.httpService.post(this.api, { ...data, reg_ip: toIp(ip) });
   }
 
   @Permissions('account.admin.update')
