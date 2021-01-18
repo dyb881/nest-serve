@@ -24,12 +24,12 @@ export class InformationQueryDto extends PaginationQueryDto {
   status?: boolean;
 
   @ApiProperty('分类ID', { required: false })
-  categoryId: string;
+  categoryId?: string;
 }
 
 export class InformationCreateDto extends InfosBaseCreateDto {
-  @ApiProperty('分类ID')
-  categoryId: string;
+  @ApiProperty('分类ID', { required: false })
+  categoryId?: string;
 }
 
 export class InformationUpdateDto extends InformationCreateDto {}

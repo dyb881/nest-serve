@@ -17,7 +17,7 @@ export class CategoryService extends CommonService<Category, any, CategoryCreate
   }
 
   async update(id: string, data: CategoryUpdateDto) {
-    insNull(data, ['icon', 'picture_group', 'summary', 'content', 'parentId']);
+    insNull(data, ['icon', 'pictureGroup', 'summary', 'content', 'parentId']);
     await super.update(id, data);
   }
 }

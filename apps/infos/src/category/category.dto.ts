@@ -22,7 +22,7 @@ export class CategoryQueryDto {
 }
 
 export class CategoryCreateDto extends InfosBaseCreateDto {
-  @ApiProperty('上级 ID', { required: false })
+  @ApiProperty('上级ID', { required: false })
   parentId?: string;
 }
 

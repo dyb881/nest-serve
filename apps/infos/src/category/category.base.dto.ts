@@ -12,7 +12,7 @@ export class InfosBaseCreateDto {
   icon?: string;
 
   @ApiProperty('图组', { required: false })
-  picture_group?: string[];
+  pictureGroup?: string[];
 
   @ApiProperty('简介', { required: false })
   summary?: string;

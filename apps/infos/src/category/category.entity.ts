@@ -21,7 +21,7 @@ export class InfosBase extends CommonEntity {
 
   @ApiProperty('图组')
   @ColumnArray('图组', { nullable: true })
-  picture_group: string[];
+  pictureGroup: string[];
 
   @ApiProperty('简介')
   @Column('简介', { nullable: true })
@@ -47,6 +47,6 @@ export class InfosBase extends CommonEntity {
 @Entity()
 export class Category extends InfosBase {
   @ApiProperty('上级ID')
-  @Column('上级ID', { nullable: true })
+  @Column('上级ID', 36, { nullable: true })
   parentId: string;
 }

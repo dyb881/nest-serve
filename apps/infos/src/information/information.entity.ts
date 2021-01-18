@@ -5,6 +5,6 @@ import { InfosBase } from '../category/category.entity';
 @Entity()
 export class Information extends InfosBase {
   @ApiProperty('分类ID')
-  @Column('分类ID', 36)
+  @Column('分类ID', 36, { nullable: true })
   categoryId: string;
 }

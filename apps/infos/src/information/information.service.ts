@@ -17,7 +17,7 @@ export class InformationService extends CommonService<Information, any, Informat
   }
 
   async update(id: string, data: InformationUpdateDto) {
-    insNull(data, ['icon', 'picture_group', 'summary', 'content', 'categoryId']);
+    insNull(data, ['icon', 'pictureGroup', 'summary', 'content', 'categoryId']);
     await super.update(id, data);
   }
 }
