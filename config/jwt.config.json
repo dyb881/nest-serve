@@ -1,16 +1,16 @@
 {
   "account": {
-    "account": { "query": true, "create": true, "update": true, "delete": true },
-    "admin": { "query": true, "create": true, "update": true, "delete": true },
-    "user": { "query": true, "create": true, "update": true, "delete": true },
-    "roleAdmin": { "query": true, "create": true, "update": true, "delete": true }
+    "account": { "query": false, "create": false, "update": false, "delete": false },
+    "roleAdmin": { "query": false, "create": false, "update": false, "delete": false },
+    "admin": { "query": false, "create": false, "update": false, "delete": false },
+    "user": { "query": false, "create": false, "update": false, "delete": false }
   },
   "files": {
-    "files": { "query": true, "create": true, "update": true, "delete": true },
-    "config": { "query": true, "update": true }
+    "files": { "query": false, "create": false, "update": false, "delete": false },
+    "config": { "query": false, "update": false }
   },
   "infos": {
-    "category": { "query": true, "create": true, "update": true, "delete": true },
-    "information": { "query": true, "create": true, "update": true, "delete": true }
+    "category": { "query": false, "create": false, "update": false, "delete": false },
+    "information": { "query": false, "create": false, "update": false, "delete": false }
   }
 }
