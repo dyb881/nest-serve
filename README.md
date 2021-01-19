@@ -6,18 +6,12 @@
 
 ## 使用方法
 
-创建以下数据库，然后在 /config 内修改 .demo.env 文件名为 .env，自己根据情况修改配置
+创建数据库 nest_serve（可在 /config/apps 内修改配置进行分库），然后在 /config 内修改 .demo.env 文件名为 .env，自己根据情况修改配置
 
 ```sh
 yarn build:all // 打包所有基础服务
 yarn pm2:all // 使用pm2运行所有服务（请自行 npm i -g pm2）
 ```
-
-## 默认数据库
-
-- nest_serve_account 账号管理
-- nest_serve_files 文件管理
-- nest_serve_infos 信息管理
 
 ## 基础服务
 
