@@ -3,7 +3,7 @@ import { Repository, FindManyOptions, FindOneOptions, FindConditions, SelectQuer
 import { TransformClassToPlain } from 'class-transformer';
 import { PaginationQueryDto } from '@app/dto-tool';
 import { getWhere, getPaginationData } from './tool';
-import { merge } from 'lodash';
+import { merge, cloneDeepWith } from 'lodash';
 
 /**
  * 公用服务<数据实体，查询，创建，更新>
@@ -75,6 +75,10 @@ export class CommonService<T extends object, Q extends PaginationQueryDto = any,
   async update(id: string, data: U, options?: FindOneOptions<T>) {
     const one = await this.findOne(id, options);
     merge(one, data);
+    // 递归删除更新时间
+    cloneDeepWith(one, (_value, key, object: any) => {
+      if (key === 'update_date') delete object.update_date;
+    });
     await this.repository.save(one);
   }
 
