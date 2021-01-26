@@ -59,7 +59,7 @@ yarn pm2:all // 使用pm2运行所有服务（请自行 npm i -g pm2）
 - redis 缓存
 - oss 文件中转上传和 sts 授权上传
 
-## 配套 UI 效果图
+## 配套 UI 效果图（兼容移动端）
 
 在[cra-template-seasoning](https://github.com/dyb881/cra-template-seasoning)中使用 pc-admin 模版
 
@@ -74,6 +74,8 @@ yarn pm2:all // 使用pm2运行所有服务（请自行 npm i -g pm2）
 ![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-9.png)
 ![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-10.png)
 ![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-11.png)
+![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-12.png)
+![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-13.png)
 
 ## 如果觉得项目还不错，请打赏一波，您的支持是我最大的动力。
 
