@@ -63,20 +63,20 @@ yarn pm2:all // 使用pm2运行所有服务（请自行 npm i -g pm2）
 
 在[cra-template-seasoning](https://github.com/dyb881/cra-template-seasoning)中使用 pc-admin 模版
 
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-1.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-2.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-3.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-4.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-5.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-6.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-7.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-8.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-9.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-10.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-11.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-12.png)
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/github/nest-serve-13.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-1.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-2.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-3.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-4.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-5.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-6.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-7.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-8.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-9.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-10.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-11.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-12.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-13.png)
 
 ## 如果觉得项目还不错，请打赏一波，您的支持是我最大的动力。
 
-![二维码](https://bittyshow-files.oss-cn-guangzhou.aliyuncs.com/pay.png)
+![二维码](https://files.bittyshow.top/pay.png)
