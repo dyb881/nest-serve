@@ -57,6 +57,7 @@ yarn start:dev account // 使用开发模式运行账号模块
 
 ## 附加功能
 
+- Swagger 接口文档
 - 日志文件生成
 - redis 缓存
 - oss 文件中转上传和 sts 授权上传
