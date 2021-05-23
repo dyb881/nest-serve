@@ -84,16 +84,23 @@ export const jwtModule = () =>
   });
 
 /**
- * redis模块初始化
+ * 高速缓存模块初始化
  */
-export const cacheModule = () =>
-  CacheModule.registerAsync({
-    useFactory: () => ({
-      store: redisStore,
-      host: process.env.REDIS_HOST,
-      port: +process.env.REDIS_PORT,
-    }),
-  });
+export const cacheModule = () => {
+  const host = process.env.REDIS_HOST;
+  const port = +process.env.REDIS_PORT;
+  if (host && port) {
+    // 使用 redis 模块
+    return CacheModule.registerAsync({
+      useFactory: () => ({
+        store: redisStore,
+        host,
+        port,
+      }),
+    });
+  }
+  return CacheModule.register();
+};
 
 /**
  * http请求模块
