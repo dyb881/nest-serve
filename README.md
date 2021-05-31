@@ -11,7 +11,7 @@
 ```sh
 yarn build:all // 打包所有基础服务
 yarn pm2:all // 使用pm2运行所有服务（请自行 npm i -g pm2）
-pm2 delete account // 加入要开发账号模块，先从 pm2 删除账号模块
+pm2 delete account // 假如要开发账号模块，先从 pm2 删除账号模块
 yarn start:dev account // 使用开发模式运行账号模块
 ```
 
