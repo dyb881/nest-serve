@@ -2,6 +2,11 @@
 
 使用 nestjs v8.x 进行重构，抽象更多公共模块到 libs，并把原有同质 lib 合并成一个
 
+## 旧版本
+
+- [使用 monorepo 模式开发](https://github.com/dyb881/nest-serve/tree/monorepo)
+- [使用 multirepo 模式开发](https://github.com/dyb881/nest-serve/tree/multirepo)
+
 ## 基础服务
 
 ### 账号管理模块
