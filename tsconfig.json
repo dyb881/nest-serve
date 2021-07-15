@@ -12,9 +12,14 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
     "paths": {
       "@app/public-decorator": ["libs/public-decorator/src"],
-      "@app/public-decorator/*": ["libs/public-decorator/src/*"]
+      "@app/public-decorator/*": ["libs/public-decorator/src/*"],
+      "@app/public-tool": ["libs/public-tool/src"],
+      "@app/public-tool/*": ["libs/public-tool/src/*"]
     }
   }
 }

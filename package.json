@@ -24,9 +24,14 @@
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^5.0.3",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
+    "dayjs": "^1.10.6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.2.34"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -74,7 +79,9 @@
       "@app/decorator/(.*)": "<rootDir>/libs/decorator/src/$1",
       "@app/decorator": "<rootDir>/libs/decorator/src",
       "@app/public-decorator/(.*)": "<rootDir>/libs/public-decorator/src/$1",
-      "@app/public-decorator": "<rootDir>/libs/public-decorator/src"
+      "@app/public-decorator": "<rootDir>/libs/public-decorator/src",
+      "@app/public-tool/(.*)": "<rootDir>/libs/public-tool/src/$1",
+      "@app/public-tool": "<rootDir>/libs/public-tool/src"
     }
   }
 }

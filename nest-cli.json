@@ -24,6 +24,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/public-decorator/tsconfig.lib.json"
       }
+    },
+    "public-tool": {
+      "type": "library",
+      "root": "libs/public-tool",
+      "entryFile": "index",
+      "sourceRoot": "libs/public-tool/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/public-tool/tsconfig.lib.json"
+      }
     }
   }
 }
