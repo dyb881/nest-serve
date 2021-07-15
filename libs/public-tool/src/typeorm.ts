@@ -1,4 +1,5 @@
 import { ValueTransformer } from 'typeorm/decorator/options/ValueTransformer';
+import { sha512 } from 'js-sha512';
 import { format } from './data';
 
 // ---------------------- 数据转化器生成 ---------------------- //
@@ -11,9 +12,14 @@ const toOrFrom = (value: any) => value;
  */
 export const createTransformer = ({ to = toOrFrom, from = toOrFrom }: Partial<ValueTransformer>) => ({ to, from });
 
+// ---------------------- 数据转化器生成 ---------------------- //
+
 /**
  * 时间转化
  */
 export const dateTransformer = createTransformer({ from: format });
 
-// ---------------------- 数据转化器生成 ---------------------- //
+/**
+ * sha512 密码转化
+ */
+export const sha512Transformer = createTransformer({ to: sha512 });

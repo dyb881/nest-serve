@@ -22,16 +22,22 @@
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.0.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "dayjs": "^1.10.6",
+    "js-sha512": "^0.8.0",
+    "js-yaml": "^4.1.0",
+    "nest-winston": "^1.5.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.34"
+    "swagger-ui-express": "^4.1.6",
+    "typeorm": "^0.2.34",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -39,6 +45,7 @@
     "@nestjs/testing": "^8.0.0",
     "@types/express": "^4.17.13",
     "@types/jest": "^26.0.24",
+    "@types/js-yaml": "^4.0.2",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
@@ -81,7 +88,9 @@
       "@app/public-decorator/(.*)": "<rootDir>/libs/public-decorator/src/$1",
       "@app/public-decorator": "<rootDir>/libs/public-decorator/src",
       "@app/public-tool/(.*)": "<rootDir>/libs/public-tool/src/$1",
-      "@app/public-tool": "<rootDir>/libs/public-tool/src"
+      "@app/public-tool": "<rootDir>/libs/public-tool/src",
+      "@app/logger/(.*)": "<rootDir>/libs/logger/src/$1",
+      "@app/logger": "<rootDir>/libs/logger/src"
     }
   }
 }

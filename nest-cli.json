@@ -1,8 +1,8 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/nest-serve/src",
   "monorepo": true,
   "root": "apps/account",
+  "sourceRoot": "apps/account/src",
   "compilerOptions": {
     "webpack": false
   },
@@ -32,6 +32,15 @@
       "sourceRoot": "libs/public-tool/src",
       "compilerOptions": {
         "tsConfigPath": "libs/public-tool/tsconfig.lib.json"
+      }
+    },
+    "logger": {
+      "type": "library",
+      "root": "libs/logger",
+      "entryFile": "index",
+      "sourceRoot": "libs/logger/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/logger/tsconfig.lib.json"
       }
     }
   }

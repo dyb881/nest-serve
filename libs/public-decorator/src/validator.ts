@@ -5,9 +5,8 @@ import {
   IsNotEmpty as IsNotEmptySource,
   IsDate as IsDateSource,
   ValidationOptions,
-  IsOptional,
 } from 'class-validator';
-import { getKeys, getEnumRemark } from '@app/data-tool';
+import { getKeys, getEnumRemark } from '@app/public-tool';
 
 /**
  * 验证是否输入
