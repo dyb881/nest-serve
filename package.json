@@ -31,6 +31,7 @@
     "dayjs": "^1.10.6",
     "js-sha512": "^0.8.0",
     "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
     "log4js": "^6.3.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -89,7 +90,9 @@
       "@app/public-tool/(.*)": "<rootDir>/libs/public-tool/src/$1",
       "@app/public-tool": "<rootDir>/libs/public-tool/src",
       "@app/logger/(.*)": "<rootDir>/libs/logger/src/$1",
-      "@app/logger": "<rootDir>/libs/logger/src"
+      "@app/logger": "<rootDir>/libs/logger/src",
+      "@app/public-module/(.*)": "<rootDir>/libs/public-module/src/$1",
+      "@app/public-module": "<rootDir>/libs/public-module/src"
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { ConfigService } from '@nestjs/config';
-import { LoggerService } from '@app/logger';
+import { LoggerService } from '@app/public-module';
 
 @Controller()
 export class AccountController {
