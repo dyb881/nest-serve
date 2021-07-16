@@ -1,7 +1,6 @@
 # 服务配置（每个单独的服务都需要配置对应的端口）
 
 serve:
-  host: 'localhost'
   port: 3100
   prefix: '/api'
 

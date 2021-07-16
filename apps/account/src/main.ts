@@ -1,13 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-// import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { AccountModule } from './account.module';
+import { AppModule } from './app.module';
+
 import { ConfigService } from '@nestjs/config';
+import { LoggerService } from '@app/logger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AccountModule, {});
+  const app = await NestFactory.create(AppModule, {});
 
-  // 日志注入
-  // app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  const loggerService = app.get(LoggerService);
+  console.log(loggerService);
 
   const configService = app.get(ConfigService);
   const port = configService.get('db[0]');

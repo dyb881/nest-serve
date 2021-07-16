@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AccountController } from './account.controller';
-import { AccountService } from './account.service';
 import { ConfigModule } from '@nestjs/config';
-import { WinstonModule } from 'nest-winston';
 import { readFileSync } from 'fs';
 import { load } from 'js-yaml';
+import { LoggerModule } from '@app/logger';
 
 @Module({
   imports: [
@@ -13,9 +11,12 @@ import { load } from 'js-yaml';
       cache: true,
       load: [() => load(readFileSync('config/production.yaml', 'utf8')) as Record<string, any>],
     }),
-    WinstonModule,
+    LoggerModule.forRoot({
+      isGlobal: true,
+      useFactory: () => {
+        return { filename: 'logs/account/account.log' };
+      },
+    }),
   ],
-  controllers: [AccountController],
-  providers: [AccountService],
 })
-export class AccountModule {}
+export class GlobalModule {}
