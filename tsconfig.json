@@ -16,30 +16,12 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "paths": {
-      "@app/public-decorator": [
-        "libs/public-decorator/src"
-      ],
-      "@app/public-decorator/*": [
-        "libs/public-decorator/src/*"
-      ],
-      "@app/public-tool": [
-        "libs/public-tool/src"
-      ],
-      "@app/public-tool/*": [
-        "libs/public-tool/src/*"
-      ],
-      "@app/logger": [
-        "libs/logger/src"
-      ],
-      "@app/logger/*": [
-        "libs/logger/src/*"
-      ],
-      "@app/public-module": [
-        "libs/public-module/src"
-      ],
-      "@app/public-module/*": [
-        "libs/public-module/src/*"
-      ]
+      "@app/public-decorator": ["libs/public-decorator/src"],
+      "@app/public-decorator/*": ["libs/public-decorator/src/*"],
+      "@app/public-tool": ["libs/public-tool/src"],
+      "@app/public-tool/*": ["libs/public-tool/src/*"],
+      "@app/public-module": ["libs/public-module/src"],
+      "@app/public-module/*": ["libs/public-module/src/*"]
     }
   }
 }
