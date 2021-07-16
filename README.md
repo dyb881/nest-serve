@@ -4,8 +4,8 @@
 
 ## 旧版本
 
-- v2[使用 monorepo 模式开发](https://github.com/dyb881/nest-serve/tree/monorepo)
-- v1[使用 multirepo 模式开发](https://github.com/dyb881/nest-serve/tree/multirepo)
+- [v2 使用 monorepo 模式开发](https://github.com/dyb881/nest-serve/tree/monorepo)
+- [v1 使用 multirepo 模式开发](https://github.com/dyb881/nest-serve/tree/multirepo)
 
 ## 基础服务
 

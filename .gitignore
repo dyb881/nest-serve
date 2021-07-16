@@ -43,4 +43,4 @@ uploads
 dump.rdb
 
 old/
-config/production.yaml
+config/development.yaml
