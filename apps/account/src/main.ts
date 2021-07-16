@@ -11,11 +11,11 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get('serve');
 
+  await app.listen(port);
+
   // 注入日志
   const loggerService = app.get(LoggerService);
   app.useLogger(loggerService);
-
-  await app.listen(port);
 }
 
 bootstrap();

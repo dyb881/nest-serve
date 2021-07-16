@@ -4,7 +4,8 @@
   "root": "apps/account",
   "sourceRoot": "apps/account/src",
   "compilerOptions": {
-    "webpack": false
+    "webpack": true,
+    "tsConfigPath": "apps/account/tsconfig.app.json"
   },
   "projects": {
     "account": {
