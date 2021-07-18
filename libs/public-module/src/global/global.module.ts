@@ -1,7 +1,8 @@
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { Module, DynamicModule } from '@nestjs/common';
+import { rootPath, HttpExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerModule } from '../logger';
-import { rootPath } from '@app/public-tool';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import { load } from 'js-yaml';
@@ -24,6 +25,7 @@ export class GlobalModule {
     return {
       module: GlobalModule,
       imports: [
+        // 配置模块
         ConfigModule.forRoot({
           isGlobal: true,
           cache: true,
@@ -41,6 +43,7 @@ export class GlobalModule {
             },
           ],
         }),
+        // 日志模块
         LoggerModule.forRoot({
           isGlobal: true,
           useFactory: (configService: ConfigService) => {
@@ -49,6 +52,12 @@ export class GlobalModule {
           },
           inject: [ConfigService],
         }),
+      ],
+      providers: [
+        // 异常过滤器
+        { provide: APP_FILTER, useClass: HttpExceptionFilter },
+        // 响应参数转化拦截器
+        { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
       ],
     };
   }
