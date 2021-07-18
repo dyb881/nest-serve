@@ -7,13 +7,13 @@ serve:
 # 数据库配置
 
 db:
-  - type: 'mysql'
-    host: 'localhost'
-    port: '3306'
-    username: 'root'
-    password: 'root'
-    database: 'nest_serve_db'
-    synchronize: true # 自动同步表
+  type: 'mysql'
+  host: 'localhost'
+  port: '3306'
+  username: 'root'
+  password: 'root'
+  database: 'nest_serve_db'
+  synchronize: true # 自动同步表
 
 # Redis配置
 

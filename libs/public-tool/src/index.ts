@@ -7,6 +7,7 @@ export const rootPath = join(__dirname, '../../../');
 
 export * from './data';
 export * from './typeorm';
+export * from './service';
 export * from './http.exception.filter';
 export * from './transform.interceptor';
 export * from './bootstrap';

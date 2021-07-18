@@ -26,6 +26,7 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.0.3",
+    "@nestjs/typeorm": "^8.0.1",
     "@types/lodash": "^4.14.171",
     "@types/request-ip": "^0.0.37",
     "class-transformer": "^0.4.0",
@@ -35,6 +36,7 @@
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "log4js": "^6.3.0",
+    "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "request-ip": "^2.1.3",
     "rimraf": "^3.0.2",
@@ -95,7 +97,9 @@
       "@app/logger/(.*)": "<rootDir>/libs/logger/src/$1",
       "@app/logger": "<rootDir>/libs/logger/src",
       "@app/public-module/(.*)": "<rootDir>/libs/public-module/src/$1",
-      "@app/public-module": "<rootDir>/libs/public-module/src"
+      "@app/public-module": "<rootDir>/libs/public-module/src",
+      "@app/public-class/(.*)": "<rootDir>/libs/public-class/src/$1",
+      "@app/public-class": "<rootDir>/libs/public-class/src"
     }
   }
 }
