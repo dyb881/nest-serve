@@ -1,5 +1,5 @@
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { Module, DynamicModule } from '@nestjs/common';
+import { APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { Module, DynamicModule, ValidationPipe } from '@nestjs/common';
 import { rootPath, HttpExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerModule } from '../logger';
@@ -54,6 +54,8 @@ export class GlobalModule {
         }),
       ],
       providers: [
+        // 全局使用验证管道，并统一报错处理
+        { provide: APP_PIPE, useClass: ValidationPipe },
         // 异常过滤器
         { provide: APP_FILTER, useClass: HttpExceptionFilter },
         // 响应参数转化拦截器
