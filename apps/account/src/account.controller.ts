@@ -12,7 +12,7 @@ export class AccountController {
   ) {}
 
   @Get()
-  getHello(): string {
+  getHello() {
     const serve = this.configService.get('serve');
     this.loggerService.log(serve, '测试');
     return this.accountService.getHello();

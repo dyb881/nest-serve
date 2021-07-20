@@ -1,11 +1,12 @@
 import { APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { Module, DynamicModule, ValidationPipe } from '@nestjs/common';
+import { Module, DynamicModule, ValidationPipe, CacheModule } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { rootPath, HttpExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { LoggerModule } from '../logger';
 import { existsSync, mkdirSync, readFileSync } from 'fs';
+import redisStore from 'cache-manager-redis-store';
 import { diskStorage } from 'multer';
 import { join, extname } from 'path';
 import { load } from 'js-yaml';
@@ -15,8 +16,9 @@ import nuid from 'nuid';
 
 export interface GlobalModuleOptions {
   yamlFilePath?: string[]; // 配置文件路径
-  typeorm?: boolean; // 开启 orm
-  multer?: boolean; // 开启 multer 文件上传
+  typeorm?: boolean; // 开启 orm 模块
+  multer?: boolean; // 开启 multer 文件上传模块
+  cache?: boolean; // 开启缓存模块
 }
 
 /**
@@ -28,7 +30,7 @@ export class GlobalModule {
    * 全局模块初始化
    */
   static forRoot(options: GlobalModuleOptions): DynamicModule {
-    const { yamlFilePath = [], typeorm, multer } = options || {};
+    const { yamlFilePath = [], typeorm, multer, cache } = options || {};
 
     const imports: DynamicModule['imports'] = [
       // 配置模块
@@ -61,8 +63,8 @@ export class GlobalModule {
       }),
     ];
 
+    // 启动 orm
     if (typeorm) {
-      // 启动 orm
       imports.push(
         TypeOrmModule.forRootAsync({
           useFactory: (configService: ConfigService) => {
@@ -74,8 +76,8 @@ export class GlobalModule {
       );
     }
 
+    // 开启 multer 文件上传
     if (multer) {
-      // 开启 multer 文件上传
       imports.push(
         MulterModule.registerAsync({
           imports: [ConfigModule],
@@ -103,6 +105,28 @@ export class GlobalModule {
                 },
               }),
             };
+          },
+          inject: [ConfigService],
+        })
+      );
+    }
+
+    // 开启缓存模块
+    if (cache) {
+      imports.push(
+        CacheModule.registerAsync({
+          useFactory: (configService: ConfigService) => {
+            const cache = configService.get('cache');
+
+            // 使用 redis 做缓存服务
+            if (cache.redis?.host) {
+              return {
+                store: redisStore,
+                ...cache.redis,
+              };
+            }
+
+            return {};
           },
           inject: [ConfigService],
         })

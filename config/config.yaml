@@ -2,7 +2,7 @@
 
 serve:
   port: 3100
-  prefix: '/api'
+  prefix: '' # 路径前缀
 
 # 数据库配置
 
@@ -15,11 +15,12 @@ db:
   database: 'nest_serve_db'
   synchronize: true # 自动同步表
 
-# Redis配置
+# 缓存配置
 
-redis:
-  host: ''
-  port: ''
+cache:
+  redis: # 有值时，使用 redis 做缓存服务器
+    host: ''
+    port: ''
 
 # Swagger 配置
 
