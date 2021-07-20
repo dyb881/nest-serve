@@ -1,17 +1,22 @@
 import { APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { Module, DynamicModule, ValidationPipe } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { rootPath, HttpExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { LoggerModule } from '../logger';
-import { join } from 'path';
-import { readFileSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync } from 'fs';
+import { diskStorage } from 'multer';
+import { join, extname } from 'path';
 import { load } from 'js-yaml';
 import { merge } from 'lodash';
+import dayjs from 'dayjs';
+import nuid from 'nuid';
 
 export interface GlobalModuleOptions {
   yamlFilePath?: string[]; // 配置文件路径
-  typeorm?: boolean; // 是否开启 orm
+  typeorm?: boolean; // 开启 orm
+  multer?: boolean; // 开启 multer 文件上传
 }
 
 /**
@@ -23,7 +28,7 @@ export class GlobalModule {
    * 全局模块初始化
    */
   static forRoot(options: GlobalModuleOptions): DynamicModule {
-    const { yamlFilePath = [], typeorm } = options || {};
+    const { yamlFilePath = [], typeorm, multer } = options || {};
 
     const imports: DynamicModule['imports'] = [
       // 配置模块
@@ -37,7 +42,8 @@ export class GlobalModule {
             for (let path of configPath) {
               try {
                 // 读取并解析配置文件
-                configs = merge(configs, load(readFileSync(join(rootPath, 'config', path), 'utf8')));
+                const filePath = join(rootPath, 'config', path);
+                if (existsSync(filePath)) configs = merge(configs, load(readFileSync(filePath, 'utf8')));
               } catch {}
             }
             return configs;
@@ -62,6 +68,41 @@ export class GlobalModule {
           useFactory: (configService: ConfigService) => {
             const db = configService.get('db');
             return { ...db, autoLoadEntities: true };
+          },
+          inject: [ConfigService],
+        })
+      );
+    }
+
+    if (multer) {
+      // 开启 multer 文件上传
+      imports.push(
+        MulterModule.registerAsync({
+          imports: [ConfigModule],
+          useFactory: async (configService: ConfigService) => {
+            let path = configService.get('path.upload');
+            path = join(rootPath, path);
+            return {
+              // 文件储存
+              storage: diskStorage({
+                // 配置文件上传后的文件夹路径
+                destination: path,
+                // 在此处自定义保存后的文件名称
+                filename: (_req, { originalname }, cb) => {
+                  // 当前日期
+                  const day = dayjs().format('YYYY-MM-DD');
+
+                  // 不存在文件夹则创建
+                  const folder = `${path}/${day}`;
+                  existsSync(folder) || mkdirSync(folder);
+
+                  // 生成随机文件名
+                  const filename = nuid.next() + extname(originalname);
+
+                  return cb(null, `${day}/${filename}`);
+                },
+              }),
+            };
           },
           inject: [ConfigService],
         })
