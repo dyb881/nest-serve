@@ -39,7 +39,7 @@ path:
 
 jwt:
   secret: 'nestservedyb881' # 加密串，生产环境必须更改
-  expires: '36000' # 超时配置 秒
+  expiresIn: '36000s' # 过期时间
 
 
 # OSS配置

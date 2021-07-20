@@ -1,14 +1,18 @@
 import { APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { Module, DynamicModule, ValidationPipe, CacheModule } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+
 import { rootPath, HttpExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { LoggerModule } from '../logger';
+
 import { existsSync, mkdirSync, readFileSync } from 'fs';
+import { join, extname } from 'path';
+
 import redisStore from 'cache-manager-redis-store';
 import { diskStorage } from 'multer';
-import { join, extname } from 'path';
 import { load } from 'js-yaml';
 import { merge } from 'lodash';
 import dayjs from 'dayjs';
@@ -19,6 +23,7 @@ export interface GlobalModuleOptions {
   typeorm?: boolean; // 开启 orm 模块
   multer?: boolean; // 开启 multer 文件上传模块
   cache?: boolean; // 开启缓存模块
+  jwt?: boolean; // 开启 jwt 鉴权模块
 }
 
 /**
@@ -30,7 +35,7 @@ export class GlobalModule {
    * 全局模块初始化
    */
   static forRoot(options: GlobalModuleOptions): DynamicModule {
-    const { yamlFilePath = [], typeorm, multer, cache } = options || {};
+    const { yamlFilePath = [], typeorm, multer, cache, jwt } = options || {};
 
     const imports: DynamicModule['imports'] = [
       // 配置模块
@@ -81,7 +86,7 @@ export class GlobalModule {
       imports.push(
         MulterModule.registerAsync({
           imports: [ConfigModule],
-          useFactory: async (configService: ConfigService) => {
+          useFactory: (configService: ConfigService) => {
             let path = configService.get('path.upload');
             path = join(rootPath, path);
             return {
@@ -117,16 +122,21 @@ export class GlobalModule {
         CacheModule.registerAsync({
           useFactory: (configService: ConfigService) => {
             const cache = configService.get('cache');
-
             // 使用 redis 做缓存服务
-            if (cache.redis?.host) {
-              return {
-                store: redisStore,
-                ...cache.redis,
-              };
-            }
+            return cache.redis?.host ? { store: redisStore, ...cache.redis } : {};
+          },
+          inject: [ConfigService],
+        })
+      );
+    }
 
-            return {};
+    // 开启 jwt 鉴权模块
+    if (jwt) {
+      imports.push(
+        JwtModule.registerAsync({
+          useFactory: (configService: ConfigService) => {
+            const { secret, expiresIn } = configService.get('jwt');
+            return { secret, signOptions: { expiresIn } };
           },
           inject: [ConfigService],
         })
