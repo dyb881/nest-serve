@@ -5,6 +5,7 @@ import { dateTransformer, sha512Transformer } from '@app/public-tool';
 
 /**
  * 公用实体
+ * 一条数据必须存在的属性
  */
 export class CommonEntity {
   @ApiProperty('ID')
@@ -22,6 +23,7 @@ export class CommonEntity {
 
 /**
  * 基础账号实体
+ * 一个账号必须存在的属性
  */
 export class AccountEntity extends CommonEntity {
   @ApiProperty('用户名')
@@ -43,16 +45,4 @@ export class AccountEntity extends CommonEntity {
   @ApiProperty('登录时间')
   @Column('登录时间', { transformer: dateTransformer, nullable: true })
   login_date: Date;
-
-  @ApiProperty('手机号')
-  @Column('手机号', 11, { nullable: true })
-  phone: string;
-
-  @ApiProperty('昵称')
-  @Column('昵称', 32)
-  nickname: string;
-
-  @ApiProperty('头像')
-  @Column('头像', { nullable: true })
-  avatar: string;
 }

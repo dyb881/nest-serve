@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { Repository, FindManyOptions, FindOneOptions, FindConditions, SelectQueryBuilder } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
-import { getWhere, getPaginationData } from '@app/public-tool';
+import { toWhere, getPaginationData } from '@app/public-tool';
 import { mergeWith, cloneDeepWith } from 'lodash';
 import { PaginationQueryDto } from './dto';
 
@@ -20,7 +20,7 @@ export class CommonService<T extends object, Q extends PaginationQueryDto = any,
   @TransformClassToPlain()
   findAll({ where, order, ...options }: FindManyOptions<T>) {
     return this.repository.find({
-      where: getWhere(where),
+      where: toWhere(where),
       order: { create_date: 'DESC', ...order },
       relations: this.relations,
       ...options,
@@ -34,7 +34,7 @@ export class CommonService<T extends object, Q extends PaginationQueryDto = any,
     const [list, total] = await this.repository.findAndCount({
       skip,
       take,
-      where: getWhere(where),
+      where: toWhere(where),
       order: { create_date: 'DESC', ...order },
       relations: this.relations,
       ...option,
