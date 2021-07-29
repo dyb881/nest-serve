@@ -1,20 +1,28 @@
-import { Controller, Get, Post, Put, Delete, Query, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Query, Param, Body, UnauthorizedException } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
-import { IdsDto } from '@app/public-class';
+import { IdsDto, AccountLoginDto } from '@app/public-class';
 import {
   AccountAdminPaginationDto,
   AccountAdminPaginationQueryDto,
   AccountAdminCreateDto,
   AccountAdminUpdateDto,
 } from './admin.dto';
-import { AccountAdmin } from './admin.entity';
+import { AccountAdmin, ACCOUNT_ADMIN_STATUS } from './admin.entity';
 import { AccountAdminService } from './admin.service';
 
 @ApiTags('管理员账号')
 @Controller('admin')
 export class AccountAdminController {
   constructor(private readonly accountAdminService: AccountAdminService) {}
+
+  @Post('login')
+  @ApiOperation('登录')
+  login(@Body() data: AccountLoginDto) {
+    return this.accountAdminService.login(data, (one: AccountAdmin) => {
+      if (one.status !== 1) throw new UnauthorizedException(`账号${ACCOUNT_ADMIN_STATUS[one.status]}`);
+    });
+  }
 
   @Get()
   @ApiOperation('查询列表')

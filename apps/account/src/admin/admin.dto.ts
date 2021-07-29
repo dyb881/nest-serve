@@ -1,12 +1,12 @@
 import { PaginationDto, AccountPaginationQueryDto, AccountCreateDto, AccountUpdateDto } from '@app/public-class';
 import { IsIn, ApiProperty, IsNotEmpty, ToNumber, IsOptional, ApiPropertyEnum } from '@app/public-decorator';
-import { accountAdminStatus, AccountAdmin } from './admin.entity';
+import { ACCOUNT_ADMIN_STATUS, AccountAdmin } from './admin.entity';
 
 /**
  * 属性验证
  */
 export const ValidatorAccountAdmin = {
-  STATUS: IsIn(accountAdminStatus, '状态'),
+  STATUS: IsIn(ACCOUNT_ADMIN_STATUS, '状态'),
 };
 
 /**
@@ -24,7 +24,7 @@ export class AccountAdminPaginationQueryDto extends AccountPaginationQueryDto {
   @ToNumber()
   @IsOptional()
   @ValidatorAccountAdmin.STATUS
-  @ApiPropertyEnum('状态', accountAdminStatus, { required: false })
+  @ApiPropertyEnum('状态', ACCOUNT_ADMIN_STATUS, { required: false })
   status?: number;
 }
 
@@ -37,7 +37,7 @@ export class AccountAdminCreateDto extends AccountCreateDto {
   roleId: string;
 
   @ValidatorAccountAdmin.STATUS
-  @ApiPropertyEnum('状态', accountAdminStatus)
+  @ApiPropertyEnum('状态', ACCOUNT_ADMIN_STATUS)
   status: number;
 }
 
@@ -52,6 +52,6 @@ export class AccountAdminUpdateDto extends AccountUpdateDto {
   @ToNumber()
   @IsOptional()
   @ValidatorAccountAdmin.STATUS
-  @ApiPropertyEnum('状态', accountAdminStatus, { required: false })
+  @ApiPropertyEnum('状态', ACCOUNT_ADMIN_STATUS, { required: false })
   status?: number;
 }
