@@ -3,9 +3,9 @@ import { ApiProperty, IsInt, ToNumber } from '@app/public-decorator';
 /**
  * 分页对象
  */
-export function PaginationDto<T>(_Dto: T) {
+export function PaginationDto<T>(Dto: T) {
   class PaginationDto {
-    @ApiProperty('列表', { type: [_Dto] })
+    @ApiProperty('列表', { type: [Dto] })
     list: T[];
 
     @ApiProperty('总数')

@@ -2,7 +2,7 @@ import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nes
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { LoggerService } from '@app/public-module';
-import { toIp } from '@app/public-tool';
+import { toIp } from './data';
 
 export interface Response<T> {
   code: number;

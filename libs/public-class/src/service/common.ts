@@ -1,0 +1,65 @@
+import { BadRequestException } from '@nestjs/common';
+import { Repository, FindConditions, FindOneOptions, SelectQueryBuilder } from 'typeorm';
+import { TransformClassToPlain } from 'class-transformer';
+import { toWhere } from '@app/public-tool';
+import { IdsDto } from '../dto';
+
+/**
+ * 公用服务<数据实体，查询，创建，更新>
+ * 数据实体必填，其他默认 any
+ */
+export function CommonService<CreateDto = any, UpdateDto = any, Entity = any>(_Entity: Entity) {
+  class CommonService {
+    constructor(readonly repository: Repository<Entity>) {}
+
+    /**
+     * 查询所有数据
+     * @param {FindConditions<Entity>} conditions 查询条件
+     * @param updateQueryBuilder 更新查询构造器
+     */
+    @TransformClassToPlain()
+    getMany(
+      conditions: FindConditions<Entity>,
+      updateQueryBuilder?: <T extends SelectQueryBuilder<Entity>>(query: T) => T
+    ) {
+      let queryBuilder = this.repository.createQueryBuilder().where(toWhere(conditions));
+      queryBuilder = updateQueryBuilder?.(queryBuilder) || queryBuilder.addOrderBy('create_date', 'DESC');
+      return queryBuilder.getMany();
+    }
+
+    /**
+     * 查询一条数据
+     */
+    @TransformClassToPlain()
+    async findOne(conditions: string | FindConditions<Entity>, options?: FindOneOptions<Entity>) {
+      const one = await this.repository.findOne(conditions, options);
+      if (!one) throw new BadRequestException('该数据不存在');
+      return one;
+    }
+
+    /**
+     * 创建数据
+     */
+    async create(data: CreateDto) {
+      await this.repository.save(data);
+    }
+
+    /**
+     * 更新数据
+     */
+    async update(id: string, data: UpdateDto) {
+      const res = await this.repository.update(id, data);
+      console.log(res);
+    }
+
+    /**
+     * 删除数据
+     */
+    async delete(ids: IdsDto['ids']) {
+      if (Array.isArray(ids) && !ids.length) throw new BadRequestException('ids 不可为空');
+      await this.repository.delete(ids);
+    }
+  }
+
+  return class extends CommonService {};
+}

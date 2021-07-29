@@ -15,7 +15,7 @@ import redisStore from 'cache-manager-redis-store';
 import { diskStorage } from 'multer';
 import { load } from 'js-yaml';
 import { merge } from 'lodash';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import nuid from 'nuid';
 
 export interface GlobalModuleOptions {
@@ -97,7 +97,7 @@ export class GlobalModule {
                 // 在此处自定义保存后的文件名称
                 filename: (_req, { originalname }, cb) => {
                   // 当前日期
-                  const day = dayjs().format('YYYY-MM-DD');
+                  const day = moment().format('YYYY-MM-DD');
 
                   // 不存在文件夹则创建
                   const folder = `${path}/${day}`;

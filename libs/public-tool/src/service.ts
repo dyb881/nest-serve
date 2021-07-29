@@ -26,17 +26,17 @@ export const insNull = (data: object, keys: string[]) => {
  * 转为筛选条件对象
  */
 export const toWhere = (where: any) => {
-  // 过滤空值
-  where = pickBy(where, (v) => ![undefined, null, ''].includes(v));
-
   // 转化
   where = mapValues(where, (v) => {
+    // 如果查询值为数组，则使用 in 的
     if (Array.isArray(v)) {
-      // 如果查询值为数组，则使用 in 的
       v = v.length ? In(v) : undefined;
     }
     return v;
   });
+
+  // 过滤空值
+  where = pickBy(where, (v) => ![undefined, null, ''].includes(v));
 
   return where;
 };

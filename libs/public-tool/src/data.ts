@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import moment from 'moment';
 
 // ---------------------- URL 相关数据转化 ---------------------- //
 
@@ -23,10 +23,17 @@ export enum Precision {
   Year = 'YYYY', // 年
 }
 
+setTimeout(() => {
+  console.log(moment);
+}, 3000);
+
 /**
  * 时间格式化
  */
-export const format = (value?: any, template = Precision.Second) => value && dayjs(value).format(template);
+export const format = (value?: any, template = Precision.Second) => {
+  console.log(moment);
+  return value && moment(value).format(template);
+};
 
 // ---------------------- 时间相关数据转化 ---------------------- //
 
