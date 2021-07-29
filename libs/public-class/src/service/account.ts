@@ -1,6 +1,7 @@
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
+import { insNull, insLike } from '@app/public-tool';
 import { PaginationQueryDto, AccountCreateDto, AccountUpdateDto, AccountLoginDto } from '../dto';
 import { AccountEntity } from '../entity';
 import { PaginationService } from './pagination';
@@ -22,11 +23,11 @@ export function AccountPaginationService<
     }
 
     /**
-     * 验证用户名是否存在
+     * 给账号固定参数加上模糊查询
      */
-    async isUsernameExist(username: string) {
-      const one = await this.repository.findOne({ username });
-      if (one) throw new BadRequestException('用户名已存在');
+    pagination(data: QueryDto) {
+      insLike(data, ['username', 'phone', 'nickname']);
+      return super.pagination(data);
     }
 
     /**
@@ -35,6 +36,22 @@ export function AccountPaginationService<
     async create(data: CreateDto) {
       await this.isUsernameExist(data.username);
       await super.create(data);
+    }
+
+    /**
+     * 给账号固定参数插入null，避免参数为空时修改失败
+     */
+    update(id: string, data: UpdateDto) {
+      insNull(data, ['phone', 'avatar']);
+      return super.update(id, data);
+    }
+
+    /**
+     * 验证用户名是否存在
+     */
+    async isUsernameExist(username: string) {
+      const one = await this.repository.findOne({ username });
+      if (one) throw new BadRequestException('用户名已存在');
     }
 
     /**

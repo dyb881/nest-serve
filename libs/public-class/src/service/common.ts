@@ -49,7 +49,7 @@ export function CommonService<CreateDto = any, UpdateDto = any, Entity = any>(_E
      */
     async update(id: string, data: UpdateDto) {
       const res = await this.repository.update(id, data);
-      console.log(res);
+      if (res.affected === 0) throw new BadRequestException('该数据不存在');
     }
 
     /**
