@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Query, Body, UnauthorizedException } from '@nestjs/common';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
-import { AccountLoginDto, CrudController } from '@app/public-class';
+import { AccountLoginDto, PaginationController } from '@app/public-class';
 import {
   AccountAdminPaginationDto,
   AccountAdminPaginationQueryDto,
@@ -13,7 +13,11 @@ import { AccountAdminService } from './admin.service';
 
 @ApiTags('管理员账号')
 @Controller('admin')
-export class AccountAdminController extends CrudController<AccountAdminCreateDto, AccountAdminUpdateDto>(AccountAdmin) {
+export class AccountAdminController extends PaginationController<
+  AccountAdminPaginationQueryDto,
+  AccountAdminCreateDto,
+  AccountAdminUpdateDto
+>(AccountAdmin, AccountAdminPaginationDto) {
   constructor(private readonly accountAdminService: AccountAdminService) {
     super(accountAdminService);
   }
@@ -24,12 +28,5 @@ export class AccountAdminController extends CrudController<AccountAdminCreateDto
     return this.accountAdminService.login(data, (one: AccountAdmin) => {
       if (one.status !== 1) throw new UnauthorizedException(`账号${ACCOUNT_ADMIN_STATUS[one.status]}`);
     });
-  }
-
-  @Get()
-  @ApiOperation('查询列表')
-  @ApiResponse({ status: 200, type: AccountAdminPaginationDto })
-  pagination(@Query() data: AccountAdminPaginationQueryDto) {
-    return this.accountAdminService.pagination(data);
   }
 }
