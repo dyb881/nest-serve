@@ -5,11 +5,10 @@ import { toWhere } from '@app/public-tool';
 import { IdsDto } from '../dto';
 
 /**
- * 公用服务<数据实体，查询，创建，更新>
- * 数据实体必填，其他默认 any
+ * 增刪查改服务
  */
-export function CommonService<CreateDto = any, UpdateDto = any, Entity = any>(_Entity: Entity) {
-  class CommonService {
+export function CrudService<CreateDto = any, UpdateDto = any, Entity = any>(_Entity: Entity) {
+  class CrudService {
     constructor(readonly repository: Repository<Entity>) {}
 
     /**
@@ -19,10 +18,11 @@ export function CommonService<CreateDto = any, UpdateDto = any, Entity = any>(_E
      */
     @TransformClassToPlain()
     getMany(
-      conditions: FindConditions<Entity>,
+      conditions?: FindConditions<Entity>,
       updateQueryBuilder?: <T extends SelectQueryBuilder<Entity>>(query: T) => T
     ) {
-      let queryBuilder = this.repository.createQueryBuilder().where(toWhere(conditions));
+      let queryBuilder = this.repository.createQueryBuilder();
+      if (conditions) queryBuilder = queryBuilder.where(toWhere(conditions));
       queryBuilder = updateQueryBuilder?.(queryBuilder) || queryBuilder.addOrderBy('create_date', 'DESC');
       return queryBuilder.getMany();
     }
@@ -61,5 +61,5 @@ export function CommonService<CreateDto = any, UpdateDto = any, Entity = any>(_E
     }
   }
 
-  return class extends CommonService {};
+  return class extends CrudService {};
 }

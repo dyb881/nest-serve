@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Put, Delete, Query, Param, Body, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Query, Body, UnauthorizedException } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
-import { IdsDto, AccountLoginDto } from '@app/public-class';
+import { AccountLoginDto, CrudController } from '@app/public-class';
 import {
   AccountAdminPaginationDto,
   AccountAdminPaginationQueryDto,
@@ -13,8 +13,10 @@ import { AccountAdminService } from './admin.service';
 
 @ApiTags('管理员账号')
 @Controller('admin')
-export class AccountAdminController {
-  constructor(private readonly accountAdminService: AccountAdminService) {}
+export class AccountAdminController extends CrudController<AccountAdminCreateDto, AccountAdminUpdateDto>(AccountAdmin) {
+  constructor(private readonly accountAdminService: AccountAdminService) {
+    super(accountAdminService);
+  }
 
   @Post('login')
   @ApiOperation('登录')
@@ -27,32 +29,7 @@ export class AccountAdminController {
   @Get()
   @ApiOperation('查询列表')
   @ApiResponse({ status: 200, type: AccountAdminPaginationDto })
-  findAll(@Query() data: AccountAdminPaginationQueryDto) {
+  pagination(@Query() data: AccountAdminPaginationQueryDto) {
     return this.accountAdminService.pagination(data);
-  }
-
-  @Get(':id')
-  @ApiOperation('查询详情')
-  @ApiResponse({ status: 200, type: AccountAdmin })
-  findOne(@Param('id') id: string) {
-    return this.accountAdminService.findOne(id);
-  }
-
-  @Post()
-  @ApiOperation('添加')
-  async create(@Body() data: AccountAdminCreateDto) {
-    await this.accountAdminService.create(data);
-  }
-
-  @Put(':id')
-  @ApiOperation('编辑')
-  async update(@Param('id') id: string, @Body() data: AccountAdminUpdateDto) {
-    await this.accountAdminService.update(id, data);
-  }
-
-  @Delete()
-  @ApiOperation('删除')
-  async deletes(@Body() { ids }: IdsDto) {
-    await this.accountAdminService.delete(ids);
   }
 }

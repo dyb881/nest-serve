@@ -2,7 +2,7 @@ import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
 import { insNull, insLike } from '@app/public-tool';
-import { PaginationQueryDto, AccountCreateDto, AccountUpdateDto, AccountLoginDto } from '../dto';
+import { AccountPaginationQueryDto, AccountCreateDto, AccountUpdateDto, AccountLoginDto } from '../dto';
 import { AccountEntity } from '../entity';
 import { PaginationService } from './pagination';
 import { sha512 } from 'js-sha512';
@@ -12,12 +12,12 @@ import { sha512 } from 'js-sha512';
  * 账号类型拓展
  */
 export function AccountPaginationService<
-  QueryDto extends PaginationQueryDto = any,
+  QueryDto extends AccountPaginationQueryDto = any,
   CreateDto extends AccountCreateDto = any,
   UpdateDto extends AccountUpdateDto = any,
   Entity extends AccountEntity = any
 >(_Entity: Entity) {
-  class AccountPaginationService extends PaginationService<QueryDto, CreateDto, UpdateDto>(_Entity) {
+  class AccountPaginationService extends PaginationService<QueryDto, CreateDto, UpdateDto, Entity>(_Entity) {
     constructor(readonly repository: Repository<Entity>) {
       super(repository);
     }

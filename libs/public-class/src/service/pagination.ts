@@ -2,7 +2,7 @@ import { Repository, SelectQueryBuilder } from 'typeorm';
 import { TransformClassToPlain } from 'class-transformer';
 import { toWhere, getPaginationData } from '@app/public-tool';
 import { PaginationQueryDto } from '../dto';
-import { CommonService } from './common';
+import { CrudService } from './crud';
 
 /**
  * 分页服务
@@ -13,7 +13,7 @@ export function PaginationService<
   UpdateDto = any,
   Entity = any
 >(_Entity: Entity) {
-  class PaginationService extends CommonService<CreateDto, UpdateDto>(_Entity) {
+  class PaginationService extends CrudService<CreateDto, UpdateDto, Entity>(_Entity) {
     constructor(readonly repository: Repository<Entity>) {
       super(repository);
     }
