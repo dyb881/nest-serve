@@ -33,6 +33,6 @@ export class PaginationQueryDto {
  * ID 数组
  */
 export class IdsDto {
-  @ApiProperty('ID 数组', { required: false })
+  @ApiProperty('ID数组')
   ids: string[];
 }

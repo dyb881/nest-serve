@@ -2,22 +2,24 @@ import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { AccountLoginDto, PaginationController } from '@app/public-class';
+import { AccountAdminService } from './admin.service';
+import { AccountAdmin, ACCOUNT_ADMIN_STATUS } from './admin.entity';
 import {
-  AccountAdminPaginationDto,
-  AccountAdminPaginationQueryDto,
   AccountAdminCreateDto,
   AccountAdminUpdateDto,
+  AccountAdminPaginationQueryDto,
+  AccountAdminPaginationDto,
 } from './admin.dto';
-import { AccountAdmin, ACCOUNT_ADMIN_STATUS } from './admin.entity';
-import { AccountAdminService } from './admin.service';
 
 @ApiTags('管理员账号')
 @Controller('admin')
-export class AccountAdminController extends PaginationController<
-  AccountAdminPaginationQueryDto,
+export class AccountAdminController extends PaginationController(
   AccountAdminCreateDto,
-  AccountAdminUpdateDto
->(AccountAdmin, AccountAdminPaginationDto) {
+  AccountAdminUpdateDto,
+  AccountAdmin,
+  AccountAdminPaginationQueryDto,
+  AccountAdminPaginationDto
+) {
   constructor(private readonly accountAdminService: AccountAdminService) {
     super(accountAdminService);
   }

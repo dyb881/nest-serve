@@ -1,26 +1,26 @@
 import { Get, Query } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
-import { PaginationQueryDto } from '../dto';
 import { CrudController } from './crud';
 
 /**
  * 分页控制器
  */
 export function PaginationController<
-  QueryDto extends PaginationQueryDto = any,
-  CreateDto = any,
-  UpdateDto = any,
+  CreateDto extends Function = any,
+  UpdateDto extends Function = any,
   Entity extends Function = any,
+  QueryDto extends Function = any,
   PaginationDto extends Function = any
->(_Entity: Entity, _PaginationDto: PaginationDto) {
-  class PaginationController extends CrudController<CreateDto, UpdateDto, Entity>(_Entity) {
+>(_CreateDto: CreateDto, _UpdateDto: UpdateDto, _Entity: Entity, _QueryDto: QueryDto, _PaginationDto: PaginationDto) {
+  class PaginationController extends CrudController(_CreateDto, _UpdateDto, _Entity) {
     constructor(readonly service: any) {
       super(service);
     }
 
     @Get()
-    @ApiOperation('查询列表')
+    @ApiOperation('查询分页列表')
+    @ApiQuery({ type: _QueryDto })
     @ApiResponse({ status: 200, type: _PaginationDto })
     pagination(@Query() data: QueryDto) {
       return this.service.pagination(data);
