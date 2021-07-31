@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { rootPath, HttpExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { LoggerModule } from '../logger';
+import { AliSmsModule } from '../aliSms';
 
 import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { join, extname } from 'path';
@@ -14,7 +15,7 @@ import { join, extname } from 'path';
 import redisStore from 'cache-manager-redis-store';
 import { diskStorage } from 'multer';
 import { load } from 'js-yaml';
-import { merge } from 'lodash';
+import { merge, cloneDeepWith } from 'lodash';
 import moment from 'moment';
 import nuid from 'nuid';
 
@@ -24,6 +25,7 @@ export interface GlobalModuleOptions {
   multer?: boolean; // 开启 multer 文件上传模块
   cache?: boolean; // 开启缓存模块
   jwt?: boolean; // 开启 jwt 鉴权模块
+  aliSms?: boolean; // 开启阿里云短信模块
 }
 
 /**
@@ -35,7 +37,7 @@ export class GlobalModule {
    * 全局模块初始化
    */
   static forRoot(options: GlobalModuleOptions): DynamicModule {
-    const { yamlFilePath = [], typeorm, multer, cache, jwt } = options || {};
+    const { yamlFilePath = [], typeorm, multer, cache, jwt, aliSms } = options || {};
 
     const imports: DynamicModule['imports'] = [
       // 配置模块
@@ -45,7 +47,14 @@ export class GlobalModule {
         load: [
           () => {
             let configs: any = {};
-            const configPath = ['config.yaml', `${process.env.NODE_ENV || 'development'}.yaml`, ...yamlFilePath];
+            const configPath = [
+              'config.yaml',
+              'config.file.yaml',
+              'config.jwt.yaml',
+              'config.ali.yaml',
+              `${process.env.NODE_ENV || 'development'}.yaml`,
+              ...yamlFilePath,
+            ];
             for (let path of configPath) {
               try {
                 // 读取并解析配置文件
@@ -53,6 +62,10 @@ export class GlobalModule {
                 if (existsSync(filePath)) configs = merge(configs, load(readFileSync(filePath, 'utf8')));
               } catch {}
             }
+            // 递归将 null 转 空字符串
+            configs = cloneDeepWith(configs, (value) => {
+              if (value === null) return '';
+            });
             return configs;
           },
         ],
@@ -121,9 +134,9 @@ export class GlobalModule {
       imports.push(
         CacheModule.registerAsync({
           useFactory: (configService: ConfigService) => {
-            const cache = configService.get('cache');
+            const { redis } = configService.get('cache');
             // 使用 redis 做缓存服务
-            return cache.redis?.host ? { store: redisStore, ...cache.redis } : {};
+            return redis?.host ? { store: redisStore, ...redis } : {};
           },
           inject: [ConfigService],
         })
@@ -137,6 +150,20 @@ export class GlobalModule {
           useFactory: (configService: ConfigService) => {
             const { secret, expiresIn } = configService.get('jwt');
             return { secret, signOptions: { expiresIn } };
+          },
+          inject: [ConfigService],
+        })
+      );
+    }
+
+    // 开启阿里云短信模块
+    if (aliSms) {
+      imports.push(
+        AliSmsModule.forRoot({
+          isGlobal: true,
+          useFactory: (configService: ConfigService) => {
+            const { accessKeyId, accessKeySecret } = configService.get('ali');
+            return { accessKeyId, accessKeySecret };
           },
           inject: [ConfigService],
         })

@@ -1,0 +1,17 @@
+# 阿里云相关服务配置
+
+ali:
+  accessKeyId:
+  accessKeySecret:
+
+# OSS配置
+
+oss:
+  bucket:
+  region:
+
+# OSS绑定的域名，不填则使用默认域名
+
+oss_domain:
+  protocol:
+  host:

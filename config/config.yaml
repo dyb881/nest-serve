@@ -2,56 +2,35 @@
 
 serve:
   port: 3100
-  prefix: '' # 路径前缀
+  prefix: # 路径前缀
 
 # 数据库配置
 
 db:
-  type: 'mysql'
-  host: 'localhost'
-  port: '3306'
-  username: 'root'
-  password: 'root'
-  database: 'nest_serve_db'
+  type: mysql
+  host: localhost
+  port: 3306
+  username: root
+  password: root
+  database: nest_serve_db
   synchronize: true # 自动同步表
 
 # 缓存配置
 
 cache:
   redis: # 有值时，使用 redis 做缓存服务器
-    host: ''
-    port: ''
+    host:
+    port:
 
 # Swagger 配置
 
 swagger:
-  title: '接口文档'
-  description: 'code:状态码，message:提示信息，data:返回值'
-  path: 'swagger'
+  title: 接口文档
+  description: code:状态码，message:提示信息，data:返回值
+  path: swagger
 
 # 路径配置配置
 
 path:
-  log: 'logs' # 日志存放目录
-  upload: 'uploads' # 上传文件存放目录
-
-# 鉴权配置
-
-jwt:
-  secret: 'nestservedyb881' # 加密串，生产环境必须更改
-  expiresIn: '36000s' # 过期时间
-
-
-# OSS配置
-
-oss:
-  accessKeyId: ''
-  accessKeySecret: ''
-  bucket: ''
-  region: ''
-
-# OSS绑定的域名，不填则使用默认域名
-
-oss_domain:
-  protocol: 'https:'
-  host: ''
+  log: logs # 日志存放目录
+  upload: uploads # 上传文件存放目录

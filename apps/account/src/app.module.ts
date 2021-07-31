@@ -5,7 +5,7 @@ import { AccountUserModule } from './user/user.module';
 
 @Module({
   imports: [
-    GlobalModule.forRoot({ yamlFilePath: ['apps/account.yaml'], typeorm: true }),
+    GlobalModule.forRoot({ yamlFilePath: ['apps/account.yaml'], typeorm: true, aliSms: true }),
     AccountAdminModule, // 管理员账号
     AccountUserModule, // 用户账号
   ],
