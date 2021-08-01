@@ -4,13 +4,16 @@ jwt:
   secret: nestservedyb881 # 加密串，生产环境必须更改
   expiresIn: 36000s # 过期时间
 
-# 权限动作
-
-permissionAction: [query, create, update, delete]
-
 # 权限配置
 
-permissions:
-  account: [adminRole, admin, user]
-  infos: [category, information]
-  system: [files]
+permission:
+  # 权限动作
+  actions: [query, create, update, delete]
+  # 权限模块
+  apps:
+    # 账号模块
+    account: [adminRole, admin, user]
+    # 信息模块
+    infos: [category, information]
+    # 系统模块
+    system: [files, aliSms]

@@ -86,6 +86,7 @@ export class AccountEntity extends CommonEntity {
 }
 ```
 
+- controller 常用的控制器类
 - dto 接口参数类型定义，以及对于 swagger 的注解
 - entity 公用的数据库实体类
 - service 公用的服务类，自带 CRUD，继承即可使用（待优化）
