@@ -5,7 +5,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 
-import { rootPath, HttpExceptionFilter, TransformInterceptor } from '@app/public-tool';
+import { rootPath, AllExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { LoggerModule } from '../logger';
 import { AliSmsModule } from '../aliSms';
 
@@ -177,7 +177,7 @@ export class GlobalModule {
         // 全局使用验证管道，并统一报错处理
         { provide: APP_PIPE, useClass: ValidationPipe },
         // 异常过滤器
-        { provide: APP_FILTER, useClass: HttpExceptionFilter },
+        { provide: APP_FILTER, useClass: AllExceptionFilter },
         // 响应参数转化拦截器
         { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
       ],

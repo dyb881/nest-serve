@@ -1,6 +1,7 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
-import { Response } from 'express';
+import { TcpContext } from '@nestjs/microservices';
 import { LoggerService } from '@app/public-module';
+import { throwError } from 'rxjs';
 
 const line = '-'.repeat(50);
 
@@ -8,19 +9,18 @@ const line = '-'.repeat(50);
  * 报错过滤器
  */
 @Catch()
-export class HttpExceptionFilter<T> implements ExceptionFilter {
+export class AllExceptionFilter implements ExceptionFilter {
   constructor(private readonly loggerService: LoggerService) {}
 
-  catch(exception: T, host: ArgumentsHost) {
+  catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
+    const response = ctx.getResponse();
 
     let errorLog = exception;
     let code = HttpStatus.INTERNAL_SERVER_ERROR;
     let error = 'Internal Server Error';
     let msg;
 
-    // 请求错误
     if (exception instanceof HttpException) {
       const res = exception.getResponse();
       if (typeof res !== 'string') {
@@ -29,6 +29,11 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
         error = err;
         msg = Array.isArray(message) ? message[0] : message;
       }
+    } else if (exception.response) {
+      const { statusCode, message, error: err = message } = exception.response;
+      code = statusCode;
+      error = err;
+      msg = Array.isArray(message) ? message[0] : message;
     } else {
       this.loggerService.error(errorLog, '服务运行错误');
     }
@@ -41,6 +46,10 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
     // 错误日志
     this.loggerService.error(resJson, '响应错误');
     this.loggerService.log(line, '请求结束');
+
+    if (response instanceof TcpContext) {
+      return throwError(exception);
+    }
 
     response.status(code).json(resJson);
   }

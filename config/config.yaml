@@ -32,5 +32,5 @@ swagger:
 # 路径配置配置
 
 path:
-  log: logs # 日志存放目录
+  log: apps # 日志存放目录
   upload: uploads # 上传文件存放目录

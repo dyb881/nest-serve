@@ -1,4 +1,5 @@
 import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { AccountLoginDto, PaginationController } from '@app/public-class';
@@ -24,6 +25,7 @@ export class AccountAdminController extends PaginationController(
     super(accountAdminService);
   }
 
+  @MessagePattern(`${AccountAdmin.name}Login`)
   @Post('login')
   @ApiOperation('登录')
   login(@Body() data: AccountLoginDto) {
