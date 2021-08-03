@@ -4,7 +4,7 @@ import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
-    GlobalModule.forRoot({ yamlFilePath: ['apps/admin.yaml'], microservice: ['ACCOUNT_SERVICE'] }),
+    GlobalModule.forRoot({ yamlFilePath: ['apps/admin.yaml'], microservice: ['ACCOUNT_SERVICE'], cache: true }),
     AccountModule,
   ],
 })
