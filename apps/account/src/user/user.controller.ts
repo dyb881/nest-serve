@@ -1,4 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { AccountLoginDto, PaginationController } from '@app/public-class';
@@ -24,8 +25,9 @@ export class AccountUserController extends PaginationController(
     super(accountAdminService);
   }
 
+  @MessagePattern(`${AccountUser.name}.login`)
   @Post('login')
-  @ApiOperation('登录')
+  @ApiOperation(`登录：${AccountUser.name}.login`)
   login(@Body() data: AccountLoginDto) {
     return this.accountAdminService.login(data);
   }

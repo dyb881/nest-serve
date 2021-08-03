@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { CrudController } from '@app/public-class';
@@ -13,9 +14,10 @@ export class AdminRoleController extends CrudController(AdminRole, AdminRoleCrea
     super(adminRoleService);
   }
 
-  @Get('permission-config')
-  @ApiOperation('获取权限配置')
-  getDefaultConfig() {
+  @MessagePattern(`${AdminRole.name}.get.config`)
+  @Get('config')
+  @ApiOperation(`获取权限配置：${AdminRole.name}.get.config`)
+  getConfig() {
     return this.adminRoleService.getPermissionConfig();
   }
 }

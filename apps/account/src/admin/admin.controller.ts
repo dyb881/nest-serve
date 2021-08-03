@@ -25,9 +25,9 @@ export class AccountAdminController extends PaginationController(
     super(accountAdminService);
   }
 
-  @MessagePattern(`${AccountAdmin.name}Login`)
+  @MessagePattern(`${AccountAdmin.name}.login`)
   @Post('login')
-  @ApiOperation('登录')
+  @ApiOperation(`登录：${AccountAdmin.name}.login`)
   login(@Body() data: AccountLoginDto) {
     return this.accountAdminService.login(data, (one: AccountAdmin) => {
       if (one.status !== 1) throw new UnauthorizedException(`账号${ACCOUNT_ADMIN_STATUS[one.status]}`);

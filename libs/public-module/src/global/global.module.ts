@@ -1,6 +1,7 @@
 import { APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { Module, DynamicModule, ValidationPipe, CacheModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientsModule } from '@nestjs/microservices';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
@@ -21,6 +22,7 @@ import nuid from 'nuid';
 
 export interface GlobalModuleOptions {
   yamlFilePath?: string[]; // 配置文件路径
+  microservice?: string[]; // 开启微服务模块
   typeorm?: boolean; // 开启 orm 模块
   multer?: boolean; // 开启 multer 文件上传模块
   cache?: boolean; // 开启缓存模块
@@ -37,7 +39,7 @@ export class GlobalModule {
    * 全局模块初始化
    */
   static forRoot(options: GlobalModuleOptions): DynamicModule {
-    const { yamlFilePath = [], typeorm, multer, cache, jwt, aliSms } = options || {};
+    const { yamlFilePath = [], microservice, typeorm, multer, cache, jwt, aliSms } = options || {};
 
     const imports: DynamicModule['imports'] = [
       // 配置模块
@@ -49,6 +51,7 @@ export class GlobalModule {
             let configs: any = {};
             const configPath = [
               'config.yaml',
+              'config.microservice.yaml',
               'config.file.yaml',
               'config.jwt.yaml',
               'config.ali.yaml',
@@ -81,7 +84,24 @@ export class GlobalModule {
       }),
     ];
 
-    // 启动 orm
+    // 开启微服务模块
+    if (microservice) {
+      imports.push({
+        ...ClientsModule.registerAsync(
+          microservice.map((name) => ({
+            name,
+            useFactory: (configService: ConfigService) => {
+              const microserviceClient = configService.get(`microserviceClients.${name}`);
+              return microserviceClient;
+            },
+            inject: [ConfigService],
+          }))
+        ),
+        global: true,
+      });
+    }
+
+    // 启动 orm 模块
     if (typeorm) {
       imports.push(
         TypeOrmModule.forRootAsync({

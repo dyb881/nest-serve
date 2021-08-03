@@ -1,0 +1,30 @@
+# 微服务配置
+
+# 微服务 transport 常量
+
+# TCP = 0,
+# REDIS = 1,
+# NATS = 2,
+# MQTT = 3,
+# GRPC = 4,
+# RMQ = 5,
+# KAFKA = 6
+
+# 服务端配置
+
+microservices:
+  - transport: 0
+    options:
+      host: localhost
+      port:
+
+# 客户端配置
+
+# microserviceClients.key 主要用于 @Inject(name)
+
+microserviceClients:
+  ACCOUNT_SERVICE:
+    transport: 0
+    options:
+      host: localhost
+      port:

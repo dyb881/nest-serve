@@ -1,4 +1,5 @@
 import { Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { ApiResponse, ApiBody } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { IdsDto } from '@app/public-class';
@@ -14,38 +15,43 @@ export function CrudController<
   class CrudController {
     constructor(readonly service: any) {}
 
+    @MessagePattern(`${_Entity.name}.get.all`)
     @Get('all')
-    @ApiOperation('查询所有')
+    @ApiOperation(`查询所有：${_Entity.name}.get.all`)
     @ApiResponse({ status: 200, type: [_Entity] })
     getMany() {
       return this.service.getMany();
     }
 
+    @MessagePattern(`${_Entity.name}.get.one`)
     @Get(':id')
-    @ApiOperation('查询详情')
+    @ApiOperation(`查询详情：${_Entity.name}.get.one`)
     @ApiResponse({ status: 200, type: _Entity })
     findOne(@Param('id') id: string) {
       return this.service.findOne(id);
     }
 
+    @MessagePattern(`${_Entity.name}.create`)
     @Post()
-    @ApiOperation('添加')
+    @ApiOperation(`添加：${_Entity.name}.create`)
     @ApiBody({ type: _CreateDto })
     async create(@Body() data: CreateDto) {
       await this.service.create(data);
     }
 
+    @MessagePattern(`${_Entity.name}.update`)
     @Put(':id')
-    @ApiOperation('编辑')
+    @ApiOperation(`编辑：${_Entity.name}.update`)
     @ApiBody({ type: _UpdateDto })
     async update(@Param('id') id: string, @Body() data: UpdateDto) {
       await this.service.update(id, data);
     }
 
+    @MessagePattern(`${_Entity.name}.delete`)
     @Delete()
-    @ApiOperation('删除')
+    @ApiOperation(`删除：${_Entity.name}.delete`)
     @ApiBody({ type: IdsDto })
-    async deletes(@Body() { ids }: IdsDto) {
+    async delete(@Body() { ids }: IdsDto) {
       await this.service.delete(ids);
     }
   }

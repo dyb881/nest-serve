@@ -8,7 +8,7 @@ export interface AliSmsModuleAsyncOptions {
 }
 
 /**
- * 日志模块
+ * 阿里云短信模块
  */
 @Module({})
 export class AliSmsModule {

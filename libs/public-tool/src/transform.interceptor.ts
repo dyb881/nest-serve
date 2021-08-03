@@ -36,8 +36,8 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
       this.loggerService.log(res.getPattern(), 'TCP 请求');
       Object.keys(req).length && this.loggerService.log(req, '请求参数');
     } else {
-      const { url, ip, method, body } = req;
-      this.loggerService.log(url, `${toIp(ip)} ${method}`);
+      const { url, clientIp, method, body } = req;
+      this.loggerService.log(url, `${toIp(clientIp)} ${method}`);
       Object.keys(body).length && this.loggerService.log(body, '请求参数');
       // 响应参数转化为统一格式
       resNext = resNext.pipe(map((data) => ({ code: res.statusCode, data })));

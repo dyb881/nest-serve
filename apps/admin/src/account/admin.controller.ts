@@ -8,11 +8,11 @@ import 'rxjs';
 @ApiTags('管理员账号')
 @Controller('admin')
 export class AccountAdminController {
-  constructor(@Inject('MATH_SERVICE') private readonly client: ClientProxy) {}
+  constructor(@Inject('ACCOUNT_SERVICE') private readonly client: ClientProxy) {}
 
   @Post('login')
   @ApiOperation('登录')
   login(@Body() data: AccountLoginDto) {
-    return this.client.send('AccountAdminLogin', data);
+    return this.client.send('AccountAdmin.login', data);
   }
 }

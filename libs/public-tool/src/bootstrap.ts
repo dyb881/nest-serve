@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { NestApplicationOptions, INestApplication } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { MicroserviceOptions } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { LoggerService } from '@app/public-module';
 import { mw } from 'request-ip';
@@ -26,8 +26,10 @@ export async function bootstrap(module: any, bootstrapOptions?: BootstrapOptions
   // 获取客户端真实IP
   app.use(mw());
 
-  // 获取配置
+  // 获取配置服务
   const configService = app.get(ConfigService);
+
+  // 服务配置
   const serve = configService.get('serve');
 
   // 注入日志
@@ -49,9 +51,12 @@ export async function bootstrap(module: any, bootstrapOptions?: BootstrapOptions
   SwaggerModule.setup(swagger.path, app, document);
 
   // 使用微服务
-  if (microservice) {
+  const microservices = configService.get('microservices');
+  if (microservice && microservices?.length) {
     // 连接微服务
-    app.connectMicroservice<MicroserviceOptions>({ transport: Transport.TCP }, { inheritAppConfig: true });
+    for (let item of microservices) {
+      app.connectMicroservice<MicroserviceOptions>(item, { inheritAppConfig: true });
+    }
 
     // 启动所有微服务
     await app.startAllMicroservices();
