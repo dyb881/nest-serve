@@ -14,9 +14,9 @@ import {
 @ApiTags('用户账号')
 @Controller('user')
 export class AccountUserController extends PaginationController(
+  AccountUser,
   AccountUserCreateDto,
   AccountUserUpdateDto,
-  AccountUser,
   AccountUserPaginationQueryDto,
   AccountUserPaginationDto
 ) {

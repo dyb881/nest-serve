@@ -7,13 +7,13 @@ import { CrudController } from './crud';
  * 分页控制器
  */
 export function PaginationController<
+  Entity extends Function = any,
   CreateDto extends Function = any,
   UpdateDto extends Function = any,
-  Entity extends Function = any,
   QueryDto extends Function = any,
   PaginationDto extends Function = any
->(_CreateDto: CreateDto, _UpdateDto: UpdateDto, _Entity: Entity, _QueryDto: QueryDto, _PaginationDto: PaginationDto) {
-  class PaginationController extends CrudController(_CreateDto, _UpdateDto, _Entity) {
+>(_Entity: Entity, _CreateDto: CreateDto, _UpdateDto: UpdateDto, _QueryDto: QueryDto, _PaginationDto: PaginationDto) {
+  class PaginationController extends CrudController(_Entity, _CreateDto, _UpdateDto) {
     constructor(readonly service: any) {
       super(service);
     }

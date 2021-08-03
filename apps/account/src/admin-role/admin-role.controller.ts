@@ -8,7 +8,7 @@ import { AdminRole } from './admin-role.entity';
 
 @ApiTags('管理员角色')
 @Controller('admin-role')
-export class AdminRoleController extends CrudController(AdminRoleCreateDto, AdminRoleUpdateDto, AdminRole) {
+export class AdminRoleController extends CrudController(AdminRole, AdminRoleCreateDto, AdminRoleUpdateDto) {
   constructor(private readonly adminRoleService: AdminRoleService) {
     super(adminRoleService);
   }

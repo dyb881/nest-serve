@@ -7,10 +7,10 @@ import { IdsDto } from '@app/public-class';
  * 增刪查改控制器
  */
 export function CrudController<
+  Entity extends Function = any,
   CreateDto extends Function = any,
-  UpdateDto extends Function = any,
-  Entity extends Function = any
->(_CreateDto: CreateDto, _UpdateDto: UpdateDto, _Entity: Entity) {
+  UpdateDto extends Function = any
+>(_Entity: Entity, _CreateDto: CreateDto, _UpdateDto: UpdateDto) {
   class CrudController {
     constructor(readonly service: any) {}
 

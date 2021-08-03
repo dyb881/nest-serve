@@ -15,9 +15,9 @@ import {
 @ApiTags('管理员账号')
 @Controller('admin')
 export class AccountAdminController extends PaginationController(
+  AccountAdmin,
   AccountAdminCreateDto,
   AccountAdminUpdateDto,
-  AccountAdmin,
   AccountAdminPaginationQueryDto,
   AccountAdminPaginationDto
 ) {
