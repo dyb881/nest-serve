@@ -5,26 +5,26 @@ import { JwtPermissions, Permissions } from '@app/public-module';
 import { ApiOperation } from '@app/public-decorator';
 import { PaginationClientController } from '@app/public-class';
 import { toIp } from '@app/public-tool';
-import { AccountAdmin } from 'apps/account/src/admin/admin.entity';
+import { AccountUser } from 'apps/account/src/user/user.entity';
 import {
-  AccountAdminCreateDto,
-  AccountAdminUpdateDto,
-  AccountAdminPaginationQueryDto,
-  AccountAdminPaginationDto,
-} from 'apps/account/src/admin/admin.dto';
+  AccountUserCreateDto,
+  AccountUserUpdateDto,
+  AccountUserPaginationQueryDto,
+  AccountUserPaginationDto,
+} from 'apps/account/src/user/user.dto';
 
-const PERMISSIONS = 'account.admin';
+const PERMISSIONS = 'account.user';
 
 @JwtPermissions()
-@ApiTags('管理员账号')
-@Controller('account/admin')
-export class AccountAdminController extends PaginationClientController(
+@ApiTags('用户账号')
+@Controller('account/user')
+export class AccountUserController extends PaginationClientController(
   PERMISSIONS,
-  AccountAdmin,
-  AccountAdminCreateDto,
-  AccountAdminUpdateDto,
-  AccountAdminPaginationQueryDto,
-  AccountAdminPaginationDto
+  AccountUser,
+  AccountUserCreateDto,
+  AccountUserUpdateDto,
+  AccountUserPaginationQueryDto,
+  AccountUserPaginationDto
 ) {
   constructor(@Inject('ACCOUNT_SERVICE') readonly client: ClientProxy) {
     super(client);
@@ -33,7 +33,7 @@ export class AccountAdminController extends PaginationClientController(
   @Permissions(`${PERMISSIONS}.create`)
   @Post()
   @ApiOperation('添加')
-  create(@Body() data: AccountAdminCreateDto, @Req() req) {
+  create(@Body() data: AccountUserCreateDto, @Req() req) {
     return super.create({ ...data, reg_ip: toIp(req.clientIp) });
   }
 }

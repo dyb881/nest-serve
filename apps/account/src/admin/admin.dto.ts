@@ -39,6 +39,8 @@ export class AccountAdminCreateDto extends AccountCreateDto {
   @ValidatorAccountAdmin.STATUS
   @ApiPropertyEnum('状态', ACCOUNT_ADMIN_STATUS)
   status: number;
+
+  reg_ip?: string;
 }
 
 /**
