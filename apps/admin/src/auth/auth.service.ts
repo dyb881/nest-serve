@@ -20,11 +20,10 @@ export class AuthService {
    * 生成加密串
    */
   getToken(accountAdmin: AccountAdmin) {
-    const { id, username, roleId } = accountAdmin;
+    const { id, username } = accountAdmin;
     return this.jwtService.sign({
-      [`key-${this.configService.get('jwt.secret')}`]: id,
+      [`secret-${this.configService.get('jwt.secret')}`]: id,
       username,
-      roleId,
     });
   }
 

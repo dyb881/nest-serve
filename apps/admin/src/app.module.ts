@@ -9,7 +9,6 @@ import { AuthModule } from './auth/auth.module';
       yamlFilePath: ['apps/admin.yaml'],
       microservice: ['ACCOUNT_SERVICE'],
       cache: true,
-      jwt: true,
     }),
     AccountModule,
     AuthModule,

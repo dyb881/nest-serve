@@ -29,7 +29,7 @@ export class PermissionsGuard implements CanActivate {
       const [role] = permissions;
 
       // 获取角色权限配置
-      const roles = await this.cacheManager.get(`${request.user.id}-${request.user.accountId}`);
+      const roles = await this.cacheManager.get(`permissions-${request.user.id}`);
       if (!get(roles, role)) return false;
     }
 
@@ -40,9 +40,11 @@ export class PermissionsGuard implements CanActivate {
 /**
  * 权限校验
  */
-export const JwtPermissions = () => (...arg: any[]) => {
-  const decorator: any = UseGuards(AuthGuard('jwt'), PermissionsGuard);
-  return ApiBearerAuth()(decorator(...arg));
+export const JwtPermissions = () => {
+  return (...arg: any[]) => {
+    const decorator: any = UseGuards(AuthGuard('jwt'), PermissionsGuard);
+    return ApiBearerAuth()(decorator(...arg));
+  };
 };
 
 /**

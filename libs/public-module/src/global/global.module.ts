@@ -4,8 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
 
 import { rootPath, AllExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { LoggerModule } from '../logger';
@@ -27,7 +25,6 @@ export interface GlobalModuleOptions {
   typeorm?: boolean; // 开启 orm 模块
   multer?: boolean; // 开启 multer 文件上传模块
   cache?: boolean; // 开启缓存模块
-  jwt?: boolean; // 开启 jwt 鉴权模块
   aliSms?: boolean; // 开启阿里云短信模块
 }
 
@@ -40,7 +37,7 @@ export class GlobalModule {
    * 全局模块初始化
    */
   static forRoot(options: GlobalModuleOptions): DynamicModule {
-    const { yamlFilePath = [], microservice, typeorm, multer, cache, jwt, aliSms } = options || {};
+    const { yamlFilePath = [], microservice, typeorm, multer, cache, aliSms } = options || {};
 
     const imports: DynamicModule['imports'] = [
       // 配置模块
@@ -163,26 +160,6 @@ export class GlobalModule {
         }),
         global: true,
       });
-    }
-
-    // 开启 jwt 鉴权模块
-    if (jwt) {
-      imports.push(
-        {
-          ...PassportModule.register({}),
-          global: true,
-        },
-        {
-          ...JwtModule.registerAsync({
-            useFactory: (configService: ConfigService) => {
-              const { secret, expiresIn } = configService.get('jwt');
-              return { secret, signOptions: { expiresIn } };
-            },
-            inject: [ConfigService],
-          }),
-          global: true,
-        }
-      );
     }
 
     // 开启阿里云短信模块
