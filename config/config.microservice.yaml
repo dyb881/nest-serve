@@ -15,8 +15,8 @@
 microservices:
   - transport: 0
     options:
-      host: localhost
-      port:
+      host: 0.0.0.0
+      port: 3100
 
 # 客户端配置
 
@@ -27,4 +27,4 @@ microserviceClients:
     transport: 0
     options:
       host: localhost
-      port:
+      port: 3100
