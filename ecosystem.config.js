@@ -1,12 +1,14 @@
+const createApp = (name) => {
+  return {
+    name: `v3-${name}`,
+    script: `dist/apps/${name}/main.js`,
+    env: { NODE_ENV: 'development' },
+    env_production: { NODE_ENV: 'production' },
+  };
+};
+
 module.exports = {
-  apps: [
-    {
-      name: 'v3-account',
-      script: 'dist/apps/account/main.js',
-      env: { NODE_ENV: 'development' },
-      env_production: { NODE_ENV: 'production' },
-    },
-  ],
+  apps: [createApp('account'), createApp('admin')],
   // deploy: {
   //   production: {
   //     user: 'SSH_USERNAME',
