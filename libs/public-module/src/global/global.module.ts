@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 
 import { rootPath, AllExceptionFilter, TransformInterceptor } from '@app/public-tool';
@@ -166,16 +167,22 @@ export class GlobalModule {
 
     // 开启 jwt 鉴权模块
     if (jwt) {
-      imports.push({
-        ...JwtModule.registerAsync({
-          useFactory: (configService: ConfigService) => {
-            const { secret, expiresIn } = configService.get('jwt');
-            return { secret, signOptions: { expiresIn } };
-          },
-          inject: [ConfigService],
-        }),
-        global: true,
-      });
+      imports.push(
+        {
+          ...PassportModule.register({}),
+          global: true,
+        },
+        {
+          ...JwtModule.registerAsync({
+            useFactory: (configService: ConfigService) => {
+              const { secret, expiresIn } = configService.get('jwt');
+              return { secret, signOptions: { expiresIn } };
+            },
+            inject: [ConfigService],
+          }),
+          global: true,
+        }
+      );
     }
 
     // 开启阿里云短信模块
