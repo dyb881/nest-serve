@@ -151,29 +151,31 @@ export class GlobalModule {
 
     // 开启缓存模块
     if (cache) {
-      imports.push(
-        CacheModule.registerAsync({
+      imports.push({
+        ...CacheModule.registerAsync({
           useFactory: (configService: ConfigService) => {
             const { redis } = configService.get('cache');
             // 使用 redis 做缓存服务
             return redis?.host ? { store: redisStore, ...redis } : {};
           },
           inject: [ConfigService],
-        })
-      );
+        }),
+        global: true,
+      });
     }
 
     // 开启 jwt 鉴权模块
     if (jwt) {
-      imports.push(
-        JwtModule.registerAsync({
+      imports.push({
+        ...JwtModule.registerAsync({
           useFactory: (configService: ConfigService) => {
             const { secret, expiresIn } = configService.get('jwt');
             return { secret, signOptions: { expiresIn } };
           },
           inject: [ConfigService],
-        })
-      );
+        }),
+        global: true,
+      });
     }
 
     // 开启阿里云短信模块

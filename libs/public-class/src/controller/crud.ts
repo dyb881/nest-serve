@@ -1,5 +1,5 @@
 import { Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiResponse, ApiBody } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { IdsDto } from '@app/public-class';
@@ -43,8 +43,8 @@ export function CrudController<
     @Put(':id')
     @ApiOperation(`编辑：${_Entity.name}.update`)
     @ApiBody({ type: _UpdateDto })
-    async update(@Param('id') id: string, @Body() data: UpdateDto) {
-      await this.service.update(id, data);
+    async update(@Param('id') id: string, @Body() data: UpdateDto, @Payload() payload?: [string, UpdateDto]) {
+      await this.service.update(...(payload || [id, data]));
     }
 
     @MessagePattern(`${_Entity.name}.delete`)

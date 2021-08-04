@@ -3,7 +3,6 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { AccountLoginDto } from '@app/public-class';
-import 'rxjs';
 
 @ApiTags('管理员账号')
 @Controller('admin')

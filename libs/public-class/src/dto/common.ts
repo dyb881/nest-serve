@@ -3,10 +3,10 @@ import { ApiProperty, IsInt, ToNumber } from '@app/public-decorator';
 /**
  * 分页对象
  */
-export function PaginationDto<T>(Dto: T) {
+export function PaginationDto<Dto>(_Dto: Dto) {
   class PaginationDto {
-    @ApiProperty('列表', { type: [Dto] })
-    list: T[];
+    @ApiProperty('列表', { type: [_Dto] })
+    list: Dto[];
 
     @ApiProperty('总数')
     total: number;
