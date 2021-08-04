@@ -48,9 +48,9 @@ export function CrudService<CreateDto = any, UpdateDto = any, Entity = any>(_Ent
      * 更新数据
      */
     async update(id: string, data: UpdateDto) {
-      Object.assign(data, { update_date: new Date() });
-      const res = await this.repository.update(id, data);
-      if (res.affected === 0) throw new BadRequestException('该数据不存在');
+      const one = await this.findOne(id);
+      Object.assign(one, data, { update_date: new Date() });
+      await this.repository.save(one);
     }
 
     /**

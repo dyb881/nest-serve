@@ -19,7 +19,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/nest-serve/test/jest-e2e.json",
-    "build:all": "nest build account && nest build admin"
+    "build:all": "nest build account && nest build admin",
+    "serve": "pm2 start",
+    "serve:pd": "pm2 start --env production"
   },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "^2.0.1",

@@ -23,7 +23,7 @@ export class AdminRoleService extends CrudService<AdminRoleCreateDto, AdminRoleU
 
     const permissionAction: any = {};
     for (let action of actions) {
-      permissionAction[action] = true;
+      permissionAction[action] = false;
     }
 
     const permission: any = {};
