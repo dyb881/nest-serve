@@ -30,6 +30,7 @@ export class PermissionsGuard implements CanActivate {
 
       // 获取角色权限配置
       const roles = await this.cacheManager.get(`permissions-${request.user.id}`);
+
       if (!get(roles, role)) return false;
     }
 

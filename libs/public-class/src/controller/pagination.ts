@@ -1,5 +1,5 @@
 import { Get, Query } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { CrudController } from './crud';
@@ -24,8 +24,8 @@ export function PaginationController<
     @ApiOperation(`查询分页列表：${_Entity.name}.get.pagination`)
     @ApiQuery({ type: _QueryDto })
     @ApiResponse({ status: 200, type: _PaginationDto })
-    pagination(@Query() data: QueryDto) {
-      return this.service.pagination(data);
+    pagination(@Query() data: QueryDto, @Payload() payload?: QueryDto) {
+      return this.service.pagination(payload || data);
     }
   }
 
