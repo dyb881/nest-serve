@@ -18,14 +18,6 @@ export function CrudClientController<
     constructor(readonly client: ClientProxy) {}
 
     @Permissions(`${permissions}.query`)
-    @Get('all')
-    @ApiOperation('查询所有')
-    @ApiResponse({ status: 200, type: [_Entity] })
-    getMany(..._args: any[]) {
-      return this.client.send(`${_Entity.name}.get.all`, {});
-    }
-
-    @Permissions(`${permissions}.query`)
     @Get(':id')
     @ApiOperation('查询详情')
     @ApiResponse({ status: 200, type: _Entity })

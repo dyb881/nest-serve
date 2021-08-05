@@ -12,12 +12,12 @@ import { sha512 } from 'js-sha512';
  * 账号类型拓展
  */
 export function AccountPaginationService<
-  QueryDto extends AccountPaginationQueryDto = any,
+  PaginationQueryDto extends AccountPaginationQueryDto = any,
   CreateDto extends AccountCreateDto = any,
   UpdateDto extends AccountUpdateDto = any,
   Entity extends AccountEntity = any
 >(_Entity: Entity) {
-  class AccountPaginationService extends PaginationService<QueryDto, CreateDto, UpdateDto, Entity>(_Entity) {
+  class AccountPaginationService extends PaginationService<PaginationQueryDto, CreateDto, UpdateDto, Entity>(_Entity) {
     constructor(readonly repository: Repository<Entity>) {
       super(repository);
     }
@@ -25,7 +25,7 @@ export function AccountPaginationService<
     /**
      * 给账号固定参数加上模糊查询
      */
-    pagination(data: QueryDto) {
+    pagination(data: PaginationQueryDto) {
       insLike(data, ['username', 'phone', 'nickname']);
       return super.pagination(data);
     }

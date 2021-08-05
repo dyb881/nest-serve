@@ -11,7 +11,7 @@ export class AccountUserService extends AccountPaginationService<
   AccountUserCreateDto,
   AccountUserUpdateDto
 >(AccountUser) {
-  constructor(@InjectRepository(AccountUser) readonly accountAdminRepository: Repository<AccountUser>) {
-    super(accountAdminRepository);
+  constructor(@InjectRepository(AccountUser) readonly accountUserRepository: Repository<AccountUser>) {
+    super(accountUserRepository);
   }
 }

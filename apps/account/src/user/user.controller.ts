@@ -21,14 +21,14 @@ export class AccountUserController extends PaginationController(
   AccountUserPaginationQueryDto,
   AccountUserPaginationDto
 ) {
-  constructor(private readonly accountAdminService: AccountUserService) {
-    super(accountAdminService);
+  constructor(private readonly accountUserService: AccountUserService) {
+    super(accountUserService);
   }
 
   @MessagePattern(`${AccountUser.name}.login`)
   @Post('login')
   @ApiOperation(`登录：${AccountUser.name}.login`)
   login(@Body() data: AccountLoginDto) {
-    return this.accountAdminService.login(data);
+    return this.accountUserService.login(data);
   }
 }

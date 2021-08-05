@@ -1,6 +1,6 @@
 import { Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { ApiResponse, ApiBody } from '@nestjs/swagger';
+import { EventPattern } from '@nestjs/microservices';
+import { ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { IdsDto } from '@app/public-class';
 
@@ -15,15 +15,7 @@ export function CrudController<
   class CrudController {
     constructor(readonly service: any) {}
 
-    @MessagePattern(`${_Entity.name}.get.all`)
-    @Get('all')
-    @ApiOperation(`查询所有：${_Entity.name}.get.all`)
-    @ApiResponse({ status: 200, type: [_Entity] })
-    getMany() {
-      return this.service.getMany();
-    }
-
-    @MessagePattern(`${_Entity.name}.get.one`)
+    @EventPattern(`${_Entity.name}.get.one`)
     @Get(':id')
     @ApiOperation(`查询详情：${_Entity.name}.get.one`)
     @ApiResponse({ status: 200, type: _Entity })
@@ -31,7 +23,7 @@ export function CrudController<
       return this.service.findOne(id);
     }
 
-    @MessagePattern(`${_Entity.name}.create`)
+    @EventPattern(`${_Entity.name}.create`)
     @Post()
     @ApiOperation(`添加：${_Entity.name}.create`)
     @ApiBody({ type: _CreateDto })
@@ -39,15 +31,16 @@ export function CrudController<
       await this.service.create(data);
     }
 
-    @MessagePattern(`${_Entity.name}.update`)
+    @EventPattern(`${_Entity.name}.update`)
     @Put(':id')
     @ApiOperation(`编辑：${_Entity.name}.update`)
+    @ApiParam({ name: 'id' })
     @ApiBody({ type: _UpdateDto })
-    async update(@Param('id') id: string, @Body() data: UpdateDto, @Payload() payload?: [string, UpdateDto]) {
-      await this.service.update(...(Array.isArray(payload) ? payload : [id, data]));
+    async update(@Param('id') id: string | [string, UpdateDto], @Body() data: UpdateDto) {
+      await this.service.update(...(Array.isArray(id) ? id : [id, data]));
     }
 
-    @MessagePattern(`${_Entity.name}.delete`)
+    @EventPattern(`${_Entity.name}.delete`)
     @Delete()
     @ApiOperation(`删除：${_Entity.name}.delete`)
     @ApiBody({ type: IdsDto })

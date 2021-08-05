@@ -17,6 +17,24 @@
         "tsConfigPath": "apps/account/tsconfig.app.json"
       }
     },
+    "infos": {
+      "type": "application",
+      "root": "apps/infos",
+      "entryFile": "main",
+      "sourceRoot": "apps/infos/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/infos/tsconfig.app.json"
+      }
+    },
+    "admin": {
+      "type": "application",
+      "root": "apps/admin",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/admin/tsconfig.app.json"
+      }
+    },
     "public-decorator": {
       "type": "library",
       "root": "libs/public-decorator",
@@ -51,15 +69,6 @@
       "sourceRoot": "libs/public-class/src",
       "compilerOptions": {
         "tsConfigPath": "libs/public-class/tsconfig.lib.json"
-      }
-    },
-    "admin": {
-      "type": "application",
-      "root": "apps/admin",
-      "entryFile": "main",
-      "sourceRoot": "apps/admin/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/admin/tsconfig.app.json"
       }
     }
   }

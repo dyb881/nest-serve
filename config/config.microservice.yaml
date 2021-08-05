@@ -28,3 +28,8 @@ microserviceClients:
     options:
       host: localhost
       port: 3100
+  INFOS_SERVICE:
+    transport: 0
+    options:
+      host: localhost
+      port: 3100

@@ -3,20 +3,21 @@ import { ApiTags } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiOperation } from '@app/public-decorator';
 import { JwtPermissions, Permissions } from '@app/public-module';
-import { CrudClientController } from '@app/public-class';
+import { ManyClientController } from '@app/public-class';
 import { AdminRole } from 'apps/account/src/admin-role/admin-role.entity';
-import { AdminRoleCreateDto, AdminRoleUpdateDto } from 'apps/account/src/admin-role/admin-role.dto';
+import { AdminRoleCreateDto, AdminRoleUpdateDto, AdminRoleQueryDto } from 'apps/account/src/admin-role/admin-role.dto';
 
 const PERMISSIONS = 'account.adminRole';
 
 @JwtPermissions()
 @ApiTags('管理员角色')
 @Controller('account/admin/role')
-export class AdminRoleController extends CrudClientController(
+export class AdminRoleController extends ManyClientController(
   PERMISSIONS,
   AdminRole,
   AdminRoleCreateDto,
-  AdminRoleUpdateDto
+  AdminRoleUpdateDto,
+  AdminRoleQueryDto
 ) {
   constructor(@Inject('ACCOUNT_SERVICE') readonly client: ClientProxy) {
     super(client);
