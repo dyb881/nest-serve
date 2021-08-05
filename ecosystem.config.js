@@ -8,7 +8,7 @@ const createApp = (name) => {
 };
 
 module.exports = {
-  apps: [createApp('account'), createApp('admin')],
+  apps: [createApp('account'), createApp('infos'), createApp('admin')],
   // deploy: {
   //   production: {
   //     user: 'SSH_USERNAME',
