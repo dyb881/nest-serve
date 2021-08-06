@@ -38,7 +38,7 @@ export function CrudClientController<
     @ApiOperation('编辑')
     @ApiBody({ type: _UpdateDto })
     update(@Param('id') id: string, @Body() data, ..._args: any[]) {
-      return this.client.send(`${_Entity.name}.update`, { id, ...data });
+      return this.client.send(`${_Entity.name}.update`, [id, data]);
     }
 
     @Permissions(`${permissions}.delete`)

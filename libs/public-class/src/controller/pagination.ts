@@ -1,6 +1,6 @@
 import { Get, Query } from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
-import { ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { EventPattern, Payload } from '@nestjs/microservices';
+import { ApiResponse, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { CrudController } from './crud';
 
@@ -23,9 +23,10 @@ export function PaginationController<
     @Get()
     @ApiOperation(`查询分页列表：${_Entity.name}.get.pagination`)
     @ApiQuery({ type: _QueryDto })
+    @ApiBody({ required: false })
     @ApiResponse({ status: 200, type: _PaginationDto })
-    pagination(@Query() data: QueryDto) {
-      return this.service.pagination(data);
+    pagination(@Query() data: QueryDto, @Payload() payload?: QueryDto) {
+      return this.service.pagination(payload || data);
     }
   }
 

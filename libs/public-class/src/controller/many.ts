@@ -1,6 +1,6 @@
 import { Get, Query } from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
-import { ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { EventPattern, Payload } from '@nestjs/microservices';
+import { ApiResponse, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { CrudController } from './crud';
 
@@ -22,9 +22,10 @@ export function ManyController<
     @Get('all')
     @ApiOperation(`查询所有：${_Entity.name}.get.all`)
     @ApiQuery({ type: _QueryDto })
+    @ApiBody({ required: false })
     @ApiResponse({ status: 200, type: [_Entity] })
-    getMany(@Query() data: QueryDto) {
-      return this.service.getMany(data);
+    getMany(@Query() data: QueryDto, @Payload() payload?: QueryDto) {
+      return this.service.getMany(payload || data);
     }
   }
 

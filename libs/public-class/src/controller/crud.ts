@@ -36,8 +36,8 @@ export function CrudController<
     @ApiOperation(`编辑：${_Entity.name}.update`)
     @ApiParam({ name: 'id' })
     @ApiBody({ type: _UpdateDto })
-    async update(@Param('id') id: string | [string, UpdateDto], @Body() data: UpdateDto) {
-      await this.service.update(...(Array.isArray(id) ? id : [id, data]));
+    async update(@Param('id') id: string, @Body() data: UpdateDto | [string, UpdateDto]) {
+      await this.service.update(...(Array.isArray(data) ? data : [id, data]));
     }
 
     @EventPattern(`${_Entity.name}.delete`)

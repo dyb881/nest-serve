@@ -25,7 +25,7 @@ export function ManyClientController<
     @ApiOperation('查询所有')
     @ApiQuery({ type: _QueryDto })
     @ApiResponse({ status: 200, type: [_Entity] })
-    getMany(@Query() data: QueryDto) {
+    getMany(@Query() data: QueryDto, ..._args: any[]) {
       return this.client.send(`${_Entity.name}.get.all`, data);
     }
   }
