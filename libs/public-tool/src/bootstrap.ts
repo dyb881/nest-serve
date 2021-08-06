@@ -51,12 +51,10 @@ export async function bootstrap(module: any, bootstrapOptions?: BootstrapOptions
   SwaggerModule.setup(swagger.path, app, document);
 
   // 使用微服务
-  const microservices = configService.get('microservices');
-  if (microservice && microservices?.length) {
+  const microserviceService = configService.get('microserviceService');
+  if (microservice && microserviceService) {
     // 连接微服务
-    for (let item of microservices) {
-      app.connectMicroservice<MicroserviceOptions>(item, { inheritAppConfig: true });
-    }
+    app.connectMicroservice<MicroserviceOptions>(microserviceService, { inheritAppConfig: true });
 
     // 启动所有微服务
     await app.startAllMicroservices();

@@ -10,15 +10,15 @@
 # RMQ = 5,
 # KAFKA = 6
 
-# 服务端配置
+# 微服务-服务端配置
 
-microservices:
-  - transport: 0
-    options:
-      host: 0.0.0.0
-      port: 3100
+microserviceService:
+  transport: 0
+  options:
+    host: 0.0.0.0
+    port: 3100
 
-# 客户端配置
+# 微服务-客户端配置
 
 # microserviceClients.key 主要用于 @Inject(name)
 
@@ -27,9 +27,9 @@ microserviceClients:
     transport: 0
     options:
       host: localhost
-      port: 3100
+      port: 3101
   INFOS_SERVICE:
     transport: 0
     options:
       host: localhost
-      port: 3100
+      port: 3102

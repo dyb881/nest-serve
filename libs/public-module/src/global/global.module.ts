@@ -67,6 +67,9 @@ export class GlobalModule {
             configs = cloneDeepWith(configs, (value) => {
               if (value === null) return '';
             });
+
+            console.log(configs.microserviceClients);
+
             return configs;
           },
         ],

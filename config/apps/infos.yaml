@@ -2,3 +2,9 @@
 
 serve:
   port: 3002
+
+# 微服务-服务端配置
+
+microserviceService:
+  options:
+    port: 3102
