@@ -4,10 +4,6 @@ import { CategoryModule } from './category/category.module';
 import { ArticleModule } from './article/article.module';
 
 @Module({
-  imports: [
-    GlobalModule.forRoot({ yamlFilePath: ['apps/infos.yaml'], typeorm: true }),
-    CategoryModule, // 信息分类
-    ArticleModule, // 文章管理
-  ],
+  imports: [GlobalModule.forRoot({ yamlFilePath: ['apps/infos.yaml'], typeorm: true }), CategoryModule, ArticleModule],
 })
 export class AppModule {}
