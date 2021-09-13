@@ -184,7 +184,7 @@ export class GlobalModule {
       imports,
       providers: [
         // 全局使用验证管道，并统一报错处理
-        { provide: APP_PIPE, useClass: ValidationPipe },
+        { provide: APP_PIPE, useValue: new ValidationPipe({ transform: true }) },
         // 异常过滤器
         { provide: APP_FILTER, useClass: AllExceptionFilter },
         // 响应参数转化拦截器

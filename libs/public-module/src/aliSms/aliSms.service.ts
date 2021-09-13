@@ -40,11 +40,8 @@ export class AliSmsService {
       templateParam: JSON.stringify(templateParam),
     });
     const res = await this.aliSms.sendSms(sendSmsRequest);
-    if (res.body.code !== 'ok') {
-      throw new BadRequestException(chinese.test(res.body.message) ? res.body.message : '短信发送失败');
+    if (res.body.code !== 'OK') {
+      throw new BadRequestException(res.body.message || '短信发送失败');
     }
   }
 }
-
-// 判断是否中文
-const chinese = /.*[\u4e00-\u9fa5]+.*/;

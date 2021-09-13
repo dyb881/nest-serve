@@ -4,7 +4,6 @@ import { ClientProxy } from '@nestjs/microservices';
 import { JwtPermissions, Permissions } from '@app/public-module';
 import { ApiOperation } from '@app/public-decorator';
 import { PaginationClientController } from '@app/public-class';
-import { toIp } from '@app/public-tool';
 import { AccountUser } from 'apps/account/src/user/user.entity';
 import {
   AccountUserCreateDto,
@@ -34,6 +33,6 @@ export class AccountUserController extends PaginationClientController(
   @Post()
   @ApiOperation('添加')
   create(@Body() data: AccountUserCreateDto, @Req() req) {
-    return super.create({ ...data, reg_ip: toIp(req.clientIp) });
+    return super.create({ ...data, reg_ip: req.clientIp });
   }
 }

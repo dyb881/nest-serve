@@ -2,7 +2,7 @@ import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { toIp, format } from '@app/public-tool';
+import { format } from '@app/public-tool';
 import { AccountAdmin } from 'apps/account/src/admin/admin.entity';
 import { lastValueFrom } from 'rxjs';
 import { AdminInfoDto } from './auth.dto';
@@ -36,7 +36,7 @@ export class AuthService {
     const access_token = this.getToken(user);
 
     // 注入登录IP和登录时间
-    Object.assign(user, { login_ip: toIp(clientIp), login_date: format(new Date()) });
+    Object.assign(user, { login_ip: clientIp, login_date: format(new Date()) });
 
     // 保存登录信息，异步发起，成功失败都不影响
     this.client.send('AccountAdmin.update', [user.id, user]);

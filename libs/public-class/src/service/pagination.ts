@@ -30,7 +30,7 @@ export function PaginationService<
     ) {
       const { skip, take, where } = getPaginationData(queryData);
       let queryBuilder = this.repository.createQueryBuilder().where(toWhere(where)).skip(skip).take(take);
-      queryBuilder = updateQueryBuilder?.(queryBuilder) || queryBuilder.addOrderBy('create_date', 'DESC');
+      queryBuilder = updateQueryBuilder?.(queryBuilder) || queryBuilder.orderBy('create_date', 'DESC');
       const [list, total] = await queryBuilder.getManyAndCount();
       return { list, total };
     }

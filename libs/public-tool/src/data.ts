@@ -28,6 +28,31 @@ export enum Precision {
  */
 export const format = (value?: any, template = Precision.Second) => value && moment(value).format(template);
 
+/**
+ * 毫秒转化为时间字符串
+ */
+export const toTimeString = (time: number) => {
+  let text = '';
+  const second = Math.round(time / 1000);
+  if (second < 60) text += `${second}秒`;
+  else {
+    const s = second % 60;
+    const minute = (second - s) / 60;
+    if (minute < 60) text += `${minute}分钟${s}秒`;
+    else {
+      const m = minute % 60;
+      const hour = (minute - m) / 60;
+      if (hour < 24) text += `${hour}小时${m}分钟${s}秒`;
+      else {
+        const h = hour % 24;
+        const day = (hour - h) / 24;
+        text += `${day}天${hour}小时${m}分钟${s}秒`;
+      }
+    }
+  }
+  return text;
+};
+
 // ---------------------- 时间相关数据转化 ---------------------- //
 
 // ---------------------- 内容数据转化 ---------------------- //

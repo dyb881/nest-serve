@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { ApiProperty, Column } from '@app/public-decorator';
-import { dateTransformer, sha512Transformer } from '@app/public-tool';
+import { dateTransformer, sha512Transformer, toIpTransformer } from '@app/public-tool';
 import { CommonEntity } from './common';
 
 /**
@@ -18,11 +18,11 @@ export class AccountEntity extends CommonEntity {
   password: string;
 
   @ApiProperty('注册IP')
-  @Column('注册IP', 15, { nullable: true })
+  @Column('注册IP', 15, { transformer: toIpTransformer, nullable: true })
   reg_ip: string;
 
   @ApiProperty('登录IP')
-  @Column('登录IP', 15, { nullable: true })
+  @Column('登录IP', 15, { transformer: toIpTransformer, nullable: true })
   login_ip: string;
 
   @ApiProperty('登录时间')

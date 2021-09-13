@@ -1,5 +1,5 @@
 import { Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
+import { EventPattern, Payload } from '@nestjs/microservices';
 import { ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 import { ApiOperation } from '@app/public-decorator';
 import { IdsDto } from '@app/public-class';
@@ -18,9 +18,11 @@ export function CrudController<
     @EventPattern(`${_Entity.name}.get.one`)
     @Get(':id')
     @ApiOperation(`查询详情：${_Entity.name}.get.one`)
+    @ApiParam({ name: 'id' })
+    @ApiBody({ required: false })
     @ApiResponse({ status: 200, type: _Entity })
-    findOne(@Param('id') id: string) {
-      return this.service.findOne(id);
+    findOne(@Param('id') id: string, @Payload() payload?: any) {
+      return this.service.findOne(id || payload);
     }
 
     @EventPattern(`${_Entity.name}.create`)

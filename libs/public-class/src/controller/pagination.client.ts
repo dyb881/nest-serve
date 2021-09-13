@@ -28,7 +28,7 @@ export function PaginationClientController<
       super(client);
     }
 
-    @Permissions('account.admin.query')
+    @Permissions(`${permissions}.query`)
     @Get()
     @ApiOperation('查询分页列表')
     @ApiQuery({ type: _QueryDto })

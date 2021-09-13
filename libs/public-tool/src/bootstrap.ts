@@ -63,5 +63,10 @@ export async function bootstrap(module: any, bootstrapOptions?: BootstrapOptions
   // 启动HTTP服务
   await app.listen(serve.port);
 
+  // 捕获进程错误
+  process.on('uncaughtException', function (err) {
+    loggerService.error(err, '进程异常');
+  });
+
   loggerService.log(`http://localhost:${serve.port}/${swagger.path}`, swagger.title);
 }
