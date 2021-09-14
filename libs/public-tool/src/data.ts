@@ -46,7 +46,7 @@ export const toTimeString = (time: number) => {
       else {
         const h = hour % 24;
         const day = (hour - h) / 24;
-        text += `${day}天${hour}小时${m}分钟${s}秒`;
+        text += `${day}天${h}小时${m}分钟${s}秒`;
       }
     }
   }
