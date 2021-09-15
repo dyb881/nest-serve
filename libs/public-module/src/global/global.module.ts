@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { rootPath, AllExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { LoggerModule } from '../logger';
 import { AliSmsModule } from '../aliSms';
+import { AliOssModule } from '../aliOss';
 
 import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { join, extname } from 'path';
@@ -26,6 +27,7 @@ export interface GlobalModuleOptions {
   multer?: boolean; // 开启 multer 文件上传模块
   cache?: boolean; // 开启缓存模块
   aliSms?: boolean; // 开启阿里云短信模块
+  aliOss?: boolean; // 开启阿里云OSS对象存储
 }
 
 /**
@@ -37,7 +39,7 @@ export class GlobalModule {
    * 全局模块初始化
    */
   static forRoot(options: GlobalModuleOptions): DynamicModule {
-    const { yamlFilePath = [], microservice, typeorm, multer, cache, aliSms } = options || {};
+    const { yamlFilePath = [], microservice, typeorm, multer, cache, aliSms, aliOss } = options || {};
 
     const imports: DynamicModule['imports'] = [
       // 配置模块
@@ -171,6 +173,21 @@ export class GlobalModule {
           useFactory: (configService: ConfigService) => {
             const { accessKeyId, accessKeySecret } = configService.get('ali');
             return { accessKeyId, accessKeySecret };
+          },
+          inject: [ConfigService],
+        })
+      );
+    }
+
+    // 开启阿里云OSS对象存储
+    if (aliOss) {
+      imports.push(
+        AliOssModule.forRoot({
+          isGlobal: true,
+          useFactory: (configService: ConfigService) => {
+            const ali = configService.get('ali');
+            const oss = configService.get('oss');
+            return { ...ali, ...oss };
           },
           inject: [ConfigService],
         })

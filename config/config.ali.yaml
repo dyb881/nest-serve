@@ -9,9 +9,7 @@ ali:
 oss:
   bucket:
   region:
-
-# OSS绑定的域名，不填则使用默认域名
-
-oss_domain:
-  protocol:
-  host:
+  internal: false
+  secure: true
+  arn:
+  path: uploads
