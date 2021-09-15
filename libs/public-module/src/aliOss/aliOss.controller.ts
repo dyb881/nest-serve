@@ -1,15 +1,14 @@
-import { Controller, Get, Query, UnsupportedMediaTypeException, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, Query, UnsupportedMediaTypeException } from '@nestjs/common';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { ApiOperation } from '@app/public-decorator';
-import { AliOssService } from './aliOss.service';
 import { FileLimitDto, OSSValidateDto, OSSPutObjectDto } from './aliOss.dto';
+import { AliOssService } from './aliOss.service';
+import { JwtPermissions } from '../jwtAuth';
 import { findKey } from 'lodash';
 import { extname } from 'path';
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard('jwt'))
+@JwtPermissions()
 @ApiTags('OSS上传文件')
 @Controller('oss')
 export class AliOssController {
