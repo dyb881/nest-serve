@@ -17,3 +17,20 @@ permission:
     infos: [category, article]
     # 系统模块
     system: [files]
+
+# 权限模块名称
+
+permissionNames:
+  query: 查询
+  create: 创建
+  update: 更新
+  delete: 删除
+  account: 账号管理
+  account.adminRole: 管理员角色
+  account.admin: 管理员账号
+  account.user: 用户账号
+  infos: 信息管理
+  infos.category: 信息分类
+  infos.article: 文章管理
+  system: 系统设置
+  system.files: 文件管理
