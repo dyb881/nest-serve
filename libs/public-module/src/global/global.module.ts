@@ -68,8 +68,6 @@ export class GlobalModule {
               if (value === null) return '';
             });
 
-            console.log(configs.microserviceClients);
-
             return configs;
           },
         ],
