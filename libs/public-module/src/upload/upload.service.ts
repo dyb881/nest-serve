@@ -8,7 +8,7 @@ export type UploadServiceOptions = {
   fileLimit: FileLimit; // 文件限制配置
 };
 
-type verifyOptions = {
+export type verifyOptions = {
   originalname?: string;
   name?: string;
   size: number;
@@ -20,7 +20,7 @@ type verifyOptions = {
  */
 @Injectable()
 export class UploadService {
-  constructor(private readonly options: UploadServiceOptions) {}
+  constructor(readonly options: UploadServiceOptions) {}
 
   /**
    * 验证文件

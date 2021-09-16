@@ -179,6 +179,23 @@ export class GlobalModule {
       });
     }
 
+    // 开启阿里云OSS对象存储
+    if (aliOss) {
+      imports.push(
+        AliOssModule.forRoot({
+          isGlobal: true,
+          useFactory: (configService: ConfigService) => {
+            const uploadPath = configService.get('uploadPath');
+            const fileLimit = configService.get('fileLimit');
+            const ali = configService.get('ali');
+            const oss = configService.get('oss');
+            return { uploadPath, fileLimit, ...ali, ...oss };
+          },
+          inject: [ConfigService],
+        })
+      );
+    }
+
     // 开启阿里云短信模块
     if (aliSms) {
       imports.push(
@@ -187,21 +204,6 @@ export class GlobalModule {
           useFactory: (configService: ConfigService) => {
             const { accessKeyId, accessKeySecret } = configService.get('ali');
             return { accessKeyId, accessKeySecret };
-          },
-          inject: [ConfigService],
-        })
-      );
-    }
-
-    // 开启阿里云OSS对象存储
-    if (aliOss) {
-      imports.push(
-        AliOssModule.forRoot({
-          isGlobal: true,
-          useFactory: (configService: ConfigService) => {
-            const ali = configService.get('ali');
-            const oss = configService.get('oss');
-            return { ...ali, ...oss };
           },
           inject: [ConfigService],
         })

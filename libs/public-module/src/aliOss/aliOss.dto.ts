@@ -1,16 +1,6 @@
 import { ApiProperty } from '@app/public-decorator';
 import { UploadResDto } from '../upload/upload.dto';
 
-export class FileLimitItemDto {
-  name: string; // 文件类型名称
-  maxSizeMB: number; // 最大尺寸 M
-  suffixs: string[]; // 后缀名
-}
-
-export class FileLimitDto {
-  [key: string]: FileLimitItemDto;
-}
-
 /**
  * OSS 验证属性
  */

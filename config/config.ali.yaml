@@ -12,4 +12,3 @@ oss:
   internal: false
   secure: true
   arn:
-  path: uploads

@@ -11,6 +11,7 @@ import { InfosModule } from './infos/infos.module';
       microservice: ['ACCOUNT_SERVICE', 'INFOS_SERVICE'],
       cache: true,
       upload: true,
+      aliOss: true,
     }),
     AuthModule,
     AccountModule,

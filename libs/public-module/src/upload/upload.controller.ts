@@ -5,9 +5,9 @@ import { ConfigService } from '@nestjs/config';
 import { ApiOperation } from '@app/public-decorator';
 import { UploadService } from './upload.service';
 import { UploadDto, UploadResDto } from './upload.dto';
-// import { JwtPermissions } from '../jwtAuth';
+import { JwtPermissions } from '../jwtAuth';
 
-// @JwtPermissions()
+@JwtPermissions()
 @ApiTags('上传文件')
 @Controller('upload')
 export class UploadController {
@@ -24,7 +24,6 @@ export class UploadController {
   @ApiResponse({ status: 200, type: UploadResDto })
   @UseInterceptors(FileInterceptor('file'))
   async uploadServer(@UploadedFile() file) {
-    console.log(file);
     await this.uploadService.verify(file);
     const url = this.uploadHost + file.path.split('uploads')[1];
     return { url };
