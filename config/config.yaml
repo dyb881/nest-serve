@@ -29,8 +29,6 @@ swagger:
   description: code:状态码，message:提示信息，data:返回值
   path: swagger
 
-# 路径配置配置
+# 日志存放目录
 
-path:
-  log: apps # 日志存放目录
-  upload: uploads # 上传文件存放目录
+logsPath: apps

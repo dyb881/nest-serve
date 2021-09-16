@@ -2,11 +2,13 @@ import { APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { Module, DynamicModule, ValidationPipe, CacheModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { rootPath, AllExceptionFilter, TransformInterceptor } from '@app/public-tool';
 import { LoggerModule } from '../logger';
+import { UploadModule } from '../upload';
 import { AliSmsModule } from '../aliSms';
 import { AliOssModule } from '../aliOss';
 
@@ -24,7 +26,7 @@ export interface GlobalModuleOptions {
   yamlFilePath?: string[]; // 配置文件路径
   microservice?: string[]; // 开启微服务模块
   typeorm?: boolean; // 开启 orm 模块
-  multer?: boolean; // 开启 multer 文件上传模块
+  upload?: boolean; // 开启文件上传模块
   cache?: boolean; // 开启缓存模块
   aliSms?: boolean; // 开启阿里云短信模块
   aliOss?: boolean; // 开启阿里云OSS对象存储
@@ -39,7 +41,7 @@ export class GlobalModule {
    * 全局模块初始化
    */
   static forRoot(options: GlobalModuleOptions): DynamicModule {
-    const { yamlFilePath = [], microservice, typeorm, multer, cache, aliSms, aliOss } = options || {};
+    const { yamlFilePath = [], microservice, typeorm, upload, cache, aliSms, aliOss } = options || {};
 
     const imports: DynamicModule['imports'] = [
       // 配置模块
@@ -78,7 +80,7 @@ export class GlobalModule {
       LoggerModule.forRoot({
         isGlobal: true,
         useFactory: (configService: ConfigService) => {
-          const path = configService.get('path.log');
+          const path = configService.get('logsPath');
           return { filename: join(rootPath, `logs/${path}/${path}.log`) };
         },
         inject: [ConfigService],
@@ -115,35 +117,47 @@ export class GlobalModule {
       );
     }
 
-    // 开启 multer 文件上传
-    if (multer) {
+    // 开启文件上传
+    if (upload) {
       imports.push(
-        MulterModule.registerAsync({
-          imports: [ConfigModule],
+        {
+          ...MulterModule.registerAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => {
+              let path = configService.get('uploadPath');
+              path = join(rootPath, path);
+              existsSync(path) || mkdirSync(path);
+              return {
+                // 文件储存
+                storage: diskStorage({
+                  destination: function (_req, _file, cb) {
+                    const day = moment().format('YYYY-MM-DD');
+                    const folder = `${path}/${day}`;
+                    existsSync(folder) || mkdirSync(folder);
+                    cb(null, folder);
+                  },
+                  filename: (_req, { originalname }, cb) => {
+                    return cb(null, nuid.next() + extname(originalname));
+                  },
+                }),
+              };
+            },
+            inject: [ConfigService],
+          }),
+          global: true,
+        },
+        ServeStaticModule.forRootAsync({
           useFactory: (configService: ConfigService) => {
-            let path = configService.get('path.upload');
-            path = join(rootPath, path);
-            return {
-              // 文件储存
-              storage: diskStorage({
-                // 配置文件上传后的文件夹路径
-                destination: path,
-                // 在此处自定义保存后的文件名称
-                filename: (_req, { originalname }, cb) => {
-                  // 当前日期
-                  const day = moment().format('YYYY-MM-DD');
-
-                  // 不存在文件夹则创建
-                  const folder = `${path}/${day}`;
-                  existsSync(folder) || mkdirSync(folder);
-
-                  // 生成随机文件名
-                  const filename = nuid.next() + extname(originalname);
-
-                  return cb(null, `${day}/${filename}`);
-                },
-              }),
-            };
+            const path = configService.get('uploadPath');
+            return [{ rootPath: join(rootPath, path), exclude: ['/api/:path*'] }];
+          },
+          inject: [ConfigService],
+        }),
+        UploadModule.forRoot({
+          isGlobal: true,
+          useFactory: (configService: ConfigService) => {
+            const fileLimit = configService.get('fileLimit');
+            return { fileLimit };
           },
           inject: [ConfigService],
         })

@@ -10,7 +10,7 @@ import { InfosModule } from './infos/infos.module';
       yamlFilePath: ['apps/admin.yaml'],
       microservice: ['ACCOUNT_SERVICE', 'INFOS_SERVICE'],
       cache: true,
-      aliOss: true,
+      upload: true,
     }),
     AuthModule,
     AccountModule,

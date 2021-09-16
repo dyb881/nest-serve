@@ -1,4 +1,5 @@
 import { ApiProperty } from '@app/public-decorator';
+import { UploadResDto } from '../upload/upload.dto';
 
 export class FileLimitItemDto {
   name: string; // 文件类型名称
@@ -24,10 +25,7 @@ export class OSSValidateDto {
 /**
  * OSS 上传对象属性
  */
-export class OSSPutObjectDto {
+export class OSSPutObjectDto extends UploadResDto {
   @ApiProperty('OSS对象名称')
   name: string;
-
-  @ApiProperty('OSS访问地址')
-  url: string;
 }

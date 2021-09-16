@@ -1,3 +1,11 @@
+# 上传文件存放目录
+
+uploadPath: uploads
+
+# 上传文件静态服务器
+
+uploadHost: http://localhost:3010
+
 # 文件限制配置
 
 fileLimit:
