@@ -38,7 +38,7 @@ export class AuthService {
     // 注入登录IP和登录时间
     Object.assign(user, { login_ip: clientIp, login_date: format(new Date()) });
 
-    // 保存登录信息，异步发起，成功失败都不影响
+    // 保存登录信息
     await lastValueFrom(this.client.send('AccountAdmin.update', [user.id, user]));
 
     // 查询角色信息
