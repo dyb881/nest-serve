@@ -1,13 +1,6 @@
 # Nest Serve v3
 
-使用 nestjs v8.x 进行重构，抽象更多公共模块到 libs，并把原有同质 lib 合并成一个
-
-## 主要预期
-
-每个基础服务都有两种对接方式
-
-- 网关使用微服务方式调基础服务，最终输出，N 个基础服务，N 个网关
-- 网关 imports 基础服务模块，最终输出单个服务
+使用 Nestjs 8.x 以微服务方式开发的基础管理后台服务，并搭配 React 开发的管理后台前端（可自行根据 swagger 的接口开发对应的管理后台前端）
 
 ## 旧版本
 
@@ -16,19 +9,20 @@
 
 ## 基础服务
 
-### 账号管理模块
-
-- account
-
-### 信息管理模块
-
-- infos
+- account 账号管理模块
+  - admin 管理员账号
+  - admin-role 管理员角色
+  - user 用户账号
+- infos 信息管理模块
+  - category 信息分类
+  - article 文章列表
 
 ## 网关服务
 
-### 管理后台网关
-
-- admin
+- admin 管理后台网管
+  - account 账号管理相关接口
+  - infos 信息管理相关接口
+  - auth 鉴权接口
 
 ## 自定义库
 
@@ -112,6 +106,24 @@ Column('simple-json', { comment: 'json 数据' }) = ColumnJson('json 数据');
 - typeorm 针对数据库的数据转化工具
 - http.exception.filter 异常拦截器
 - transform.interceptor 响应参数转化为统一格式
+
+## 配套 UI 效果图（兼容移动端）
+
+在[cra-template-seasoning](https://github.com/dyb881/cra-template-seasoning)中使用 pc-admin 模版
+
+![效果图](https://files.bittyshow.top/github/nest-serve-1.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-2.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-3.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-4.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-5.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-6.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-7.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-8.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-9.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-10.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-11.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-12.png)
+![效果图](https://files.bittyshow.top/github/nest-serve-13.png)
 
 ## 如果觉得项目还不错，请打赏一波，您的支持是我最大的动力。
 
