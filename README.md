@@ -19,7 +19,7 @@
 
 ## 网关服务
 
-- admin 管理后台网管
+- admin 管理后台网关
   - account 账号管理相关接口
   - infos 信息管理相关接口
   - auth 鉴权接口
