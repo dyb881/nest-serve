@@ -7,6 +7,41 @@
 - [v2 使用 monorepo 模式开发](https://github.com/dyb881/nest-serve/tree/monorepo)
 - [v1 使用 multirepo 模式开发](https://github.com/dyb881/nest-serve/tree/multirepo)
 
+## 使用方法
+
+### 配置
+
+一般情况下可以直接用当前配置，但如果要区分环境的话，就需要在 config 文件夹下添加这两个文件
+
+- development.yaml
+- production.yaml
+
+在运行时会根据环境变量 NODE_ENV=配置文件名 进行选择加载，如
+
+```sh
+NODE_ENV=production yarn start // 加载 production.yaml 覆盖配置
+```
+
+环境变量为空时，默认会尝试加载 development.yaml
+
+### 开发环境
+
+一般情况下需要一个个单独启动服务
+
+```sh
+yarn start:dev account
+yarn start:dev infos
+yarn start:dev admin
+```
+
+### 部署
+
+```sh
+yarn build:all // 打包所有
+yarn pm2 // 用 pm2 运行所有服务
+yarn pm2:pd // 使用 /config/production.yaml + pm2 运行所有服务
+```
+
 ## 基础服务
 
 - account 账号管理模块
