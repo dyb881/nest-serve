@@ -27,7 +27,7 @@ export async function bootstrap(module: any, bootstrapOptions?: BootstrapOptions
   app.use(mw());
 
   // 获取配置服务
-  const configService = app.get(ConfigService);
+  const configService = app.get<ConfigService>(ConfigService);
 
   // 服务配置
   const serve = configService.get('serve');
