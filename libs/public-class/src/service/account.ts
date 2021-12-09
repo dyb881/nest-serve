@@ -1,6 +1,6 @@
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { TransformClassToPlain } from 'class-transformer';
+import { TransformInstanceToPlain } from 'class-transformer';
 import { insNull, insLike } from '@app/public-tool';
 import { AccountPaginationQueryDto, AccountCreateDto, AccountUpdateDto, AccountLoginDto } from '../dto';
 import { AccountEntity } from '../entity';
@@ -59,7 +59,7 @@ export function AccountPaginationService<
      * @param {AccountLoginDto} 登录时所需的账号密码
      * @param validatorAccount 自定义验证账号函数假如不通过，抛出异常提示即可
      */
-    @TransformClassToPlain()
+    @TransformInstanceToPlain()
     async login({ username, password }: AccountLoginDto, validatorAccount?: (_Entity: Entity) => void) {
       const one = await this.repository.findOne({ username });
       // 账号不存在或密码错误的情况下，提示登录失败

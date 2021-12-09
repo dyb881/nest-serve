@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `account_admin`;
 CREATE TABLE `account_admin` (
-  `id` char(36) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `create_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
   `update_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新时间',
   `username` varchar(32) NOT NULL COMMENT '用户名',
@@ -51,7 +51,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `account_user`;
 CREATE TABLE `account_user` (
-  `id` char(36) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `create_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
   `update_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新时间',
   `username` varchar(32) NOT NULL COMMENT '用户名',
@@ -71,7 +71,7 @@ CREATE TABLE `account_user` (
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_role`;
 CREATE TABLE `admin_role` (
-  `id` char(36) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `create_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
   `update_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新时间',
   `name` varchar(255) NOT NULL COMMENT '角色名称',
@@ -93,7 +93,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
-  `id` char(36) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `create_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
   `update_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新时间',
   `title` varchar(255) NOT NULL COMMENT '标题',
@@ -113,7 +113,7 @@ CREATE TABLE `article` (
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
-  `id` char(36) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `create_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
   `update_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新时间',
   `title` varchar(255) NOT NULL COMMENT '标题',

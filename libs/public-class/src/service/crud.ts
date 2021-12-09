@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { Repository, FindConditions, FindOneOptions, SelectQueryBuilder } from 'typeorm';
-import { TransformClassToPlain } from 'class-transformer';
+import { TransformInstanceToPlain } from 'class-transformer';
 import { toWhere } from '@app/public-tool';
 import { IdsDto } from '../dto';
 
@@ -16,7 +16,7 @@ export function CrudService<CreateDto = any, UpdateDto = any, Entity = any>(_Ent
      * @param {FindConditions<Entity>} conditions 查询条件
      * @param updateQueryBuilder 更新查询构造器
      */
-    @TransformClassToPlain()
+    @TransformInstanceToPlain()
     getMany(
       conditions?: FindConditions<Entity>,
       updateQueryBuilder?: <T extends SelectQueryBuilder<Entity>>(query: T) => T
@@ -30,7 +30,7 @@ export function CrudService<CreateDto = any, UpdateDto = any, Entity = any>(_Ent
     /**
      * 查询一条数据
      */
-    @TransformClassToPlain()
+    @TransformInstanceToPlain()
     async findOne(conditions: string | FindConditions<Entity>, options?: FindOneOptions<Entity>) {
       const one = await this.repository.findOne(conditions, options);
       if (!one) throw new BadRequestException('该数据不存在');

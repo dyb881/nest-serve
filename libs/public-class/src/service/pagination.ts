@@ -1,5 +1,5 @@
 import { Repository, SelectQueryBuilder } from 'typeorm';
-import { TransformClassToPlain } from 'class-transformer';
+import { TransformInstanceToPlain } from 'class-transformer';
 import { toWhere, getPaginationData } from '@app/public-tool';
 import { PaginationQueryDto as PaginationQueryDtoSource } from '../dto';
 import { CrudService } from './crud';
@@ -23,7 +23,7 @@ export function PaginationService<
      * @param {PaginationQueryDto} queryData 分页查询数据
      * @param updateQueryBuilder 更新查询构造器
      */
-    @TransformClassToPlain()
+    @TransformInstanceToPlain()
     async pagination(
       queryData: PaginationQueryDto,
       updateQueryBuilder?: <T extends SelectQueryBuilder<Entity>>(query: T) => T
