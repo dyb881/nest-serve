@@ -26,7 +26,7 @@ export function PaginationController<
     @ApiBody({ required: false })
     @ApiResponse({ status: 200, type: _PaginationDto })
     pagination(@Query() data: QueryDto, @Payload() payload?: QueryDto) {
-      return this.service.pagination(payload || data);
+      return this.service.pagination(data || payload);
     }
   }
 
