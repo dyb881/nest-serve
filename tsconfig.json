@@ -6,41 +6,17 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "paths": {
-      "@app/public-decorator": [
-        "libs/public-decorator/src"
-      ],
-      "@app/public-decorator/*": [
-        "libs/public-decorator/src/*"
-      ],
-      "@app/public-tool": [
-        "libs/public-tool/src"
-      ],
-      "@app/public-tool/*": [
-        "libs/public-tool/src/*"
-      ],
-      "@app/public-module": [
-        "libs/public-module/src"
-      ],
-      "@app/public-module/*": [
-        "libs/public-module/src/*"
-      ],
-      "@app/public-class": [
-        "libs/public-class/src"
-      ],
-      "@app/public-class/*": [
-        "libs/public-class/src/*"
-      ]
-    }
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true
   }
 }

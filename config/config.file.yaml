@@ -4,7 +4,7 @@ uploadPath: uploads
 
 # 上传文件静态服务器
 
-uploadHost: http://localhost:3010
+uploadHost: http://localhost:3000
 
 # 文件限制配置
 

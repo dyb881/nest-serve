@@ -1,34 +1,39 @@
 # 服务配置（每个单独的服务都需要配置对应的端口）
 
 serve:
-  port: 3100
-  prefix: # 路径前缀
+  port: 3000
+  prefix: api # 路径前缀
 
 # 数据库配置
 
 db:
-  type: mysql
-  host: localhost
-  port: 3306
-  username: root
-  password: root
-  database: nest_serve_db
+  type: sqlite # 默认使用 sqlite，如果需要使用其他数据库，请安装对应驱动器
+  database: 'sqls/db.sql'
+  autoLoadEntities: true # 自动加载实体
   synchronize: true # 自动同步表
 
 # 缓存配置
 
 cache:
-  redis: # 有值时，使用 redis 做缓存服务器
-    host:
-    port:
+  # 使用文件数据库缓存
+  sqlite:
+    database: 'sqls/cache.sql' # 缓存数据库
+  # 其他持久化储存方式：https://github.com/jaredwray/keyv
+
+# 鉴权配置
+
+jwt:
+  secret: DZhu1yNJcAYYrGsktfQE # 加密串，生产环境必须更改
+  expiresIn: 604800000 # 过期时间 1000 * 60 * 60 * 24 * 7 毫秒 = 7 天 
+  validateKey: 7kk2RGVBmWM9nuxEsvon # 验证key，生产环境必须更改
 
 # Swagger 配置
 
 swagger:
-  title: 接口文档
+  title: PartTime接口文档
   description: code:状态码，message:提示信息，data:返回值
   path: swagger
 
 # 日志存放目录
 
-logsPath: apps
+logsPath: logs

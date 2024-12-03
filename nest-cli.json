@@ -1,75 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "monorepo": true,
-  "root": "apps/admin",
-  "sourceRoot": "apps/admin/src",
+  "sourceRoot": "src",
   "compilerOptions": {
-    "webpack": true,
-    "tsConfigPath": "apps/admin/tsconfig.app.json"
-  },
-  "projects": {
-    "account": {
-      "type": "application",
-      "root": "apps/account",
-      "entryFile": "main",
-      "sourceRoot": "apps/account/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/account/tsconfig.app.json"
-      }
-    },
-    "infos": {
-      "type": "application",
-      "root": "apps/infos",
-      "entryFile": "main",
-      "sourceRoot": "apps/infos/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/infos/tsconfig.app.json"
-      }
-    },
-    "admin": {
-      "type": "application",
-      "root": "apps/admin",
-      "entryFile": "main",
-      "sourceRoot": "apps/admin/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/admin/tsconfig.app.json"
-      }
-    },
-    "public-decorator": {
-      "type": "library",
-      "root": "libs/public-decorator",
-      "entryFile": "index",
-      "sourceRoot": "libs/public-decorator/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/public-decorator/tsconfig.lib.json"
-      }
-    },
-    "public-tool": {
-      "type": "library",
-      "root": "libs/public-tool",
-      "entryFile": "index",
-      "sourceRoot": "libs/public-tool/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/public-tool/tsconfig.lib.json"
-      }
-    },
-    "public-module": {
-      "type": "library",
-      "root": "libs/public-module",
-      "entryFile": "index",
-      "sourceRoot": "libs/public-module/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/public-module/tsconfig.lib.json"
-      }
-    },
-    "public-class": {
-      "type": "library",
-      "root": "libs/public-class",
-      "entryFile": "index",
-      "sourceRoot": "libs/public-class/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/public-class/tsconfig.lib.json"
-      }
-    }
+    "deleteOutDir": true
   }
 }

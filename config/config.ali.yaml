@@ -3,12 +3,11 @@
 ali:
   accessKeyId:
   accessKeySecret:
-
-# OSS配置
-
-oss:
-  bucket:
-  region:
-  internal: false
-  secure: true
-  arn:
+  
+  # OSS配置
+  oss:
+    bucket:
+    region:
+    internal: false
+    secure: true
+    arn:
