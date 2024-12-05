@@ -6,11 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "rimraf dist && dsb build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
+    "start": "rimraf dist && dsb dev",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
@@ -45,6 +43,7 @@
     "js-sha512": "^0.9.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
+    "multer": "1.4.5-lts.1",
     "nest-winston": "^1.9.7",
     "nuid": "^2.0.1-2",
     "passport": "^0.7.0",
@@ -58,6 +57,7 @@
     "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
+    "@doubleshot/builder": "^0.0.12",
     "@nestjs/cli": "^10.4.8",
     "@nestjs/schematics": "^10.2.3",
     "@nestjs/testing": "^10.4.12",
@@ -72,6 +72,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "jest": "^29.7.0",
     "prettier": "^3.4.1",
+    "rimraf": "^6.0.1",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
