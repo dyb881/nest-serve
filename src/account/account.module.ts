@@ -10,7 +10,7 @@ const imports = [RoleModule, AdminModule, UserModule, AuthModule];
 @Module({
   imports: [
     ...imports,
-    
+
     // 路由前缀定义
     RouterModule.register([{ path: 'account', children: imports }]),
   ],

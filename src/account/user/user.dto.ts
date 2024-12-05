@@ -1,10 +1,4 @@
-import {
-  PaginationQueryDto,
-  PaginationDto,
-  AccountQueryDto,
-  AccountCreateDto,
-  AccountUpdateDto,
-} from '../../common';
+import { PaginationQueryDto, PaginationDto, AccountQueryDto, AccountCreateDto, AccountUpdateDto } from '../../common';
 import { User } from './user.entity';
 
 /**
