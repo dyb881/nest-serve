@@ -1,5 +1,10 @@
 import dayjs from 'dayjs';
-export * from '../../../config'
+import path from 'path';
+
+/**
+ * 跟目录
+ */
+export const rootPath = path.join(__dirname, '../../../');
 
 // ---------------------- URL 相关数据转化 ---------------------- //
 
