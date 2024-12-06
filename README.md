@@ -3,6 +3,8 @@
 使用 Nestjs 10.x 开发的基础管理后台服务，极大简约了代码，降低开发成本<br/>
 [Nestjs 10.x 中文开发文档](https://docs.nestjs.cn/10/firststeps)
 
+## 其他构建方式
+
 ## 旧版本
 
 - [v3 使用 monorepo 模式开发](https://github.com/dyb881/nest-serve/tree/monorepo-v3)
