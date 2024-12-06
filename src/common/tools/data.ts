@@ -4,7 +4,7 @@ import path from 'path';
 /**
  * 跟目录
  */
-export const rootPath = path.join(__dirname, '../../../');
+export const rootPath = path.join(__dirname, '../');
 
 // ---------------------- URL 相关数据转化 ---------------------- //
 
