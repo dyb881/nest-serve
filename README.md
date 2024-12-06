@@ -3,6 +3,27 @@
 使用 Nestjs 10.x 开发的基础管理后台服务，极大简约了代码，降低开发成本<br/>
 [Nestjs 10.x 中文开发文档](https://docs.nestjs.cn/10/firststeps)
 
+## 使用方式
+
+### 开发与打包
+
+```sh
+npm run start:dev # 开发
+npm run build # 打包生产环境
+npm run build:ncc # 打包单文件
+```
+
+### 部署
+
+```sh
+node ./dist/main.js # 运行服务
+node ./ncc/index.js # 运行单文件服务
+
+# 建议使用 pm2 运行
+pm2 start ./dist/main.js # 运行服务
+pm2 start ./ncc/index.js # 运行单文件服务
+```
+
 ## 其他构建方式
 
 ## 旧版本

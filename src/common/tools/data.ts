@@ -1,10 +1,19 @@
 import dayjs from 'dayjs';
 import path from 'path';
+import fs from 'fs';
 
 /**
  * 跟目录
  */
-export const rootPath = path.join(__dirname, '../../../');
+export const rootPath = (() => {
+  const defaultPath = path.join(__dirname, '../../../');
+  if (fs.existsSync(path.join(defaultPath, 'config'))) return defaultPath;
+
+  const nccPath = path.join(__dirname, '../'); // 单文件打包根目录
+  if (fs.existsSync(path.join(nccPath, 'config'))) return nccPath;
+
+  return '';
+})();
 
 // ---------------------- URL 相关数据转化 ---------------------- //
 

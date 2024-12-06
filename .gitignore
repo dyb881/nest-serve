@@ -6,6 +6,7 @@
 /config/development.yaml
 /config/production.yaml
 /sqls
+/ncc
 
 # lock
 yarn.lock
