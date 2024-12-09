@@ -9,6 +9,11 @@
 
 ```sh
 npm run start:dev # 开发
+```
+
+### 打包
+
+```sh
 npm run build # 打包生产环境
 npm run build:ncc # 打包单文件
 ```
@@ -17,11 +22,11 @@ npm run build:ncc # 打包单文件
 
 ```sh
 node ./dist/main.js # 运行服务
-node ./ncc/index.js # 运行单文件服务
+node ./dist.ncc/index.js # 运行单文件服务
 
 # 建议使用 pm2 运行
 pm2 start ./dist/main.js # 运行服务
-pm2 start ./ncc/index.js # 运行单文件服务
+pm2 start ./dist.ncc/index.js # 运行单文件服务
 ```
 
 ### 打包单个可执行文件
