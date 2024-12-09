@@ -33,7 +33,7 @@ pm2 start ./ncc/index.js # 运行单文件服务
 ./sea/build.mac.sh # mac
 
 # 运行
-./dist.sea/run/index
+./dist.sea/run/nest-serve
 ```
 
 ## 旧版本

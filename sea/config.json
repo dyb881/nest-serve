@@ -1,4 +1,4 @@
 {
-  "main": "./dist.sea/run/index.js",
+  "main": "./dist.sea/run/nest-serve.js",
   "output": "./dist.sea/run/prep.blob"
 }
