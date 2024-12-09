@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "build:ncc": "npm run build && ncc build ./dist/main.js -o ncc",
+    "build:ncc": "npm run build && ncc build ./dist/main.js -o dist.ncc/run && cp -R ./config ./dist.ncc",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
