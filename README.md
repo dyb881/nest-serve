@@ -35,10 +35,16 @@ pm2 start ./dist.ncc/index.js # 运行单文件服务
 
 ```sh
 # 打包
-./sea/build.mac.sh # mac
+./build.mac.sh darwin-arm64 # mac M芯片
+./build.mac.sh darwin-x64 # mac
+./build.mac.sh linux-x64 # linux
+./build.mac.sh win-x64 # win
 
 # 运行
-./dist.sea/run/nest-serve
+./dist.sea/run/nest-serve-darwin-arm64
+./dist.sea/run/nest-serve-darwin-x64
+./dist.sea/run/nest-serve-linux-x64
+./dist.sea/run/nest-serve-win-x64.exe
 ```
 
 ## 旧版本

@@ -1,3 +1,5 @@
+platform=$1 # linux-x64 win-x64 darwin-arm64
+
 delimiter="################################################################"
 dividingLine="----------------------------------------------------------------"
 
@@ -19,8 +21,11 @@ sub_log() {
 
 log "开始执行打包"
 
+# sub_log "删除上一次打包"
+# rm -rf ./dist.sea
+
 sub_log "打包单文件"
-npm run build 
+npm run build
 node_modules/.bin/ncc build ./dist/main.js -o dist.sea/run
 
 sub_log "拷贝配置到待打包目录"
@@ -31,21 +36,21 @@ echo "const { createRequire } = require('node:module');\nrequire = createRequire
 cat temp ./dist.sea/run/index.js >./dist.sea/run/nest-serve.js
 rm -rf temp
 
-sub_log "生成blob文件"
-node --experimental-sea-config ./sea/config.json
+sub_log "生成sea可执行文件"
+xsea ./dist.sea/run/nest-serve.js -o ./dist.sea/run/nest-serve -t ${platform}
 
-sub_log "创建node可执行文件的副本并根据需要命名"
-cp $(command -v node) ./dist.sea/run/nest-serve
 
-sub_log "删除二进制文件的签名"
-codesign --remove-signature ./dist.sea/run/nest-serve
+sub_log "下载对应预构建文件"
 
-sub_log "将blob注入到复制的二进制文件中"
-npx postject ./dist.sea/run/nest-serve NODE_SEA_BLOB ./dist.sea/run/prep.blob \
-	--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
-	--macho-segment-name NODE_SEA
+sqlite_file_name=$platform
+if [ $platform == 'win-x64' ]; then
+	sqlite_file_name='win32-x64'
+fi
 
-sub_log "签署二进制文件"
-codesign --sign - ./dist.sea/run/nest-serve
+sqlite_file_url="https://github.com/TryGhost/node-sqlite3/releases/download/v5.1.7/sqlite3-v5.1.7-napi-v6-${sqlite_file_name}.tar.gz"
+sqlite_file_path="./dist.sea/run/sqlite3.tar.gz"
+wget ${sqlite_file_url} -O ${sqlite_file_path}
+tar -zxf ${sqlite_file_path}
+rm -rf ${sqlite_file_path}
 
 log "打包成功"
