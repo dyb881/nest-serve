@@ -8,6 +8,7 @@
 /sqls
 /dist.ncc
 /dist.sea
+/cache
 
 # lock
 yarn.lock
