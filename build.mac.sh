@@ -21,8 +21,8 @@ sub_log() {
 
 log "开始执行打包"
 
-# sub_log "删除上一次打包"
-# rm -rf ./dist.sea
+sub_log "删除上一次打包"
+rm -rf ./dist.sea
 
 sub_log "打包单文件"
 npm run build
