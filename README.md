@@ -24,7 +24,17 @@ pm2 start ./dist/main.js # 运行服务
 pm2 start ./ncc/index.js # 运行单文件服务
 ```
 
-## 其他构建方式
+### 打包单个可执行文件
+
+打包成功后，可以将 dist.sea 文件夹拷贝到服务器上直接运行
+
+```sh
+# 打包
+./sea/build.mac.sh # mac
+
+# 运行
+./dist.sea/run/index
+```
 
 ## 旧版本
 

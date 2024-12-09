@@ -7,8 +7,7 @@
 /config/production.yaml
 /sqls
 /dist.ncc
-/sea/dist
-/sea/ncc
+/dist.sea
 
 # lock
 yarn.lock
