@@ -31,20 +31,25 @@ pm2 start ./dist.ncc/index.js # 运行单文件服务
 
 ### 打包单个可执行文件
 
-打包成功后，可以将 dist.sea 文件夹拷贝到服务器上直接运行
+打包成功后，可以将 dist.sea 文件夹拷贝到服务器上直接运行<br/>
+命令行后的参数代表node的分发平台版本后缀
 
 ```sh
+npm i -g xsea # 安装构建工具
+
 # 打包
 ./build.mac.sh darwin-arm64 # mac M芯片
 ./build.mac.sh darwin-x64 # mac
 ./build.mac.sh linux-x64 # linux
 ./build.mac.sh win-x64 # win
+./build.mac.sh win-x86 # win
 
 # 运行
 ./dist.sea/run/nest-serve-darwin-arm64
 ./dist.sea/run/nest-serve-darwin-x64
 ./dist.sea/run/nest-serve-linux-x64
 ./dist.sea/run/nest-serve-win-x64.exe
+./dist.sea/run/nest-serve-win-x86.exe
 ```
 
 ## 旧版本

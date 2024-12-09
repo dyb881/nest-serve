@@ -39,17 +39,18 @@ rm -rf temp
 sub_log "生成sea可执行文件"
 xsea ./dist.sea/run/nest-serve.js -o ./dist.sea/run/nest-serve -t ${platform}
 
-
-sub_log "下载对应预构建文件"
-
+sub_log "下载 sqlite 预构建文件"
 sqlite_file_name=$platform
 if [ $platform == 'win-x64' ]; then
 	sqlite_file_name='win32-x64'
+elif [ $platform == 'win-x86' ]; then
+	sqlite_file_name='win32-ia32'
 fi
-
 sqlite_file_url="https://github.com/TryGhost/node-sqlite3/releases/download/v5.1.7/sqlite3-v5.1.7-napi-v6-${sqlite_file_name}.tar.gz"
 sqlite_file_path="./dist.sea/run/sqlite3.tar.gz"
 wget ${sqlite_file_url} -O ${sqlite_file_path}
+
+sub_log "解压 sqlite"
 tar -zxf ${sqlite_file_path}
 rm -rf ${sqlite_file_path}
 
