@@ -1,7 +1,8 @@
 # Nest Serve v4
 
-使用 Nestjs 10.x 开发的基础管理后台服务，极大简约了代码，降低开发成本<br/>
-[Nestjs 10.x 中文开发文档](https://docs.nestjs.cn/10/firststeps)
+[Nestjs 10.x 中文开发文档](https://docs.nestjs.cn/10/firststeps)<br/>
+使用 Nestjs 10.x 开发的基础管理后台服务，极大简约了代码，降低开发成本，支持打包单js文件，无需安装依赖即可部署，并且可基于sea打包成单个可执行文件，无需安装node即可运行。<br/>
+
 
 ## 使用方式
 
