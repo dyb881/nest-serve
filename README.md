@@ -76,6 +76,7 @@ NODE_ENV=production yarn start // 加载 production.yaml 覆盖配置
     - config 配置模块
     - logger 日志模块
     - upload 文件上传模块
+    - 支付模块（待定）
   - providers 数据/异常拦截
   - controller 公共控制器
   - dto 公共数据对象
@@ -90,3 +91,9 @@ NODE_ENV=production yarn start // 加载 production.yaml 覆盖配置
 - infos 信息模块
   - category 基础信息分类
   - article 文章管理
+- products 商品模块（待定）
+  - 商品分类
+  - 商品管理
+- trade 交易模块（待定）
+  - 购物车
+  - 订单管理
