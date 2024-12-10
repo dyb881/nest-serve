@@ -90,17 +90,17 @@ cp ./cache/${node_platform_path}/${node_file_name} ./dist.sea/run/${run_file}
 
 if [ $platform == 'darwin-arm64' ]; then
 	sub_log "删除二进制文件的签名"
-	codesign --remove-signature ./dist.sea/run/nest-serve
+	codesign --remove-signature ./dist.sea/run/${run_file}
 fi
 
 sub_log "将blob注入到复制的二进制文件中"
-npx postject ./dist.sea/run/nest-serve NODE_SEA_BLOB ./dist.sea/run/prep.blob \
+npx postject ./dist.sea/run/${run_file} NODE_SEA_BLOB ./dist.sea/run/prep.blob \
 	--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
 	--macho-segment-name NODE_SEA
 
 if [ $platform == 'darwin-arm64' ]; then
 	sub_log "签署二进制文件"
-	codesign --sign - ./dist.sea/run/nest-serve
+	codesign --sign - ./dist.sea/run/${run_file}
 fi
 
 sub_log "下载 sqlite 预构建文件"
